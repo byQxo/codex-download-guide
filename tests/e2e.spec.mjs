@@ -13,6 +13,14 @@ test("health and core routes respond", async ({ request }) => {
   }
 });
 
+test("article content has rewritten domains", async ({ request }) => {
+  const response = await request.get("/articles/codex-cc-switch-gpt-55-third-party-api-guide/");
+  expect(response.status()).toBe(200);
+  const body = await response.text();
+  expect(body).not.toMatch(/(?:download|us)\.yancc\.cloud/i);
+  expect(body).toContain("api.yudidc.cc");
+});
+
 test("mirrored page records are locally reachable", async ({ request }) => {
   const manifest = JSON.parse(await fs.readFile(path.join(root, "artifacts/mirror-manifest.json"), "utf8"));
   const pages = manifest.records.filter((record) => record.localPath?.endsWith("index.html"));
