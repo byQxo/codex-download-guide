@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codex Pets - 宠物列表</title>
+  <meta name="description" content="Codex 宠物画廊，收集可安装到 Codex 的社区宠物。">
+  <link rel="canonical" href="/pets/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <link rel="stylesheet" href="/mirror/assets/pets-b8db8841e3ea.css">
+
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head>
+
+<body>
+  <video class="page-background-video" src="/bg.mp4" muted="" loop="" autoplay="" playsinline="" aria-hidden="true"></video>
+
+  <div class="site-shell" data-pets-page="gallery">
+    <header class="site-header">
+      <div class="section-wrap header-row">
+        <a class="site-brand" href="/" aria-label="Codex 首页">
+          <span class="site-brand-icon"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+          <span class="site-brand-text">Codex 下载</span>
+        </a>
+
+        <div class="header-actions">
+          <a class="site-nav-link hidden px-3 py-2 text-base font-bold tracking-[-0.02em] text-black/70 transition duration-200 hover:-translate-y-px sm:inline-flex" href="/relay-guide/">中转站搭建</a><a class="site-nav-link" href="/articles/">文章</a>
+          <a class="site-nav-link" href="/docs/">文档</a>
+          <a class="site-nav-link" href="/pets/" aria-current="page">宠物</a>
+          <a class="site-button" href="https://pan.quark.cn/s/1ad15b67bc05#/list/share" target="_blank" rel="noreferrer">下载 Codex</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="site-main">
+      <section class="section-wrap">
+        <div class="hero-surface">
+          <div class="hero-content gallery-panel" data-pet-gallery-panel="">
+            <section class="gallery-head" aria-labelledby="pets-gallery-title">
+              <div>
+                <span class="eyebrow">Codex Pets</span>
+                <h1 id="pets-gallery-title" class="gallery-title">宠物列表</h1>
+                <p class="gallery-copy">收集可安装到 Codex 的社区宠物，可按名称、ID、作者或标签搜索。</p>
+              </div>
+            </section>
+
+            <form class="pet-search-bar" data-pet-search-form="" role="search">
+              <label class="pet-search-label" for="pet-search-input">搜索宠物</label>
+              <div class="pet-search-field">
+                <input id="pet-search-input" class="pet-search-input" type="search" name="q" placeholder="输入名称、ID、作者或标签" autocomplete="off" data-pet-search-input="">
+                <button class="pet-search-button" type="submit">搜索</button>
+              </div>
+            </form>
+
+            <div class="gallery-result-bar" data-pet-gallery-result="" aria-live="polite"></div>
+            <section class="pet-cards" data-pet-gallery="" aria-label="宠物列表"></section>
+            <nav class="pet-pagination" data-pet-pagination="" aria-label="宠物分页"></nav>
+          </div>
+
+          <div class="hero-content" data-pet-detail="" hidden=""></div>
+        </div>
+      </section>
+    </main>
+
+  </div>
+
+  <script src="/mirror/assets/pets-data-b9f312d4f0da.js"></script>
+  <script src="/mirror/assets/pets-94e72ab5f8c9.js"></script>
+
+
+
+</body></html>

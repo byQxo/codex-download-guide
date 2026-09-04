@@ -1,0 +1,888 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta http-equiv="content-language" content="zh-CN"><meta name="applicable-device" content="pc,mobile"><meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/docs/administration/enterprise/managed-configuration/"><link rel="icon" type="image/png" href="/mirror/assets/favicon-44eb2f9d4266.png"><meta name="description" content="为企业团队统一设置 Codex 默认值与强制限制，了解 `requirements.toml`、`managed_config.toml`、MDM 下发方式和托管配置在组织治理中的作用，并帮助管理员在企业环境中查找权限边界、认证流程、策略配置、审计线索和团队采用建议，把 Codex 更稳妥地接入组织治理、代码评审与自动化流程。"><meta name="keywords" content="Codex中文文档,Codex教程,Codex下载,OpenAI Codex,Codex CLI,Codex客户端,Codex配置,Codex IDE,Codex使用指南"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"><meta name="theme-color" content="#ffffff" data-docs-theme-color=""><script>
+      (() => {
+        const STORAGE_KEY = 'codex-docs-theme';
+        const DARK_THEME_COLOR = '#000000';
+        const LIGHT_THEME_COLOR = '#ffffff';
+        const root = document.documentElement;
+
+        const readPreference = () => {
+          try {
+            const value = window.localStorage.getItem(STORAGE_KEY);
+            return value === 'dark' ? 'dark' : 'light';
+          } catch {
+            return 'light';
+          }
+        };
+
+        const writePreference = (preference) => {
+          try {
+            if (preference !== 'dark') {
+              window.localStorage.removeItem(STORAGE_KEY);
+              return;
+            }
+
+            window.localStorage.setItem(STORAGE_KEY, 'dark');
+          } catch {
+            // Ignore storage failures; the in-page theme still updates.
+          }
+        };
+
+        const resolveTheme = (preference) => {
+          return preference === 'dark' ? 'dark' : 'light';
+        };
+
+        const updateThemeColor = (theme) => {
+          const meta = document.querySelector('meta[data-docs-theme-color]');
+          if (meta) {
+            meta.setAttribute('content', theme === 'dark' ? DARK_THEME_COLOR : LIGHT_THEME_COLOR);
+          }
+        };
+
+        const applyTheme = (preference, options = {}) => {
+          const nextPreference = preference === 'light' || preference === 'dark'
+            ? preference
+            : 'light';
+          const theme = resolveTheme(nextPreference);
+
+          root.dataset.themePreference = nextPreference;
+          root.dataset.theme = theme;
+          root.classList.toggle('dark', theme === 'dark');
+          updateThemeColor(theme);
+
+          if (options.persist) {
+            writePreference(nextPreference);
+          }
+
+          window.dispatchEvent(new CustomEvent('codex-docs-theme-change', {
+            detail: { preference: nextPreference, theme },
+          }));
+        };
+
+        window.__codexDocsTheme = {
+          applyTheme,
+          getPreference: () => root.dataset.themePreference || readPreference(),
+          getResolvedTheme: () => root.dataset.theme || resolveTheme(readPreference()),
+          setPreference: (preference) => applyTheme(preference, { persist: true }),
+        };
+
+        applyTheme(readPreference());
+      })();
+    </script><link rel="sitemap" href="/mirror/assets/sitemap-0486dc4a6455.xml"><link rel="canonical" href="/docs/administration/enterprise/managed-configuration/"><link rel="alternate" hreflang="zh-CN" href="/docs/administration/enterprise/managed-configuration/"><link rel="alternate" hreflang="en" href="https://developers.openai.com/codex/enterprise/managed-configuration"><meta property="og:site_name" content="Codex中文官方文档"><meta property="og:locale" content="zh_CN"><meta property="og:type" content="article"><meta property="og:title" content="Codex Managed Config | 企业默认与强制规则"><meta property="og:description" content="为企业团队统一设置 Codex 默认值与强制限制，了解 `requirements.toml`、`managed_config.toml`、MDM 下发方式和托管配置在组织治理中的作用，并帮助管理员在企业环境中查找权限边界、认证流程、策略配置、审计线索和团队采用建议，把 Codex 更稳妥地接入组织治理、代码评审与自动化流程。"><meta property="og:url" content="https://download.yudidc.cc/docs/administration/enterprise/managed-configuration/"><meta property="og:image" content="https://download.yudidc.cc/docs/og/administration.svg"><meta property="og:image:type" content="image/svg+xml"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="Codex Managed Config | 企业默认与强制规则"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Codex Managed Config | 企业默认与强制规则"><meta name="twitter:description" content="为企业团队统一设置 Codex 默认值与强制限制，了解 `requirements.toml`、`managed_config.toml`、MDM 下发方式和托管配置在组织治理中的作用，并帮助管理员在企业环境中查找权限边界、认证流程、策略配置、审计线索和团队采用建议，把 Codex 更稳妥地接入组织治理、代码评审与自动化流程。"><meta name="twitter:image" content="https://download.yudidc.cc/docs/og/administration.svg"><meta name="dateModified" content="2026-05-19T00:00:00.000Z"><meta property="article:modified_time" content="2026-05-19T00:00:00.000Z"><title>Codex Managed Config | 企业默认与强制规则 | Codex中文官方文档</title><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","@id":"https://download.yudidc.cc/docs/administration/enterprise/managed-configuration/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Codex中文官方文档","item":"https://download.yudidc.cc/docs/"},{"@type":"ListItem","position":2,"name":"托管配置","item":"https://download.yudidc.cc/docs/administration/enterprise/managed-configuration/"}]}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","name":"托管配置","description":"为企业团队统一设置 Codex 默认值与强制限制，了解 `requirements.toml`、`managed_config.toml`、MDM 下发方式和托管配置在组织治理中的作用，并帮助管理员在企业环境中查找权限边界、认证流程、策略配置、审计线索和团队采用建议，把 Codex 更稳妥地接入组织治理、代码评审与自动化流程。","url":"https://download.yudidc.cc/docs/administration/enterprise/managed-configuration/","image":{"@type":"ImageObject","url":"https://download.yudidc.cc/docs/og/administration.svg","width":1200,"height":630},"primaryImageOfPage":{"@type":"ImageObject","url":"https://download.yudidc.cc/docs/og/administration.svg","width":1200,"height":630},"thumbnailUrl":"https://download.yudidc.cc/docs/og/administration.svg","inLanguage":"zh-CN","isPartOf":{"@type":"WebSite","@id":"https://download.yudidc.cc/docs/#website","name":"Codex中文官方文档","url":"https://download.yudidc.cc/docs/"},"about":{"@type":"Thing","name":"OpenAI Codex","url":"https://developers.openai.com/codex/enterprise/managed-configuration"},"publisher":{"@type":"Organization","@id":"https://download.yudidc.cc/docs/#organization","name":"Codex中文官方文档","url":"https://download.yudidc.cc/docs/","description":"Codex中文官方文档，按官方文档结构整理 Codex App、CLI、IDE 扩展、Web、配置、管理与自动化内容，并持续同步官方更新。"},"breadcrumb":{"@id":"https://download.yudidc.cc/docs/administration/enterprise/managed-configuration/#breadcrumb"},"dateModified":"2026-05-19T00:00:00.000Z","headline":"托管配置"}</script><script>
+  (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "wpqootlqdn");
+</script><style>[data-astro-cid-qd4rauu3][data-doc-outline-link][data-active=true]{color:#18181b;font-weight:600}[data-astro-cid-qd4rauu3][data-doc-outline-link][aria-current=location]{color:#18181b}[data-astro-cid-qd4rauu3][data-doc-outline-link][data-active=true]:before{content:"";position:absolute;left:-1px;top:.5rem;bottom:.5rem;width:3px;border-radius:9999px;background:#18181b}
+</style>
+<link rel="stylesheet" href="/mirror/assets/_slug_.Cd_ceBA7-95e3b5d6841a.css">
+<link rel="stylesheet" href="/mirror/assets/_slug_.bA6AMCiJ-585ff35e79b6.css"><!-- 百度统计：复用主站统计 ID，覆盖 docs 静态页面访问。 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ad6645cd757bc1c6dbef1c4a9ca73f7a";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head> <body class="min-h-screen bg-white text-zinc-900 antialiased docs-shell-body"> <header class="sticky top-0 z-40 border-b border-zinc-200/70 bg-white/95 backdrop-blur" data-astro-cid-6tp3z3up=""> <div class="flex h-14 items-center justify-between gap-4 px-4 sm:px-6 w-full lg:px-6" data-astro-cid-6tp3z3up=""> <a href="/docs/" class="min-w-0 truncate text-[0.98rem] font-semibold tracking-tight text-zinc-950" data-astro-cid-6tp3z3up="">
+Codex中文官方文档
+</a> <div class="flex shrink-0 items-center gap-2" data-astro-cid-6tp3z3up=""> <a href="/" data-docs-download-link="" class="hidden rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white transition hover:bg-zinc-800 focus:bg-zinc-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 md:inline-flex" data-astro-cid-6tp3z3up="">客户端下载</a> <a href="/" data-docs-home-link="" class="hidden rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-950 focus:bg-zinc-100 focus:text-zinc-950 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 sm:inline-flex" data-astro-cid-6tp3z3up="">首页</a>  <div class="docs-search" data-docs-search-root="" data-docs-search-suggestions="[&quot;mcp&quot;,&quot;sandbox&quot;,&quot;subagents&quot;,&quot;noninteractive&quot;,&quot;worktrees&quot;]" data-pagefind-ignore="all"> <button type="button" class="docs-search__trigger hidden md:inline-flex" data-docs-search-open="" aria-haspopup="dialog" aria-expanded="false"> <span class="docs-search__trigger-label">文档内容搜索</span> <span class="sr-only" data-docs-search-shortcut="">⌘K</span> <span class="docs-search__trigger-icon" aria-hidden="true"> <svg viewBox="0 0 20 20"> <path d="M13.5 13.5 18 18M8.75 15.5a6.75 6.75 0 1 0 0-13.5 6.75 6.75 0 0 0 0 13.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path> </svg> </span> </button> <button type="button" class="docs-search__trigger docs-search__trigger--icon md:hidden" data-docs-search-open="" aria-haspopup="dialog" aria-expanded="false" aria-label="搜索文档"> <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5"> <path d="M13.5 13.5 18 18M8.75 15.5a6.75 6.75 0 1 0 0-13.5 6.75 6.75 0 0 0 0 13.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path> </svg> </button> <div class="docs-search__modal" hidden="" data-docs-search-modal=""> <button type="button" class="docs-search__backdrop" aria-label="关闭搜索" data-docs-search-close=""></button> <div class="docs-search__panel" role="dialog" aria-modal="true" aria-labelledby="docs-search-title"> <div class="docs-search__panel-header"> <label id="docs-search-title" class="sr-only" for="docs-search-input">搜索文档</label> <svg viewBox="0 0 20 20" aria-hidden="true" class="docs-search__icon"> <path d="M13.5 13.5 18 18M8.75 15.5a6.75 6.75 0 1 0 0-13.5 6.75 6.75 0 0 0 0 13.5Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path> </svg> <input id="docs-search-input" type="search" class="docs-search__input" placeholder="文档内容搜索" autocomplete="off" spellcheck="false" data-docs-search-input=""> <button type="button" class="docs-search__close" aria-label="关闭搜索" data-docs-search-close=""> <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5"> <path d="m5.5 5.5 9 9m0-9-9 9" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8"></path> </svg> </button> </div> <div class="docs-search__content"> <div class="docs-search__empty" data-docs-search-empty=""> <section class="docs-search__group" data-docs-search-recent-group=""> <h2 class="docs-search__group-title">最近搜索</h2> <div class="docs-search__chips" data-docs-search-recent=""></div> </section> <section class="docs-search__group"> <h2 class="docs-search__group-title">推荐搜索</h2> <div class="docs-search__chips" data-docs-search-suggested=""></div> </section> </div> <div class="docs-search__status" hidden="" data-docs-search-loading="">正在搜索…</div> <div class="docs-search__status" hidden="" data-docs-search-error=""></div> <div class="docs-search__status" hidden="" data-docs-search-no-results="">
+没有找到相关内容，试试更短的关键词，或者使用英文术语搜索。
+</div> <div class="docs-search__results" hidden="" data-docs-search-results=""></div> </div> </div> </div> </div> <script type="module" src="/mirror/assets/DocsSearch.astro_astro_type_script_index_0_lang.DZTimGwp-c8e8b89c00e2.js"></script> <button type="button" class="theme-toggle inline-flex size-9 items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-950 focus:border-zinc-300 focus:bg-zinc-50 focus:text-zinc-950 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200" aria-label="切换深色模式" aria-pressed="false" data-theme-toggle="" data-astro-cid-6tp3z3up=""> <svg viewBox="0 0 20 20" aria-hidden="true" class="theme-toggle__sun size-5" data-astro-cid-6tp3z3up=""> <circle cx="10" cy="10" r="3.25" fill="none" stroke="currentColor" stroke-width="1.6" data-astro-cid-6tp3z3up=""></circle> <path d="M10 2.5v1.4m0 12.2v1.4M4.7 4.7l1 1m8.6 8.6 1 1m2.2-5.3h-1.4M3.9 10H2.5m2.2 5.3 1-1m8.6-8.6 1-1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.6" data-astro-cid-6tp3z3up=""></path> </svg> <svg viewBox="0 0 20 20" aria-hidden="true" class="theme-toggle__moon hidden size-5" data-astro-cid-6tp3z3up=""> <path d="M15.7 12.9A6.35 6.35 0 0 1 7.1 4.3 6.6 6.6 0 1 0 15.7 12.9Z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.6" data-astro-cid-6tp3z3up=""></path> </svg> </button> <details class="header-actions relative" data-astro-cid-6tp3z3up=""> <summary class="inline-flex size-9 list-none items-center justify-center rounded-full border border-zinc-200 bg-white text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-950 focus:border-zinc-300 focus:bg-zinc-50 focus:text-zinc-950 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden" aria-label="打开操作菜单" data-astro-cid-6tp3z3up=""> <svg viewBox="0 0 20 20" aria-hidden="true" class="size-5" data-astro-cid-6tp3z3up=""> <path d="M5.25 10h.01M10 10h.01M14.75 10h.01" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.4" data-astro-cid-6tp3z3up=""></path> </svg> </summary> <div class="header-actions__menu absolute right-0 top-full z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-zinc-200 bg-white p-1.5 shadow-lg shadow-zinc-950/10" data-astro-cid-6tp3z3up=""> <a href="/" target="_blank" rel="noreferrer noopener" class="flex items-start gap-3 rounded-xl px-3 py-2.5 text-sm text-zinc-700 transition hover:bg-zinc-50 hover:text-zinc-950 focus:bg-zinc-50 focus:text-zinc-950 focus:outline-none" data-astro-cid-6tp3z3up=""> <span class="mt-0.5 inline-flex size-5 items-center justify-center text-zinc-500" data-astro-cid-6tp3z3up=""> <svg viewBox="0 0 20 20" aria-hidden="true" class="size-4" data-astro-cid-6tp3z3up=""> <path d="M3.5 5.75A1.75 1.75 0 0 1 5.25 4h9.5a1.75 1.75 0 0 1 1.75 1.75v8.5A1.75 1.75 0 0 1 14.75 16h-9.5a1.75 1.75 0 0 1-1.75-1.75v-8.5Z" fill="none" stroke="currentColor" stroke-width="1.5" data-astro-cid-6tp3z3up=""></path> <path d="m4 6 6 4.25L16 6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" data-astro-cid-6tp3z3up=""></path> </svg> </span> <span class="min-w-0" data-astro-cid-6tp3z3up=""> <span class="block font-medium text-zinc-950" data-astro-cid-6tp3z3up="">Codex下载首页</span> <span class="block truncate text-xs leading-5 text-zinc-500" data-astro-cid-6tp3z3up="">https://download.yudidc.cloud</span> </span> </a> </div> </details> </div> </div> </header> <script type="module">const d=()=>{Array.from(document.querySelectorAll(".header-actions")).filter(e=>e instanceof HTMLDetailsElement).forEach(e=>{e.dataset.headerActionsReady!=="true"&&(e.dataset.headerActionsReady="true",document.addEventListener("click",a=>{!e.open||a.target instanceof Node&&e.contains(a.target)||(e.open=!1)}),e.addEventListener("keydown",a=>{a.key==="Escape"&&(e.open=!1,e.querySelector("summary")?.focus())}))})},s=()=>window.__codexDocsTheme,o=()=>{const n=Array.from(document.querySelectorAll("[data-theme-toggle]")).filter(t=>t instanceof HTMLButtonElement);if(n.length===0)return;const e=()=>s()?.getResolvedTheme?.()??document.documentElement.dataset.theme??"light",a=()=>{const t=e()==="dark";n.forEach(r=>{r.setAttribute("aria-pressed",t?"true":"false"),r.setAttribute("aria-label",t?"切换浅色模式":"切换深色模式"),r.title=t?"切换浅色模式":"切换深色模式"})};n.forEach(t=>{t.dataset.themeToggleReady!=="true"&&(t.dataset.themeToggleReady="true",t.addEventListener("click",()=>{const r=e()==="dark"?"light":"dark";s()?.setPreference?.(r),a()}))}),a()};d();o();document.addEventListener("astro:page-load",d);document.addEventListener("astro:page-load",o);window.addEventListener("codex-docs-theme-change",o);</script>  <div class="w-full px-0 pb-0 pt-0"> <div class="lg:h-[calc(100vh-3.5rem)] lg:overflow-hidden"><div data-docs-sidebar-root=""> <div class="lg:hidden"> <button type="button" aria-controls="mobile-docs-menu" aria-expanded="false" class="fixed right-4 top-[4.25rem] z-30 inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white/95 px-4 py-2 text-sm font-medium text-zinc-950 shadow-sm backdrop-blur transition hover:border-zinc-300 hover:bg-zinc-50" data-docs-mobile-menu-open=""> <span>目录</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 text-zinc-500"> <path d="M3 4.75h10M3 8h10M3 11.25h10" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path> </svg> </button> <div id="mobile-docs-menu" hidden="" class="fixed inset-x-0 bottom-0 top-14 z-50" data-docs-mobile-menu=""> <button type="button" aria-label="关闭文档目录" class="absolute inset-0 bg-zinc-950/20 backdrop-blur-[2px]" data-docs-mobile-menu-close=""></button> <div class="absolute right-0 top-0 flex h-full w-[min(22rem,calc(100vw-0.75rem))] flex-col border-l border-zinc-200 bg-white shadow-[-24px_0_48px_rgba(15,23,42,0.12)]"> <div class="flex items-center justify-between border-b border-zinc-200 px-4 py-4"> <p class="text-sm font-semibold text-zinc-950">文档目录</p> <button type="button" class="inline-flex items-center rounded-full border border-zinc-200 px-3 py-1.5 text-sm text-zinc-600 transition hover:border-zinc-300 hover:bg-zinc-50 hover:text-zinc-950" data-docs-mobile-menu-close="">
+关闭
+</button> </div> <div class="scrollbar-hidden flex-1 overflow-y-auto px-3 py-4"> <nav aria-label="文档目录" class="space-y-8"> <section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">开始使用</p> <ul class="space-y-0.5"> <li> <a href="/docs/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/getting-started/quickstart/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">快速开始</span>  </a> </li><li> <a href="/docs/getting-started/migrate/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">迁移到 Codex</span>  </a> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>概念</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/getting-started/concepts/prompting/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">提示词</span>  </a> </li><li> <a href="/docs/getting-started/concepts/customization/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">自定义</span>  </a> </li><li> <details class="group/nested"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <a href="/docs/getting-started/concepts/memories/" class="min-w-0 flex-1 truncate rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200" onclick="event.stopPropagation()"> 上下文记忆 </a> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open/nested:rotate-90 group-open/nested:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1 ml-3 space-y-0.5 pl-3"> <li> <a href="/docs/getting-started/concepts/memories/chronicle/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">执行记录</span>  </a> </li> </ul> </details> </li><li> <details class="group/nested"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <a href="/docs/getting-started/concepts/sandboxing/" class="min-w-0 flex-1 truncate rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200" onclick="event.stopPropagation()"> 沙箱 </a> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open/nested:rotate-90 group-open/nested:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1 ml-3 space-y-0.5 pl-3"> <li> <a href="/docs/getting-started/concepts/auto-review/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">自动评审</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/getting-started/concepts/subagents/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">子智能体</span>  </a> </li><li> <a href="/docs/getting-started/concepts/workflows/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">工作流</span>  </a> </li><li> <a href="/docs/getting-started/concepts/models/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">模型</span>  </a> </li><li> <a href="/docs/getting-started/concepts/cyber-safety/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">网络安全</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/releases/recent-update/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">最近更新</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">使用 Codex</p> <ul class="space-y-0.5"> <li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>App</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/app/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/app/features/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">功能</span>  </a> </li><li> <a href="/docs/using-codex/app/settings/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">设置</span>  </a> </li><li> <a href="/docs/using-codex/app/review/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">评审</span>  </a> </li><li> <a href="/docs/using-codex/app/automations/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">自动化</span>  </a> </li><li> <a href="/docs/using-codex/app/worktrees/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">工作树</span>  </a> </li><li> <a href="/docs/using-codex/app/local-environments/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">本地环境</span>  </a> </li><li> <a href="/docs/using-codex/app/browser/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">内置浏览器</span>  </a> </li><li> <a href="/docs/using-codex/app/chrome-extension/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Chrome 扩展</span>  </a> </li><li> <a href="/docs/using-codex/app/computer-use/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">计算机操作</span>  </a> </li><li> <a href="/docs/using-codex/app/appshots/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">应用截图</span>  </a> </li><li> <a href="/docs/using-codex/app/commands/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">命令</span>  </a> </li><li> <a href="/docs/using-codex/app/windows/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Windows</span>  </a> </li><li> <a href="/docs/using-codex/app/troubleshooting/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">故障排查</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>IDE 扩展</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/ide/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/ide/features/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">功能</span>  </a> </li><li> <a href="/docs/using-codex/ide/settings/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">设置</span>  </a> </li><li> <a href="/docs/using-codex/ide/commands/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">命令</span>  </a> </li><li> <a href="/docs/using-codex/ide/slash-commands/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">斜杠命令</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>CLI</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/cli/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/cli/features/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">功能</span>  </a> </li><li> <a href="/docs/using-codex/cli/reference/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">命令行选项</span>  </a> </li><li> <a href="/docs/using-codex/cli/slash-commands/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">斜杠命令</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>Web</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/cloud/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/cloud/environments/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">环境</span>  </a> </li><li> <a href="/docs/using-codex/cloud/internet-access/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">网络访问</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>集成</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/integrations/github/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">GitHub</span>  </a> </li><li> <a href="/docs/using-codex/integrations/slack/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Slack</span>  </a> </li><li> <a href="/docs/using-codex/integrations/linear/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Linear</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>Codex 安全</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/codex-security/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/codex-security/setup/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">设置</span>  </a> </li><li> <a href="/docs/using-codex/codex-security/improving-your-threat-model/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">改进威胁模型</span>  </a> </li><li> <a href="/docs/using-codex/codex-security/faq/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">常见问题</span>  </a> </li> </ul> </details> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">配置</p> <ul class="space-y-0.5"> <li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>配置文件</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/configuration/config-file/config-basic/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">基础</span>  </a> </li><li> <a href="/docs/configuration/config-file/config-advanced/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">高级</span>  </a> </li><li> <a href="/docs/configuration/config-file/config-reference/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">参考</span>  </a> </li><li> <a href="/docs/configuration/config-file/sample-config/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">示例</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/configuration/permissions/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">权限</span>  </a> </li><li> <a href="/docs/configuration/speed/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">速度</span>  </a> </li><li> <a href="/docs/configuration/rules/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">规则</span>  </a> </li><li> <a href="/docs/configuration/hooks/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">钩子</span>  </a> </li><li> <a href="/docs/configuration/agents/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">AGENTS.md</span>  </a> </li><li> <a href="/docs/configuration/mcp/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">MCP</span>  </a> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>插件</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/configuration/plugins/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/configuration/plugins/building-plugins/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">构建插件</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/configuration/skills/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">技能</span>  </a> </li><li> <a href="/docs/configuration/subagents/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">子智能体</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">管理</p> <ul class="space-y-0.5"> <li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>认证</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/administration/authentication/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/administration/enterprise/access-tokens/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">访问令牌</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/administration/agent-approvals-security/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">智能体审批与安全</span>  </a> </li><li> <a href="/docs/administration/remote-connections/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">远程连接</span>  </a> </li><li> <details open="" class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden bg-zinc-100/90 text-zinc-950"> <span>企业</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/administration/enterprise/admin-setup/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">管理员设置</span>  </a> </li><li> <a href="/docs/administration/enterprise/governance/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">治理</span>  </a> </li><li> <a href="/docs/administration/enterprise/managed-configuration/" aria-current="page" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 bg-zinc-100 font-medium text-zinc-950 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.65)]"> <span class="min-w-0 truncate">托管配置</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/administration/windows/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Windows</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">自动化</p> <ul class="space-y-0.5"> <li> <a href="/docs/automation/noninteractive/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">非交互</span>  </a> </li><li> <a href="/docs/automation/sdk/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">SDK</span>  </a> </li><li> <a href="/docs/automation/app-server/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">App Server</span>  </a> </li><li> <a href="/docs/automation/mcp-server/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">MCP Server</span>  </a> </li><li> <a href="/docs/automation/github-action/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">GitHub Action</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">学习</p> <ul class="space-y-0.5"> <li> <a href="/docs/learn/best-practices/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">最佳实践</span>  </a> </li><li> <a href="/docs/learn/build-ai-native-engineering-team/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">打造 AI 原生工程团队</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">发布</p> <ul class="space-y-0.5"> <li> <a href="/docs/releases/feature-maturity/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">功能成熟度</span>  </a> </li><li> <a href="/docs/releases/open-source/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">开源</span>  </a> </li> </ul> </section> </nav> </div> </div> </div> </div> <aside class="hidden lg:fixed lg:bottom-0 lg:left-0 lg:top-14 lg:z-20 lg:block lg:w-[272px] lg:border-r lg:border-zinc-200/70 lg:bg-white"> <div class="scrollbar-hidden h-full overflow-y-auto overscroll-contain px-4 py-6" data-docs-sidebar-scroll-container=""> <nav aria-label="文档目录" class="space-y-8"> <section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">开始使用</p> <ul class="space-y-0.5"> <li> <a href="/docs/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/getting-started/quickstart/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">快速开始</span>  </a> </li><li> <a href="/docs/getting-started/migrate/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">迁移到 Codex</span>  </a> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>概念</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/getting-started/concepts/prompting/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">提示词</span>  </a> </li><li> <a href="/docs/getting-started/concepts/customization/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">自定义</span>  </a> </li><li> <details class="group/nested"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <a href="/docs/getting-started/concepts/memories/" class="min-w-0 flex-1 truncate rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200" onclick="event.stopPropagation()"> 上下文记忆 </a> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open/nested:rotate-90 group-open/nested:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1 ml-3 space-y-0.5 pl-3"> <li> <a href="/docs/getting-started/concepts/memories/chronicle/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">执行记录</span>  </a> </li> </ul> </details> </li><li> <details class="group/nested"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <a href="/docs/getting-started/concepts/sandboxing/" class="min-w-0 flex-1 truncate rounded-[10px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200" onclick="event.stopPropagation()"> 沙箱 </a> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open/nested:rotate-90 group-open/nested:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1 ml-3 space-y-0.5 pl-3"> <li> <a href="/docs/getting-started/concepts/auto-review/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">自动评审</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/getting-started/concepts/subagents/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">子智能体</span>  </a> </li><li> <a href="/docs/getting-started/concepts/workflows/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">工作流</span>  </a> </li><li> <a href="/docs/getting-started/concepts/models/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">模型</span>  </a> </li><li> <a href="/docs/getting-started/concepts/cyber-safety/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">网络安全</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/releases/recent-update/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">最近更新</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">使用 Codex</p> <ul class="space-y-0.5"> <li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>App</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/app/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/app/features/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">功能</span>  </a> </li><li> <a href="/docs/using-codex/app/settings/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">设置</span>  </a> </li><li> <a href="/docs/using-codex/app/review/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">评审</span>  </a> </li><li> <a href="/docs/using-codex/app/automations/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">自动化</span>  </a> </li><li> <a href="/docs/using-codex/app/worktrees/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">工作树</span>  </a> </li><li> <a href="/docs/using-codex/app/local-environments/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">本地环境</span>  </a> </li><li> <a href="/docs/using-codex/app/browser/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">内置浏览器</span>  </a> </li><li> <a href="/docs/using-codex/app/chrome-extension/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Chrome 扩展</span>  </a> </li><li> <a href="/docs/using-codex/app/computer-use/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">计算机操作</span>  </a> </li><li> <a href="/docs/using-codex/app/appshots/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">应用截图</span>  </a> </li><li> <a href="/docs/using-codex/app/commands/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">命令</span>  </a> </li><li> <a href="/docs/using-codex/app/windows/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Windows</span>  </a> </li><li> <a href="/docs/using-codex/app/troubleshooting/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">故障排查</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>IDE 扩展</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/ide/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/ide/features/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">功能</span>  </a> </li><li> <a href="/docs/using-codex/ide/settings/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">设置</span>  </a> </li><li> <a href="/docs/using-codex/ide/commands/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">命令</span>  </a> </li><li> <a href="/docs/using-codex/ide/slash-commands/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">斜杠命令</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>CLI</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/cli/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/cli/features/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">功能</span>  </a> </li><li> <a href="/docs/using-codex/cli/reference/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">命令行选项</span>  </a> </li><li> <a href="/docs/using-codex/cli/slash-commands/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">斜杠命令</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>Web</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/cloud/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/cloud/environments/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">环境</span>  </a> </li><li> <a href="/docs/using-codex/cloud/internet-access/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">网络访问</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>集成</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/integrations/github/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">GitHub</span>  </a> </li><li> <a href="/docs/using-codex/integrations/slack/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Slack</span>  </a> </li><li> <a href="/docs/using-codex/integrations/linear/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Linear</span>  </a> </li> </ul> </details> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>Codex 安全</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/using-codex/codex-security/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/using-codex/codex-security/setup/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">设置</span>  </a> </li><li> <a href="/docs/using-codex/codex-security/improving-your-threat-model/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">改进威胁模型</span>  </a> </li><li> <a href="/docs/using-codex/codex-security/faq/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">常见问题</span>  </a> </li> </ul> </details> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">配置</p> <ul class="space-y-0.5"> <li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>配置文件</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/configuration/config-file/config-basic/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">基础</span>  </a> </li><li> <a href="/docs/configuration/config-file/config-advanced/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">高级</span>  </a> </li><li> <a href="/docs/configuration/config-file/config-reference/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">参考</span>  </a> </li><li> <a href="/docs/configuration/config-file/sample-config/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">示例</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/configuration/permissions/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">权限</span>  </a> </li><li> <a href="/docs/configuration/speed/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">速度</span>  </a> </li><li> <a href="/docs/configuration/rules/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">规则</span>  </a> </li><li> <a href="/docs/configuration/hooks/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">钩子</span>  </a> </li><li> <a href="/docs/configuration/agents/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">AGENTS.md</span>  </a> </li><li> <a href="/docs/configuration/mcp/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">MCP</span>  </a> </li><li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>插件</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/configuration/plugins/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/configuration/plugins/building-plugins/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">构建插件</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/configuration/skills/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">技能</span>  </a> </li><li> <a href="/docs/configuration/subagents/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">子智能体</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">管理</p> <ul class="space-y-0.5"> <li> <details class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden"> <span>认证</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/administration/authentication/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">概览</span>  </a> </li><li> <a href="/docs/administration/enterprise/access-tokens/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">访问令牌</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/administration/agent-approvals-security/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">智能体审批与安全</span>  </a> </li><li> <a href="/docs/administration/remote-connections/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">远程连接</span>  </a> </li><li> <details open="" class="group"> <summary class="flex list-none items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] font-medium leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 [&amp;::-webkit-details-marker]:hidden bg-zinc-100/90 text-zinc-950"> <span>企业</span> <svg viewBox="0 0 16 16" aria-hidden="true" class="size-4 shrink-0 text-zinc-400 transition group-open:rotate-90 group-open:text-zinc-700"> <path d="M6 3.75 10.25 8 6 12.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path> </svg> </summary> <ul class="mt-1.5 ml-4 space-y-0.5 border-l border-zinc-200/85 pl-4"> <li> <a href="/docs/administration/enterprise/admin-setup/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">管理员设置</span>  </a> </li><li> <a href="/docs/administration/enterprise/governance/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">治理</span>  </a> </li><li> <a href="/docs/administration/enterprise/managed-configuration/" aria-current="page" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.38rem] text-[0.93rem] leading-[1.5rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 bg-zinc-100 font-medium text-zinc-950 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.65)]"> <span class="min-w-0 truncate">托管配置</span>  </a> </li> </ul> </details> </li><li> <a href="/docs/administration/windows/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">Windows</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">自动化</p> <ul class="space-y-0.5"> <li> <a href="/docs/automation/noninteractive/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">非交互</span>  </a> </li><li> <a href="/docs/automation/sdk/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">SDK</span>  </a> </li><li> <a href="/docs/automation/app-server/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">App Server</span>  </a> </li><li> <a href="/docs/automation/mcp-server/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">MCP Server</span>  </a> </li><li> <a href="/docs/automation/github-action/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">GitHub Action</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">学习</p> <ul class="space-y-0.5"> <li> <a href="/docs/learn/best-practices/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">最佳实践</span>  </a> </li><li> <a href="/docs/learn/build-ai-native-engineering-team/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">打造 AI 原生工程团队</span>  </a> </li> </ul> </section><section> <p class="mb-2.5 px-2.5 text-[0.92rem] font-semibold tracking-tight text-zinc-950">发布</p> <ul class="space-y-0.5"> <li> <a href="/docs/releases/feature-maturity/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">功能成熟度</span>  </a> </li><li> <a href="/docs/releases/open-source/" class="flex items-center justify-between rounded-[13px] px-3.5 py-[0.4rem] text-[0.94rem] leading-[1.55rem] text-zinc-600 transition hover:bg-zinc-100/85 hover:text-zinc-950 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200"> <span class="min-w-0 truncate">开源</span>  </a> </li> </ul> </section> </nav> </div> </aside> </div> <script>
+  (() => {
+    const STORAGE_KEY = 'codex-docs-sidebar-scroll-top';
+    const MOBILE_MENU_OPEN = 'true';
+
+    const getScrollContainer = () => {
+      const element = document.querySelector('[data-docs-sidebar-scroll-container]');
+      return element instanceof HTMLElement ? element : null;
+    };
+
+    const getSidebarRoot = () => {
+      const element = document.querySelector('[data-docs-sidebar-root]');
+      return element instanceof HTMLElement ? element : null;
+    };
+
+    const getMobileMenu = () => {
+      const root = getSidebarRoot();
+      const element = root?.querySelector('[data-docs-mobile-menu]');
+      return element instanceof HTMLElement ? element : null;
+    };
+
+    const getMobileMenuOpenButton = () => {
+      const root = getSidebarRoot();
+      const element = root?.querySelector('[data-docs-mobile-menu-open]');
+      return element instanceof HTMLButtonElement ? element : null;
+    };
+
+    const readSavedScrollTop = () => {
+      try {
+        return window.sessionStorage.getItem(STORAGE_KEY);
+      } catch {
+        return null;
+      }
+    };
+
+    const writeSavedScrollTop = (scrollTop) => {
+      try {
+        window.sessionStorage.setItem(STORAGE_KEY, String(scrollTop));
+      } catch {
+        // Ignore storage failures so navigation still works.
+      }
+    };
+
+    const persistScrollPosition = () => {
+      const container = getScrollContainer();
+      if (!container) return;
+      writeSavedScrollTop(container.scrollTop);
+    };
+
+    const restoreScrollPosition = () => {
+      const container = getScrollContainer();
+      const savedScrollTop = readSavedScrollTop();
+      if (!container || !savedScrollTop) return;
+
+      const nextScrollTop = Number(savedScrollTop);
+      if (!Number.isFinite(nextScrollTop)) return;
+
+      window.requestAnimationFrame(() => {
+        container.scrollTop = nextScrollTop;
+      });
+    };
+
+    const closeMobileMenu = () => {
+      const menu = getMobileMenu();
+      const openButton = getMobileMenuOpenButton();
+      if (!menu || menu.hidden) return;
+
+      menu.hidden = true;
+      menu.dataset.open = 'false';
+      document.body.style.overflow = '';
+
+      if (openButton) {
+        openButton.setAttribute('aria-expanded', 'false');
+      }
+    };
+
+    const openMobileMenu = () => {
+      const menu = getMobileMenu();
+      const openButton = getMobileMenuOpenButton();
+      if (!menu) return;
+
+      menu.hidden = false;
+      menu.dataset.open = MOBILE_MENU_OPEN;
+      document.body.style.overflow = 'hidden';
+
+      if (openButton) {
+        openButton.setAttribute('aria-expanded', 'true');
+      }
+    };
+
+    const setupMobileMenu = () => {
+      const root = getSidebarRoot();
+      const menu = getMobileMenu();
+      const openButton = getMobileMenuOpenButton();
+
+      if (!root || !menu || !openButton || root.dataset.mobileMenuReady === 'true') return;
+
+      root.dataset.mobileMenuReady = 'true';
+
+      openButton.addEventListener('click', () => {
+        if (menu.hidden) {
+          openMobileMenu();
+          return;
+        }
+
+        closeMobileMenu();
+      });
+
+      root.querySelectorAll('[data-docs-mobile-menu-close]').forEach((button) => {
+        button.addEventListener('click', closeMobileMenu);
+      });
+
+      menu.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element) || !target.closest('a[href]')) return;
+        closeMobileMenu();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeMobileMenu();
+        }
+      });
+    };
+
+    const setupScrollPersistence = () => {
+      const container = getScrollContainer();
+      if (!container || container.dataset.scrollPersistenceReady === 'true') {
+        restoreScrollPosition();
+        return;
+      }
+
+      container.dataset.scrollPersistenceReady = 'true';
+      container.addEventListener('scroll', persistScrollPosition, { passive: true });
+      container.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element) || !target.closest('a[href]')) return;
+        persistScrollPosition();
+      });
+
+      restoreScrollPosition();
+    };
+
+    setupMobileMenu();
+    setupScrollPersistence();
+    document.addEventListener('astro:before-swap', closeMobileMenu);
+    document.addEventListener('astro:page-load', setupMobileMenu);
+    document.addEventListener('astro:page-load', setupScrollPersistence);
+    window.addEventListener('pagehide', persistScrollPosition);
+    window.addEventListener('pagehide', closeMobileMenu);
+  })();
+</script><main class="min-w-0 px-4 pb-14 pt-20 sm:px-6 lg:ml-[272px] lg:h-full lg:overflow-y-auto lg:overscroll-contain lg:px-12 lg:pb-16 lg:pt-8 xl:px-16 2xl:px-20" data-docs-scroll-container=""><div class="mx-auto max-w-[1380px]"><div class="relative xl:pr-[288px]"><div class="mx-auto min-w-0 w-full max-w-[920px]" data-pagefind-body=""><header class="pb-4"><h1 class="mt-3 font-semibold tracking-tight text-zinc-950">托管配置</h1><p class="mt-4 max-w-[52rem] leading-8 text-zinc-600">管理员可以用统一的强制规则和默认设置，控制本地 Codex 的行为。</p></header><article class="doc-content mt-7 max-w-none"><p>企业管理员可以通过两种方式控制本地 Codex：</p>
+<ul>
+<li><strong>强制规则（Requirements）</strong>：管理员规定哪些值可以使用，用户不能覆盖</li>
+<li><strong>托管默认值（Managed defaults）</strong>：Codex 启动时先采用这些默认值。用户在当前会话中仍可修改，但下次启动时会重新回到管理员设定的默认值</li>
+</ul>
+<h2 id="admin-enforced-requirements-requirementstoml">管理员强制规则（<code>requirements.toml</code>）</h2>
+<p><code>requirements.toml</code> 用来限制安全相关设置，例如 <code>approval_policy</code>、<code>approvals_reviewer</code>、自动评审策略、<code>sandbox_mode</code>、Web 搜索模式、托管钩子，以及允许启用哪些 MCP server。Codex 在汇总配置时，例如读取 <code>config.toml</code>、<a href="/docs/configuration/config-file/config-advanced/">配置档案文件</a>或 CLI 覆盖参数，如果发现某个值和强制规则冲突，就会自动改用符合要求的值，并提示用户。</p>
+<p>如果你为 <code>mcp_servers</code> 配置了允许列表，只有当服务端的名称和身份信息都与允许项匹配时，Codex 才会启用它；否则会将其禁用。</p>
+<p>你也可以通过 <code>requirements.toml</code> 的 <code>[features]</code> 表固定<a href="/docs/configuration/config-file/config-basic/">功能开关（feature flags）</a>的取值。功能开关不一定都与安全相关，但如果企业希望统一行为，也可以在这里锁定。没有写出的键不会受到限制。</p>
+<p>完整键列表请参见<a href="/docs/configuration/config-file/config-reference/">配置参考中的 <code>requirements.toml</code></a>。</p>
+<h3 id="位置与优先级">位置与优先级</h3>
+<p>Codex 会按下面的顺序读取并应用强制规则；对同一个字段来说，越靠前优先级越高：</p>
+<ol>
+<li>云端托管强制规则（ChatGPT Business 或 Enterprise）</li>
+<li>通过 <code>com.openai.codex:requirements_toml_base64</code> 下发的 macOS 托管偏好设置（managed preferences，MDM）</li>
+<li>系统级 <code>requirements.toml</code>，例如 Unix 系统（包括 Linux / macOS）上的 <code>/etc/codex/requirements.toml</code>，或 Windows 上的 <code>%ProgramData%\OpenAI\Codex\requirements.toml</code></li>
+</ol>
+<p>不同来源会按字段合并。如果更高优先级的一层已经写了某个字段，即使它是空列表，后面的层也不能再改这个字段；但仍然可以补充那些尚未设置的字段。</p>
+<p>为了兼容旧版本，Codex 也会把旧式 <code>managed_config.toml</code> 里的 <code>approval_policy</code> 和 <code>sandbox_mode</code> 视为强制规则，也就是只允许这一个取值。</p>
+<h3 id="云端托管强制规则">云端托管强制规则</h3>
+<p>当用户用 ChatGPT 账号登录 Business 或 Enterprise 计划时，Codex 还可以从服务端获取管理员设置的强制规则。这一层与 <code>requirements.toml</code> 兼容，并会同时作用于 CLI、App 和 IDE 扩展。</p>
+<h4 id="配置云端托管强制规则">配置云端托管强制规则</h4>
+<p>进入 <a href="https://chatgpt.com/codex/settings/managed-configs">Codex 托管配置页面</a>。</p>
+<p>使用与 <code>requirements.toml</code> 相同的格式和字段，新建一份托管强制规则文件。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">enforce_residency = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"us"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allowed_approval_policies = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"on-request"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allowed_sandbox_modes = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"read-only"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"workspace-write"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">rules</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">prefix_rules = [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { pattern = [{ any_of = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"bash"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"sh"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"zsh"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] }], decision = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"prompt"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, justification = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Require explicit approval for shell entrypoints"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span></code></pre><p>保存后，新的托管强制规则会立即对命中的用户生效。更多示例请参见下方的 <a href="/docs/administration/enterprise/managed-configuration/">requirements.toml 示例</a>。</p>
+<h4 id="把强制规则分配给用户组">把强制规则分配给用户组</h4>
+<p>管理员可以为不同的用户组设置不同的托管强制规则，也可以配置一条默认规则作为兜底。</p>
+<p>如果某个用户同时匹配多条分组规则，只会采用<strong>第一条命中的规则</strong>。后面命中的规则不会再补齐前面没写的字段。</p>
+<p>例如，如果第一条命中的规则只设置了 <code>allowed_sandbox_modes = ["read-only"]</code>，而后面另一条命中的规则设置了 <code>allowed_approval_policies = ["on-request"]</code>，那么 Codex 只会应用第一条规则，不会再从后面的规则补充 <code>allowed_approval_policies</code>。</p>
+<h4 id="codex-如何在本地应用云端托管强制规则">Codex 如何在本地应用云端托管强制规则</h4>
+<p>当用户启动 Codex，并用 ChatGPT 登录 Business 或 Enterprise 计划时，Codex 会尽可能应用这层云端强制规则。它会先检查本地是否已有有效、未过期的缓存；如果有，就直接使用。如果缓存缺失、过期、损坏，或和当前登录身份不匹配，Codex 会尝试从服务端重新拉取，并在成功后写入新的签名缓存。</p>
+<p>如果本地没有可用缓存，同时拉取失败或超时，Codex 仍会继续运行，只是不会应用这一层云端强制规则。</p>
+<p>缓存处理完成后，这一层规则会按照上面介绍的优先级正常生效。</p>
+<h3 id="example-requirementstoml"><code>requirements.toml</code> 示例</h3>
+<p>下面这个示例会阻止使用 <code>--ask-for-approval never</code> 和 <code>--sandbox danger-full-access</code>，其中也包括 <code>--yolo</code>：</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allowed_approval_policies = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"untrusted"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"on-request"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allowed_sandbox_modes = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"read-only"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"workspace-write"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span></code></pre><h3 id="按主机覆盖沙箱强制规则">按主机覆盖沙箱强制规则</h3>
+<p>当同一份托管策略需要在不同主机上应用不同的沙箱要求时，可以使用 <code>[[remote_sandbox_config]]</code>。例如，你可以为笔记本保留更严格的默认值，同时允许匹配的 dev box 或 CI runner 使用 <code>workspace-write</code>。主机级条目当前只会覆盖 <code>allowed_sandbox_modes</code>：</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allowed_sandbox_modes = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"read-only"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">remote_sandbox_config</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">hostname_patterns = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"*.devbox.example.com"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"runner-??.ci.example.com"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allowed_sandbox_modes = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"read-only"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"workspace-write"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span></code></pre><p>Codex 会把每个 <code>hostname_patterns</code> 条目与尽力解析出的主机名比较。可用时优先使用完整限定域名，否则回退到本地主机名。匹配不区分大小写；<code>*</code> 匹配任意字符序列，<code>?</code> 匹配单个字符。</p>
+<p>在同一个 requirements 来源中，第一个命中的 <code>[[remote_sandbox_config]]</code> 条目生效。如果没有条目命中，Codex 会保留顶层的 <code>allowed_sandbox_modes</code>。host name 匹配只用于策略选择，不应把它当作已认证的设备证明。</p>
+<p>你也可以限制 Web 搜索模式：</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allowed_web_search_modes = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"cached"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] </span><span style="color:#6A737D;--shiki-dark:#6A737D"># "disabled" remains implicitly allowed</span></span></code></pre><p><code>allowed_web_search_modes = []</code> 表示只允许 <code>"disabled"</code>。</p>
+<p>例如，<code>allowed_web_search_modes = ["cached"]</code> 会禁止实时 Web 搜索，即使用户当前会话运行在 <code>danger-full-access</code> 模式下也一样。</p>
+<h3 id="configure-network-access-requirements">配置网络访问要求</h3>
+<p>当管理员需要集中定义网络访问要求时，可以在 <code>requirements.toml</code> 中使用 <code>[experimental_network]</code>。这些要求独立于用户侧的 <code>features.network_proxy</code> 开关：它们可以在不启用该功能开关的情况下配置 sandboxed networking，但如果当前激活的沙箱本身关闭了命令联网，它们不会授予命令网络访问。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">experimental_network.enabled = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">experimental_network.dangerously_allow_all_unix_sockets = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">experimental_network.allow_local_binding = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">experimental_network.allowed_domains = [</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">  "api.openai.com"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">  "*.example.com"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">experimental_network.denied_domains = [</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">  "blocked.example.com"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">  "*.exfil.example.com"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span></code></pre><p>只有在同时定义了管理员管理的 <code>allowed_domains</code>，并且希望这个 allowlist 成为唯一有效列表时，才使用 <code>experimental_network.managed_allowed_domains_only = true</code>。如果它为 <code>true</code> 但没有托管 allow 规则，用户新增的域名 allow 规则也不会继续生效。</p>
+<p>域名语法、本地 / 私有目的地规则、deny 优先于 allow 的行为，以及 DNS rebinding 限制，都与<a href="/docs/administration/agent-approvals-security/">智能体审批与安全</a>中描述的 sandboxed networking 行为一致。</p>
+<h3 id="pin-feature-flags">固定功能开关</h3>
+<p>你也可以为接收托管 <code>requirements.toml</code> 的用户固定<a href="/docs/configuration/config-file/config-basic/">功能开关（feature flags）</a>的取值：</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">features</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">personality = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">unified_exec = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># 需要时禁用特定 Codex 功能界面。</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">browser_use = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">in_app_browser = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">computer_use = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span></span></code></pre><p>这里要使用 <code>config.toml</code> 的 <code>[features]</code> 表中定义的标准键名。Codex 会确保最终生效的功能开关符合这些固定值，并拒绝把冲突设置写入 <code>config.toml</code> 或配置档案文件中的功能设置。</p>
+<p><a id="disable-codex-feature-surfaces"></a></p>
+<ul>
+<li><code>in_app_browser = false</code> 会禁用 app 内浏览器面板。</li>
+<li><code>browser_use = false</code> 会禁用 Browser Use（浏览器操作）和 Browser Agent 可用性。</li>
+<li><code>computer_use = false</code> 会禁用 Computer Use（计算机操作）可用性及相关安装或设置流程。</li>
+</ul>
+<p>如果省略这些键，策略会允许这些功能；实际可用性仍取决于普通客户端、平台和灰度发布条件。</p>
+<h3 id="configure-automatic-review-policy">配置自动评审策略</h3>
+<p>使用 <code>allowed_approvals_reviewers</code> 可以要求或允许自动评审。若设为 <code>["auto_review"]</code>，就表示必须使用自动评审；若同时包含 <code>"user"</code>，则用户仍可手动选择人工审批。</p>
+<p>使用 <code>guardian_policy_config</code> 可以覆盖自动评审策略里与租户相关的那一部分内容。Codex 仍会沿用内建的评审器模板和输出契约。托管的 <code>guardian_policy_config</code> 优先级高于本地的 <code>[auto_review].policy</code>。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allowed_approval_policies = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"on-request"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allowed_approvals_reviewers = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"auto_review"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">guardian_policy_config = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"""</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">## Environment Profile</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">- Trusted internal destinations include github.com/my-org, artifacts.example.com,</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">  and internal CI systems.</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">## Tenant Risk Taxonomy and Allow/Deny Rules</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">- Treat uploads to unapproved third-party file-sharing services as high risk.</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">- Deny actions that expose credentials or private source code to untrusted</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">  destinations.</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">"""</span></span></code></pre><h3 id="强制执行-deny-read-要求">强制执行 deny-read 要求</h3>
+<p>管理员可以通过 <code>[permissions.filesystem]</code> 拒绝读取精确路径或 glob 模式。用户不能用本地配置放宽这些强制要求。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">permissions</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">filesystem</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">deny_read = [</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">  # 值可以是绝对路径...</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">  "/**/*.env"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">  # ...也可以用 `~` 表示相对于 $HOME/%USERPROFILE%。</span></span>
+<span class="line"><span style="color:#032F62;--shiki-dark:#9ECBFF">  "~/.ssh"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D">  # 但不允许使用以 `./` 开头的相对路径。</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span></code></pre><p>配置了读取拒绝（deny-read）强制规则后，Codex 会将本地沙箱模式限定为 <code>read-only</code> 或 <code>workspace-write</code>，这样 Codex 才能真正执行这些限制。在原生 Windows 上，管理员下发的 <code>deny_read</code> 只适用于直接操作文件的工具；通过 shell 子进程发起的读取不会套用这项沙箱规则。</p>
+<h3 id="通过-requirements-强制执行托管钩子">通过 requirements 强制执行托管钩子</h3>
+<p>管理员也可以直接在 <code>requirements.toml</code> 中定义托管生命周期钩子。使用 <code>[hooks]</code> 编写钩子配置本身，并让 <code>managed_dir</code> 指向你的 MDM 或终端管理工具安装相关脚本的目录。</p>
+<p>若要即使用户在本地关闭 hooks 也强制执行托管 hooks，请把 <code>[features].hooks = true</code> 与 <code>[hooks]</code> 一起固定下来。若要跳过用户、项目、会话和插件 hooks，同时仍允许托管 hooks，请设置 <code>allow_managed_hooks_only = true</code>。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">allow_managed_hooks_only = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">features</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">hooks = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">true</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">hooks</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">managed_dir = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"/enterprise/hooks"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">windows_managed_dir = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">'C:\enterprise\hooks'</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">hooks</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">PreToolUse</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">matcher = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"^Bash$"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">hooks</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">PreToolUse</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">hooks</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">type = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"command"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">command = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"python3 /enterprise/hooks/pre_tool_use_policy.py"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">command_windows = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">'py -3 C:\enterprise\hooks\pre_tool_use_policy.py'</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">timeout = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">30</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">statusMessage = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Checking managed Bash command"</span></span></code></pre><p>注意事项：</p>
+<ul>
+<li>Codex 会强制执行 <code>requirements.toml</code> 中的钩子配置，但不会分发 <code>managed_dir</code> 中的脚本。</li>
+<li>请用 MDM 或设备管理方案单独分发这些脚本。</li>
+<li>托管钩子命令应引用配置的托管目录下的绝对脚本路径。</li>
+<li><code>allow_managed_hooks_only = true</code> 会跳过来自用户、项目、会话和插件来源的 hooks，但仍会加载 <code>requirements.toml</code> 和其他托管配置层里的托管 hooks。</li>
+</ul>
+<h3 id="通过-requirements-强制执行命令规则">通过 requirements 强制执行命令规则</h3>
+<p>管理员还可以在 <code>requirements.toml</code> 的 <code>[rules]</code> 表里写入更严格的命令规则。这些规则会和普通 <code>.rules</code> 文件一起生效，最后仍以限制更严格的结果为准。</p>
+<p>和 <code>.rules</code> 不同，这里的每条规则都必须显式写出 <code>decision</code>，而且只能是 <code>"prompt"</code> 或 <code>"forbidden"</code>，不能写 <code>"allow"</code>。</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">rules</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">prefix_rules = [</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { pattern = [{ token = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"rm"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }], decision = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"forbidden"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, justification = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Use git clean -fd instead."</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">  { pattern = [{ token = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"git"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }, { any_of = [</span><span style="color:#032F62;--shiki-dark:#9ECBFF">"push"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"commit"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">] }], decision = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"prompt"</span><span style="color:#24292E;--shiki-dark:#E1E4E8">, justification = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"Require review before mutating history."</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> },</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span></code></pre><p>如果你要限制用户可以启用哪些 MCP servers，可以为 <code>mcp_servers</code> 配置允许列表。对于 stdio server，要匹配 <code>command</code>；对于 streamable HTTP server，要匹配 <code>url</code>：</p>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">mcp_servers</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">docs</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">identity = { command = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"codex-mcp"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">mcp_servers</span><span style="color:#24292E;--shiki-dark:#E1E4E8">.</span><span style="color:#6F42C1;--shiki-dark:#B392F0">remote</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">identity = { url = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"https://example.com/mcp"</span><span style="color:#24292E;--shiki-dark:#E1E4E8"> }</span></span></code></pre><p>如果 <code>mcp_servers</code> 存在但为空，Codex 会禁用所有 MCP servers。</p>
+<h2 id="托管默认值managedconfigtoml">托管默认值（<code>managed_config.toml</code>）</h2>
+<p><code>managed_config.toml</code> 会覆盖在用户本地 <code>config.toml</code> 之上，也会压过 CLI 的 <code>--config</code> 参数，因此 Codex 每次启动时都会先从这些值开始。用户在当前会话中仍然可以改动这些设置，但下次启动时，Codex 会重新套用管理员给出的默认值。</p>
+<p>请确保这些托管默认值同时满足上面的强制规则；如果某个值不被允许，Codex 会直接拒绝。</p>
+<h3 id="优先级与叠加关系">优先级与叠加关系</h3>
+<p>Codex 会按以下顺序生成最终配置，越靠上的层优先级越高：</p>
+<ul>
+<li>macOS 托管偏好设置（MDM，最高优先级）</li>
+<li><code>managed_config.toml</code>（系统级或托管文件）</li>
+<li><code>config.toml</code>（用户基础配置）</li>
+</ul>
+<p>CLI <code>--config key=value</code> 只作用在基础层，但仍会被托管层覆盖。这意味着即使用户本地传了参数，每次启动仍会先回到托管默认值。</p>
+<p>云端托管强制规则影响的是强制规则层，不属于托管默认值层。它的优先级请参见上面的“管理员强制规则”。</p>
+<h3 id="位置">位置</h3>
+<ul>
+<li>Linux / macOS（Unix）：<code>/etc/codex/managed_config.toml</code></li>
+<li>Windows / 非 Unix：<code>~/.codex/managed_config.toml</code></li>
+</ul>
+<p>如果文件不存在，Codex 会跳过这一层托管配置。</p>
+<h3 id="macos-托管偏好设置mdm">macOS 托管偏好设置（MDM）</h3>
+<p>在 macOS 上，管理员可以通过设备配置描述文件下发 base64 编码的 TOML 内容：</p>
+<ul>
+<li>偏好设置域：<code>com.openai.codex</code></li>
+<li>键：<ul>
+<li><code>config_toml_base64</code>（托管默认值）</li>
+<li><code>requirements_toml_base64</code>（强制规则）</li>
+</ul>
+</li>
+</ul>
+<p>Codex 会把这些托管偏好设置按 TOML 解析。对于托管默认值 <code>config_toml_base64</code>，这一层拥有最高优先级。对于强制规则 <code>requirements_toml_base64</code>，优先级则遵循上文“云端托管强制规则”的顺序。</p>
+<p>在 <code>requirements_toml_base64</code> 里同样可以使用 <code>[features]</code> 表，这里也要使用标准键名。</p>
+<h3 id="mdm-设置流程">MDM 设置流程</h3>
+<p>Codex 兼容标准 macOS MDM 配置格式，所以你可以用 <code>Jamf Pro</code>、<code>Fleet</code> 或 <code>Kandji</code> 这类工具统一下发设置。一个轻量的部署流程通常如下：</p>
+<ol>
+<li>写好要下发的 TOML，再用 <code>base64</code> 编码，编码结果不要换行。</li>
+<li>把编码后的字符串放进 MDM 配置描述文件的 <code>com.openai.codex</code> 域，写到 <code>config_toml_base64</code>（托管默认值）或 <code>requirements_toml_base64</code>（强制规则）。</li>
+<li>下发配置描述文件后，让用户重启 Codex，并确认启动时显示的配置摘要已经反映管理员设置的值。</li>
+<li>如果需要撤销或调整策略，更新这份托管内容；CLI 会在下次启动时读取新的偏好设置。</li>
+</ol>
+<p>不要在这份内容里写入密钥或频繁变动的动态值。应把这份托管 TOML 当作正式受控配置来管理，和其他需要走变更流程的 MDM 设置保持同样的管理方式。</p>
+<h3 id="managedconfigtoml-示例"><code>managed_config.toml</code> 示例</h3>
+<pre class="shiki shiki-themes github-light github-dark" style="background-color:#fff;--shiki-dark-bg:#24292e;color:#24292e;--shiki-dark:#e1e4e8" data-language="toml"><code class="language-toml"><span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># 使用较保守的默认值</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">approval_policy = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"on-request"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">sandbox_mode    = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"workspace-write"</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">sandbox_workspace_write</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">network_access = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span><span style="color:#6A737D;--shiki-dark:#6A737D">             # 默认关闭网络，除非明确允许</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">[</span><span style="color:#6F42C1;--shiki-dark:#B392F0">otel</span><span style="color:#24292E;--shiki-dark:#E1E4E8">]</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">environment = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"prod"</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">exporter = </span><span style="color:#032F62;--shiki-dark:#9ECBFF">"otlp-http"</span><span style="color:#6A737D;--shiki-dark:#6A737D">            # 指向你的日志采集端</span></span>
+<span class="line"><span style="color:#24292E;--shiki-dark:#E1E4E8">log_user_prompt = </span><span style="color:#005CC5;--shiki-dark:#79B8FF">false</span><span style="color:#6A737D;--shiki-dark:#6A737D">            # 不记录用户提示词内容</span></span>
+<span class="line"><span style="color:#6A737D;--shiki-dark:#6A737D"># exporter 的详细配置写在对应的 exporter 表中；参见上方监控与遥测说明</span></span></code></pre><h3 id="推荐防护栏">推荐防护栏</h3>
+<ul>
+<li>对大多数用户，优先使用需要审批的 <code>workspace-write</code>；只有在受控容器环境中，才考虑开放完全访问。</li>
+<li>除非你的安全评估已经允许访问 OTel 采集端或工作流所需域名，否则应保持 <code>network_access = false</code>。</li>
+<li>可以用托管配置固定 OTel 的 <code>exporter</code>、<code>environment</code> 等设置，但除非策略明确允许保存提示词内容，否则应保持 <code>log_user_prompt = false</code>。</li>
+<li>应定期检查本地 <code>config.toml</code> 与托管策略之间的差异，及时发现配置漂移；最终应始终以托管层覆盖本地文件和命令行参数。</li>
+</ul>
+</article></div><aside class="hidden xl:fixed xl:right-6 xl:top-24 xl:block xl:w-[240px] 2xl:right-10" data-doc-outline-root="" data-astro-cid-qd4rauu3=""><div class="scrollbar-hidden xl:max-h-[calc(100vh-7rem)] xl:overflow-y-auto xl:overscroll-contain xl:pr-3" data-doc-outline-scroll="" data-astro-cid-qd4rauu3=""><p class="mb-4 text-sm font-semibold text-zinc-950" data-astro-cid-qd4rauu3="">本页内容</p><nav aria-label="本页内容" data-astro-cid-qd4rauu3=""><ul class="border-l border-zinc-200" data-astro-cid-qd4rauu3=""><li data-astro-cid-qd4rauu3=""><a href="/docs/administration/enterprise/managed-configuration/" data-doc-outline-link="" data-heading-id="admin-enforced-requirements-requirementstoml" class="relative block py-2.5 pl-6 pr-2 text-sm leading-8 text-zinc-400 transition hover:text-zinc-950" data-astro-cid-qd4rauu3="">管理员强制规则（requirements.toml）</a></li><li data-astro-cid-qd4rauu3=""><a href="/docs/administration/enterprise/managed-configuration/" data-doc-outline-link="" data-heading-id="托管默认值managedconfigtoml" class="relative block py-2.5 pl-6 pr-2 text-sm leading-8 text-zinc-400 transition hover:text-zinc-950" data-astro-cid-qd4rauu3="">托管默认值（managed_config.toml）</a></li></ul></nav></div></aside><script>
+  (() => {
+    const SCROLL_KEYS = new Set(['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' ']);
+
+    const setupOutline = () => {
+      const roots = Array.from(document.querySelectorAll('[data-doc-outline-root]'));
+
+      roots.forEach((root) => {
+        if (!(root instanceof HTMLElement) || root.dataset.docOutlineReady === 'true') return;
+
+        const parseHeadingAliases = (value) => {
+          if (!value) return [];
+
+          try {
+            const aliases = JSON.parse(value);
+            return Array.isArray(aliases) ? aliases.filter((alias) => typeof alias === 'string') : [];
+          } catch {
+            return [];
+          }
+        };
+
+        const entries = Array.from(root.querySelectorAll('[data-doc-outline-link]'))
+          .map((node) => {
+            if (!(node instanceof HTMLAnchorElement)) return null;
+            const id = node.dataset.headingId;
+            if (!id) return null;
+
+            const target = document.getElementById(id);
+            if (!(target instanceof HTMLElement)) return null;
+
+            return { aliases: parseHeadingAliases(node.dataset.headingAliases), id, link: node, target };
+          })
+          .filter((entry) => entry !== null);
+
+        if (entries.length === 0) return;
+
+        root.dataset.docOutlineReady = 'true';
+        const outlineScroller = root.querySelector('[data-doc-outline-scroll]');
+        let lockedActiveId = null;
+        let lastProgrammaticScrollAt = 0;
+        let lastUserScrollIntentAt = 0;
+        let activeId = null;
+
+        const ensureActiveLinkVisible = (link) => {
+          if (!(outlineScroller instanceof HTMLElement)) return;
+
+          const containerRect = outlineScroller.getBoundingClientRect();
+          const linkRect = link.getBoundingClientRect();
+          const padding = 12;
+
+          if (linkRect.top < containerRect.top + padding) {
+            outlineScroller.scrollTop -= containerRect.top + padding - linkRect.top;
+            return;
+          }
+
+          if (linkRect.bottom > containerRect.bottom - padding) {
+            outlineScroller.scrollTop += linkRect.bottom - (containerRect.bottom - padding);
+          }
+        };
+
+        const setActive = (id) => {
+          let activeLink = null;
+
+          entries.forEach((entry) => {
+            entry.link.dataset.active = entry.id === id ? 'true' : 'false';
+
+            if (entry.id === id) {
+              entry.link.setAttribute('aria-current', 'location');
+              activeLink = entry.link;
+              return;
+            }
+
+            entry.link.removeAttribute('aria-current');
+          });
+
+          if (activeLink && activeId !== id) {
+            ensureActiveLinkVisible(activeLink);
+          }
+
+          activeId = id;
+        };
+
+        const getScrollContainer = () => {
+          const element = document.querySelector('[data-docs-scroll-container]');
+          if (!(element instanceof HTMLElement)) return null;
+
+          const style = window.getComputedStyle(element);
+          const canScroll = /(auto|scroll)/.test(style.overflowY) && element.scrollHeight > element.clientHeight;
+          return canScroll ? element : null;
+        };
+
+        const getScrollHost = () => getScrollContainer() ?? window;
+
+        const getScrollTop = () => {
+          const scrollContainer = getScrollContainer();
+          return scrollContainer ? scrollContainer.scrollTop : window.scrollY;
+        };
+
+        const getMaxScrollTop = () => {
+          const scrollContainer = getScrollContainer();
+          if (scrollContainer) {
+            return Math.max(0, scrollContainer.scrollHeight - scrollContainer.clientHeight);
+          }
+
+          return Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+        };
+
+        const getHeadingOffsetTop = (target) => {
+          const scrollContainer = getScrollContainer();
+          if (scrollContainer) {
+            const containerRect = scrollContainer.getBoundingClientRect();
+            const targetRect = target.getBoundingClientRect();
+            return scrollContainer.scrollTop + targetRect.top - containerRect.top;
+          }
+
+          return window.scrollY + target.getBoundingClientRect().top;
+        };
+
+        const getCurrentActiveId = () => {
+          const activationTop = getScrollTop() + 140;
+          let activeId = entries[0].id;
+
+          entries.forEach((entry) => {
+            if (getHeadingOffsetTop(entry.target) <= activationTop) {
+              activeId = entry.id;
+            }
+          });
+
+          return activeId;
+        };
+
+        const jumpToTarget = (target) => {
+          const topOffset = 96;
+          const scrollContainer = getScrollContainer();
+          const nextTop = Math.min(
+            Math.max(0, getHeadingOffsetTop(target) - topOffset),
+            getMaxScrollTop(),
+          );
+
+          lastProgrammaticScrollAt = window.performance.now();
+
+          if (scrollContainer) {
+            scrollContainer.scrollTo({
+              top: nextTop,
+              behavior: 'auto',
+            });
+            return;
+          }
+
+          window.scrollTo({
+            top: nextTop,
+            behavior: 'auto',
+          });
+        };
+
+        const jumpToEntry = (entry) => {
+          jumpToTarget(entry.target);
+        };
+
+        const clearLockedActive = () => {
+          if (!lockedActiveId) return;
+          lockedActiveId = null;
+          setActive(getCurrentActiveId());
+        };
+
+        const syncActiveLink = () => {
+          if (lockedActiveId) {
+            setActive(lockedActiveId);
+            return;
+          }
+
+          setActive(getCurrentActiveId());
+        };
+
+        const markUserScrollIntent = () => {
+          lastUserScrollIntentAt = window.performance.now();
+        };
+
+        const handleScroll = () => {
+          if (
+            lockedActiveId &&
+            lastUserScrollIntentAt > lastProgrammaticScrollAt &&
+            window.performance.now() - lastUserScrollIntentAt < 400
+          ) {
+            clearLockedActive();
+            return;
+          }
+
+          syncActiveLink();
+        };
+
+        entries.forEach((entry) => {
+          entry.link.addEventListener('click', (event) => {
+            event.preventDefault();
+            lockedActiveId = entry.id;
+            jumpToEntry(entry);
+
+            if (window.location.hash !== `#${entry.id}`) {
+              window.history.replaceState(null, '', `#${entry.id}`);
+            }
+
+            setActive(entry.id);
+          });
+        });
+
+        const scrollHost = getScrollHost();
+        scrollHost.addEventListener('scroll', handleScroll, { passive: true });
+        scrollHost.addEventListener('wheel', markUserScrollIntent, { passive: true });
+        scrollHost.addEventListener('touchmove', markUserScrollIntent, { passive: true });
+        scrollHost.addEventListener('pointerdown', markUserScrollIntent, { passive: true });
+        window.addEventListener('keydown', (event) => {
+          if (SCROLL_KEYS.has(event.key)) {
+            markUserScrollIntent();
+          }
+        });
+
+        const findEntryById = (id) => entries.find((entry) => entry.id === id || entry.aliases.includes(id));
+        const hashId = window.location.hash ? decodeURIComponent(window.location.hash.slice(1)) : '';
+        const hashEntry = hashId ? findEntryById(hashId) : null;
+        const hashTarget = hashId ? document.getElementById(hashId) : null;
+
+        const runInitialHashScroll = () => {
+          if (lastUserScrollIntentAt > lastProgrammaticScrollAt) return;
+
+          if (hashEntry) {
+            lockedActiveId = hashEntry.id;
+            jumpToEntry(hashEntry);
+            setActive(hashEntry.id);
+            return;
+          }
+
+          if (hashTarget instanceof HTMLElement) {
+            jumpToTarget(hashTarget);
+            syncActiveLink();
+          }
+        };
+
+        if (hashEntry || hashTarget instanceof HTMLElement) {
+          runInitialHashScroll();
+          window.requestAnimationFrame(runInitialHashScroll);
+          window.setTimeout(runInitialHashScroll, 120);
+          window.addEventListener('load', runInitialHashScroll, { once: true });
+          return;
+        }
+
+        syncActiveLink();
+      });
+    };
+
+    setupOutline();
+    document.addEventListener('astro:page-load', setupOutline);
+  })();
+</script></div></div></main></div> </div> <vercel-analytics data-props="{}" data-params="{&quot;slug&quot;:&quot;administration/enterprise/managed-configuration&quot;}" data-pathname="/administration/enterprise/managed-configuration/"></vercel-analytics> <script type="module">var v=()=>{window.va||(window.va=function(...i){window.vaq||(window.vaq=[]),window.vaq.push(i)})},w="@vercel/analytics",h="2.0.1";function u(){return typeof window<"u"}function p(){try{const e="production"}catch{}return"production"}function y(e="auto"){if(e==="auto"){window.vam=p();return}window.vam=e}function m(){return(u()?window.vam:p())||"production"}function d(){return m()==="development"}function b(e,i){if(!e||!i)return e;let n=e;try{const t=Object.entries(i);for(const[r,s]of t)if(!Array.isArray(s)){const o=f(s);o.test(n)&&(n=n.replace(o,`/[${r}]`))}for(const[r,s]of t)if(Array.isArray(s)){const o=f(s.join("/"));o.test(n)&&(n=n.replace(o,`/[...${r}]`))}return n}catch{return e}}function f(e){return new RegExp(`/${g(e)}(?=[/?#]|$)`)}function g(e){return e.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")}function E(e){return e.scriptSrc?a(e.scriptSrc):d()?"https://va.vercel-scripts.com/v1/script.debug.js":e.basePath?a(`${e.basePath}/insights/script.js`):"/_vercel/insights/script.js"}function S(e,i){var n;let t=e;if(i)try{t={...(n=JSON.parse(i))==null?void 0:n.analytics,...e}}catch{}y(t.mode);const r={sdkn:w+(t.framework?`/${t.framework}`:""),sdkv:h};return t.disableAutoTrack&&(r.disableAutoTrack="1"),t.viewEndpoint&&(r.viewEndpoint=a(t.viewEndpoint)),t.eventEndpoint&&(r.eventEndpoint=a(t.eventEndpoint)),t.sessionEndpoint&&(r.sessionEndpoint=a(t.sessionEndpoint)),d()&&t.debug===!1&&(r.debug="false"),t.dsn&&(r.dsn=t.dsn),t.endpoint?r.endpoint=t.endpoint:t.basePath&&(r.endpoint=a(`${t.basePath}/insights`)),{beforeSend:t.beforeSend,src:E(t),dataset:r}}function a(e){return e.startsWith("http://")||e.startsWith("https://")||e.startsWith("/")?e:`/${e}`}function k(e={debug:!0},i){var n;if(!u())return;const{beforeSend:t,src:r,dataset:s}=S(e,i);if(v(),t&&((n=window.va)==null||n.call(window,"beforeSend",t)),document.head.querySelector(`script[src*="${r}"]`))return;const o=document.createElement("script");o.src=r;for(const[c,l]of Object.entries(s))o.dataset[c]=l;o.defer=!0,o.onerror=()=>{const c=d()?"Please check if any ad blockers are enabled and try again.":"Be sure to enable Web Analytics for your project and deploy again. See https://vercel.com/docs/analytics/quickstart for more information.";console.log(`[Vercel Web Analytics] Failed to load script from ${r}. ${c}`)},document.head.appendChild(o)}function $({route:e,path:i}){var n;(n=window.va)==null||n.call(window,"pageview",{route:e,path:i})}function A(){try{return}catch{}}function j(){try{return'{"analytics":{"scriptSrc":"f228888833c2cf15/script.js","viewEndpoint":"f228888833c2cf15/view","eventEndpoint":"f228888833c2cf15/event","sessionEndpoint":"f228888833c2cf15/session"},"speedInsights":{"scriptSrc":"491f34f9af10ea80/script.js","endpoint":"491f34f9af10ea80/vitals"}}'}catch{}}customElements.define("vercel-analytics",class extends HTMLElement{constructor(){super();try{const i=JSON.parse(this.dataset.props??"{}"),n=JSON.parse(this.dataset.params??"{}");k({...i,disableAutoTrack:!0,framework:"astro",basePath:A(),beforeSend:window.webAnalyticsBeforeSend},j());const t=this.dataset.pathname;$({route:b(t??"",n),path:t})}catch(i){throw new Error(`Failed to parse WebAnalytics properties: ${i}`)}}});</script> <script>
+      (() => {
+        const syncThemedPictures = () => {
+          const theme = document.documentElement.dataset.theme || 'light';
+
+          document.querySelectorAll('picture').forEach((picture) => {
+            const image = picture.querySelector('img');
+            const darkSource = picture.querySelector('source[media*="prefers-color-scheme"][media*="dark"]');
+            if (!(image instanceof HTMLImageElement) || !(darkSource instanceof HTMLSourceElement)) return;
+
+            if (!image.dataset.docsLightSrc) {
+              image.dataset.docsLightSrc = image.getAttribute('src') || '';
+            }
+
+            const darkSrcset = darkSource.getAttribute('srcset') || '';
+            const darkSrc = darkSrcset.split(',')[0]?.trim().split(/\s+/)[0];
+            if (theme === 'dark' && darkSrc) {
+              image.setAttribute('src', darkSrc);
+              return;
+            }
+
+            if (image.dataset.docsLightSrc) {
+              image.setAttribute('src', image.dataset.docsLightSrc);
+            }
+          });
+        };
+
+        syncThemedPictures();
+        window.addEventListener('codex-docs-theme-change', syncThemedPictures);
+        document.addEventListener('astro:page-load', syncThemedPictures);
+      })();
+
+      (() => {
+        const roots = Array.from(document.querySelectorAll('main pre'));
+        if (roots.length === 0) return;
+
+        const fallbackCopy = (text) => {
+          const textarea = document.createElement('textarea');
+          textarea.value = text;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          /** @type {{ execCommand?: (command: string) => boolean }} */ (document).execCommand?.('copy');
+          textarea.remove();
+        };
+
+        const copyText = async (text) => {
+          if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(text);
+            return;
+          }
+
+          fallbackCopy(text);
+        };
+
+        roots.forEach((pre) => {
+          if (!(pre instanceof HTMLElement) || pre.dataset.copyReady === 'true') return;
+
+          const code = pre.querySelector('code');
+          const text = (code?.textContent ?? pre.textContent ?? '').replace(/\n$/, '');
+          if (!text.trim()) return;
+
+          pre.dataset.copyReady = 'true';
+          pre.classList.add('code-copy-host', 'has-copy-button');
+
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'code-copy-button';
+          button.dataset.state = 'idle';
+          button.setAttribute('aria-label', '复制代码');
+          button.setAttribute('title', '复制代码');
+
+          button.addEventListener('click', async () => {
+            try {
+              await copyText(text);
+              button.dataset.state = 'copied';
+              button.setAttribute('aria-label', '已复制');
+              button.setAttribute('title', '已复制');
+
+              window.setTimeout(() => {
+                button.dataset.state = 'idle';
+                button.setAttribute('aria-label', '复制代码');
+                button.setAttribute('title', '复制代码');
+              }, 1600);
+            } catch {
+              button.dataset.state = 'error';
+              button.setAttribute('aria-label', '复制失败');
+              button.setAttribute('title', '复制失败');
+
+              window.setTimeout(() => {
+                button.dataset.state = 'idle';
+                button.setAttribute('aria-label', '复制代码');
+                button.setAttribute('title', '复制代码');
+              }, 1600);
+            }
+          });
+
+          pre.prepend(button);
+        });
+      })();
+
+      (() => {
+        const roots = Array.from(document.querySelectorAll('[data-doc-tabs]'));
+        if (roots.length === 0) return;
+
+        roots.forEach((root) => {
+          if (!(root instanceof HTMLElement) || root.dataset.docTabsReady === 'true') return;
+
+          const buttons = Array.from(root.querySelectorAll('[data-doc-tab]')).filter(
+            (node) => node instanceof HTMLElement,
+          );
+          const panels = Array.from(root.querySelectorAll('[data-doc-panel]')).filter(
+            (node) => node instanceof HTMLElement,
+          );
+
+          if (buttons.length === 0 || panels.length === 0) return;
+
+          root.dataset.docTabsReady = 'true';
+
+          const keys = buttons
+            .map((button) => button.getAttribute('data-doc-tab'))
+            .filter((key) => Boolean(key));
+
+          const apply = (nextKey) => {
+            buttons.forEach((button) => {
+              const isActive = button.getAttribute('data-doc-tab') === nextKey;
+              button.setAttribute('data-active', isActive ? 'true' : 'false');
+              button.setAttribute('aria-selected', isActive ? 'true' : 'false');
+              button.tabIndex = isActive ? 0 : -1;
+            });
+
+            panels.forEach((panel) => {
+              panel.hidden = panel.getAttribute('data-doc-panel') !== nextKey;
+            });
+          };
+
+          const focusAt = (index) => {
+            const target = buttons[index];
+            if (!target) return;
+
+            target.focus();
+            const nextKey = target.getAttribute('data-doc-tab');
+            if (!nextKey) return;
+            apply(nextKey);
+          };
+
+          buttons.forEach((button, index) => {
+            button.addEventListener('click', () => {
+              const nextKey = button.getAttribute('data-doc-tab');
+              if (!nextKey) return;
+              apply(nextKey);
+            });
+
+            button.addEventListener('keydown', (event) => {
+              if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                focusAt((index + 1) % buttons.length);
+              } else if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                focusAt((index - 1 + buttons.length) % buttons.length);
+              } else if (event.key === 'Home') {
+                event.preventDefault();
+                focusAt(0);
+              } else if (event.key === 'End') {
+                event.preventDefault();
+                focusAt(buttons.length - 1);
+              }
+            });
+          });
+
+          const initialKey =
+            buttons.find((button) => button.getAttribute('aria-selected') === 'true')?.getAttribute('data-doc-tab') ??
+            keys[0];
+
+          if (initialKey) {
+            apply(initialKey);
+          }
+        });
+      })();
+    </script>  </body></html>

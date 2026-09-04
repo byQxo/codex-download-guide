@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codex客户端下载和接入第三方中转API使用GPT-5.5详细图文教程 | Codex下载</title>
+  <meta name="description" content="详细演示 Codex 客户端下载、第三方中转 API Key 创建、auth.json 与 config.toml 配置，并接入 GPT-5.5 模型。">
+  <meta name="keywords" content="Codex教程,Codex配置GPT-5.5,Codex接入OpenAI接口,Codex第三方API配置,GPT-5.5使用教程,Codex API Key配置,Codex客户端设置,codex最新版,codex pet,codex客户端,codex下载,codex微软商店,codex官方版">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/articles/codex-client-third-party-api-gpt-55-guide/">
+  <meta name="author" content="download.yudidc.cc">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="article:published_time" content="2026-06-01">
+  <meta property="article:modified_time" content="2026-06-01">
+  <meta name="theme-color" content="#1f4dff">
+  <link rel="canonical" href="/articles/codex-client-third-party-api-gpt-55-guide/">
+  <link rel="alternate" hreflang="zh-CN" href="/articles/codex-client-third-party-api-gpt-55-guide/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Codex下载">
+  <meta property="og:title" content="Codex客户端下载和接入第三方中转API使用GPT-5.5详细图文教程">
+  <meta property="og:description" content="详细演示 Codex 客户端下载、第三方中转 API Key 创建、auth.json 与 config.toml 配置，并接入 GPT-5.5 模型。">
+  <meta property="og:url" content="https://download.yudidc.cc/articles/codex-client-third-party-api-gpt-55-guide/">
+  <meta property="og:image" content="https://download.yudidc.cc/logo.png">
+  <meta property="og:image:alt" content="Codex客户端下载和接入第三方中转API使用GPT-5.5详细图文教程">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Codex客户端下载和接入第三方中转API使用GPT-5.5详细图文教程">
+  <meta name="twitter:description" content="详细演示 Codex 客户端下载、第三方中转 API Key 创建、auth.json 与 config.toml 配置，并接入 GPT-5.5 模型。">
+  <meta name="twitter:image" content="https://download.yudidc.cc/logo.png">
+  <link rel="stylesheet" href="/mirror/assets/article-460d5ca1bf9a.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://download.yudidc.cc/#website",
+      "url": "https://download.yudidc.cc/",
+      "name": "Codex下载",
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://download.yudidc.cc/articles/codex-client-third-party-api-gpt-55-guide/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Codex 下载首页",
+          "item": "https://download.yudidc.cc/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "文章中心",
+          "item": "https://download.yudidc.cc/articles/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Codex客户端下载和接入第三方中转API使用GPT-5.5详细图文教程",
+          "item": "https://download.yudidc.cc/articles/codex-client-third-party-api-gpt-55-guide/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://download.yudidc.cc/articles/codex-client-third-party-api-gpt-55-guide/#article",
+      "headline": "Codex客户端下载和接入第三方中转API使用GPT-5.5详细图文教程",
+      "description": "详细演示 Codex 客户端下载、第三方中转 API Key 创建、auth.json 与 config.toml 配置，并接入 GPT-5.5 模型。",
+      "url": "https://download.yudidc.cc/articles/codex-client-third-party-api-gpt-55-guide/",
+      "mainEntityOfPage": "https://download.yudidc.cc/articles/codex-client-third-party-api-gpt-55-guide/",
+      "image": "https://download.yudidc.cc/logo.png",
+      "datePublished": "2026-06-01",
+      "dateModified": "2026-06-01",
+      "inLanguage": "zh-CN",
+      "author": {
+        "@type": "Organization",
+        "name": "download.yudidc.cc"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Codex下载",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://download.yudidc.cc/logo.png"
+        }
+      },
+      "keywords": [
+        "Codex教程",
+        "Codex配置GPT-5.5",
+        "Codex接入OpenAI接口",
+        "Codex第三方API配置",
+        "GPT-5.5使用教程",
+        "Codex API Key配置",
+        "Codex客户端设置"
+      ],
+      "articleSection": "Codex 使用指南"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://download.yudidc.cc/articles/codex-client-third-party-api-gpt-55-guide/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "提示 API Key 无效",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "检查： 是否存在："
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "提示连接失败",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "检查： 是否填写正确。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "修改后不生效",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "尝试： 部分版本不会实时读取配置。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ad6645cd757bc1c6dbef1c4a9ca73f7a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/articles/">
+          <span class="brand-mark"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+          <span class="brand-name">郁的 Codex 下载指南</span>
+        </a>
+        <nav class="nav-links" aria-label="主导航">
+          <a class="nav-link" href="/articles/">首页</a>
+          <a class="site-nav-link hidden px-3 py-2 text-base font-bold tracking-[-0.02em] text-black/70 transition duration-200 hover:-translate-y-px sm:inline-flex" href="/relay-guide/">中转站搭建</a><a class="nav-link is-active" href="/articles/">文章</a>
+          <a class="nav-link" href="/articles/cli/">CLI</a>
+          <a class="nav-link" href="/articles/windows/">Windows</a>
+          <a class="nav-link" href="/articles/mac/">macOS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container article-page">
+      <section>
+        <article class="article-panel" itemscope="" itemtype="https://schema.org/Article">
+          <meta itemprop="headline" content="Codex客户端下载和接入第三方中转API使用GPT-5.5详细图文教程">
+          <meta itemprop="datePublished" content="2026-06-01">
+          <meta itemprop="dateModified" content="2026-06-01">
+          <meta itemprop="author" content="download.yudidc.cc">
+          <h1 class="article-title">Codex客户端下载和接入第三方中转API使用GPT-5.5详细图文教程</h1>
+          <div class="article-meta">
+            <span class="article-badge">原创</span>
+            <span>已于 2026-06-01 15:38:14 修改</span>
+            <span class="meta-separator">·</span>
+            <span>3.3w 阅读</span>
+            <span class="meta-separator">·</span>
+            <span>42</span>
+            <span class="meta-separator">·</span>
+            <span>35</span>
+            <span class="meta-separator">·</span>
+            <span>CC 4.0 BY-SA版权</span>
+          </div>
+          <div class="article-tags">
+            <span>文章标签：</span>
+            <a href="/articles/">#Codex教程</a>
+            <a href="/articles/">#Codex配置GPT-5.5</a>
+            <a href="/articles/">#Codex接入OpenAI接口</a>
+            <a href="/articles/">#Codex第三方API配置</a>
+            <a href="/articles/">#GPT-5.5使用教程</a>
+            <a href="/articles/">#Codex API Key配置</a>
+            <a href="/articles/">#Codex客户端设置</a>
+          </div>
+          <div class="post-content" itemprop="articleBody">
+            <p>最近在体验 Codex 客户端的时候，发现不少朋友下载安装完成后，不知道如何配置第三方 API 使用 GPT-5.5 模型。</p>
+            <p>实际上整个过程并不复杂，只需要下载 Codex 客户端、创建 API Key、修改两个配置文件即可完成接入。</p>
+            <p>本文详细记录完整配置流程，新手也可以快速完成。第三方平台和模型可用性可能会变化，实际以平台页面实时显示为准。</p>
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/cf8dc0b308644c5e951b8516006e3768.png" alt="Codex 客户端配置 GPT-5.5 教程" loading="lazy"></figure>
+            <h2 id="一-下载并安装-codex-客户端">一、下载并安装 Codex 客户端</h2>
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/57b7010960884b599c5996e51a25d323.png" alt="下载 Codex 客户端" loading="lazy"></figure>
+            <p>首先进入官网下载最新版本客户端：</p>
+            <pre><code class="language-text">https://download.yudidc.cloud/</code></pre>
+            <p>下载对应系统版本后完成安装。</p>
+            <p>安装成功后打开一次 Codex，确保程序已经初始化配置目录。</p>
+            <h2 id="二-获取-api-key">二、获取 API Key</h2>
+            <p>接下来需要获取可用于调用 GPT-5.5 的 API Key。</p>
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/1b5d193f02ba42499f334cda44373cd1.png" alt="获取 API Key" loading="lazy"></figure>
+            <p>进入：</p>
+            <pre><code class="language-text">https://api.yudidc.cc/sign-in?redirect=%2Fdashboard</code></pre>
+            <p>注册并登录成功后进入：</p>
+            <pre><code class="language-text">https://api.yudidc.cc/keys</code></pre>
+            <p>可以看到 API 密钥管理页面。</p>
+            <h3 id="创建-api-key">创建 API Key</h3>
+            <p>点击右上角：</p>
+            <pre><code class="language-text">创建API密钥</code></pre>
+            <p>填写内容：</p>
+            <div class="table-wrap"><table><thead><tr><th scope="col">配置项</th><th scope="col">内容</th></tr></thead><tbody><tr><td>名称</td><td>随便填写</td></tr><tr><td>分组</td><td>openai</td></tr></tbody></table></div>
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/da55b43f2e45472188567d072e998db0.png" alt="创建 API 密钥" loading="lazy"></figure>
+            <p>当前 OpenAI 分组倍率较低，可以根据平台实时显示情况选择。</p>
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/fa6b72f4a91b47d48d2db8211cb05ccb.png" alt="选择 OpenAI 分组" loading="lazy"></figure>
+            <p>填写完成后点击：</p>
+            <pre><code class="language-text">保存</code></pre>
+            <p>创建成功后点击 Key 旁边的：</p>
+            <pre><code class="language-text">复制</code></pre>
+            <p>把 API Key 保存下来，后面需要使用。</p>
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/ffe82a827504474e9676b43203553f17.png" alt="复制 API Key" loading="lazy"></figure>
+            <h2 id="三-找到-codex-配置目录">三、找到 Codex 配置目录</h2>
+            <h3 id="windows">Windows</h3>
+            <p>按下：</p>
+            <pre><code class="language-text">Win + R</code></pre>
+            <p>输入：</p>
+            <pre><code class="language-text">%userprofile%\.codex</code></pre>
+            <p>回车即可打开配置目录。</p>
+            <h3 id="macos">macOS</h3>
+            <p>打开终端输入：</p>
+            <pre><code class="language-bash">~/.codex</code></pre>
+            <p>或者前往：</p>
+            <pre><code class="language-bash">/Users/用户名/.codex</code></pre>
+            <h2 id="四-修改-auth-json">四、修改 auth.json</h2>
+            <p>配置目录中找到：</p>
+            <pre><code class="language-text">auth.json</code></pre>
+            <p>这是 Codex 保存认证信息的文件。</p>
+            <h3 id="特别注意">特别注意</h3>
+            <p>这个文件只能有一个字段。</p>
+            <p>格式必须严格保持一致。</p>
+            <p>正确内容如下：</p>
+            <pre><code class="language-json">{
+              "OPENAI_API_KEY": "替换成你自己的APIKey"
+            }</code></pre>
+            <p>例如：</p>
+            <pre><code class="language-json">{
+              "OPENAI_API_KEY": "sk-xxxxxxxxxxxxxxxxxxxxxxxx"
+            }</code></pre>
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/9412670ef8f040eca781fc6a97964711.png" alt="修改 auth.json" loading="lazy"></figure>
+            <h3 id="常见错误">常见错误</h3>
+            <p>错误示例：</p>
+            <pre><code class="language-json">{
+              "OPENAI_API_KEY": "sk-xxx",
+              "MODEL": "gpt-5.5"
+            }</code></pre>
+            <p>增加其他字段可能导致认证失败。</p>
+            <h2 id="五-修改-config-toml">五、修改 config.toml</h2>
+            <p>接下来打开：</p>
+            <pre><code class="language-text">config.toml</code></pre>
+            <p>将内容修改为：</p>
+            <pre><code class="language-toml">model_provider = "mycodex"
+            personality = "pragmatic"
+            model = "gpt-5.5"
+            model_reasoning_effort = "medium"
+            preferred_auth_method = "apikey"
+
+            [model_providers.mycodex]
+            name = "mycodex"
+            base_url = "https://api.yudidc.cc/v1"
+            wire_api = "responses"</code></pre>
+            <p>如图所示：</p>
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/9a6286e2c40941dca7c2c3c8f70c6900.png" alt="修改 config.toml" loading="lazy"></figure>
+            <h2 id="六-配置参数说明">六、配置参数说明</h2>
+            <h3 id="model-provider">model_provider</h3>
+            <p>指定模型提供商：</p>
+            <pre><code class="language-toml">model_provider = "mycodex"</code></pre>
+            <p>后面配置块名称必须保持一致：</p>
+            <pre><code class="language-toml">[model_providers.mycodex]</code></pre>
+            <h3 id="model">model</h3>
+            <p>指定使用模型：</p>
+            <pre><code class="language-toml">model = "gpt-5.5"</code></pre>
+            <p>后续如果平台支持其它模型，也可以在这里切换。</p>
+            <h3 id="model-reasoning-effort">model_reasoning_effort</h3>
+            <p>推理强度：</p>
+            <pre><code class="language-toml">model_reasoning_effort = "medium"</code></pre>
+            <p>可选：</p>
+            <pre><code class="language-toml">low
+            medium
+            high</code></pre>
+            <p>一般使用：</p>
+            <pre><code class="language-toml">medium</code></pre>
+            <p>即可兼顾速度与效果。</p>
+            <h3 id="preferred-auth-method">preferred_auth_method</h3>
+            <p>认证方式：</p>
+            <pre><code class="language-toml">preferred_auth_method = "apikey"</code></pre>
+            <p>表示使用 API Key 认证。</p>
+            <h3 id="base-url">base_url</h3>
+            <p>接口地址：</p>
+            <pre><code class="language-toml">base_url = "https://api.yudidc.cc/v1"</code></pre>
+            <p>所有请求都会发送到该地址。</p>
+            <h3 id="wire-api">wire_api</h3>
+            <p>接口协议：</p>
+            <pre><code class="language-toml">wire_api = "responses"</code></pre>
+            <p>Codex 推荐使用 Responses API。</p>
+            <h2 id="七-最终配置示例">七、最终配置示例</h2>
+            <h3 id="auth-json">auth.json</h3>
+            <pre><code class="language-json">{
+              "OPENAI_API_KEY": "sk-xxxxxxxxxxxxxxxx"
+            }</code></pre>
+            <h3 id="config-toml">config.toml</h3>
+            <pre><code class="language-toml">model_provider = "mycodex"
+            personality = "pragmatic"
+            model = "gpt-5.5"
+            model_reasoning_effort = "medium"
+            preferred_auth_method = "apikey"
+
+            [model_providers.mycodex]
+            name = "mycodex"
+            base_url = "https://api.yudidc.cc/v1"
+            wire_api = "responses"</code></pre>
+            <h2 id="八-重启-codex">八、重启 Codex</h2>
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/2a32bbcd5e714d4096d7fd95abc5bb9c.png" alt="重启 Codex 客户端" loading="lazy"></figure>
+            <p>完成配置后：</p>
+            <ol><li>保存 auth.json</li><li>保存 config.toml</li><li>关闭 Codex</li><li>重新打开 Codex</li></ol>
+            <p>如果配置正确，此时已经可以正常调用 GPT-5.5 模型进行对话。</p>
+            <h2 id="九-常见问题">九、常见问题</h2>
+            <h3 id="提示-api-key-无效">提示 API Key 无效</h3>
+            <p>检查：</p>
+            <pre><code class="language-json">{
+              "OPENAI_API_KEY": "你的Key"
+            }</code></pre>
+            <p>是否存在：</p>
+            <ul><li>多余字段</li><li>多余逗号</li><li>引号错误</li></ul>
+            <h3 id="提示连接失败">提示连接失败</h3>
+            <p>检查：</p>
+            <pre><code class="language-toml">base_url = "https://api.yudidc.cc/v1"</code></pre>
+            <p>是否填写正确。</p>
+            <h3 id="修改后不生效">修改后不生效</h3>
+            <p>尝试：</p>
+            <pre><code class="language-text">关闭Codex
+            重新启动</code></pre>
+            <p>部分版本不会实时读取配置。</p>
+            <h2 id="总结">总结</h2>
+            <p>整个配置过程主要分为三步：</p>
+            <div class="table-wrap"><table><thead><tr><th scope="col">步骤</th><th scope="col">操作</th></tr></thead><tbody><tr><td>第一步</td><td>下载并安装 Codex</td></tr><tr><td>第二步</td><td>创建 API Key</td></tr><tr><td>第三步</td><td>修改 auth.json 与 config.toml</td></tr></tbody></table></div>
+            <p>其中最容易出问题的地方是 <code>auth.json</code> 格式错误，以及 <code>config.toml</code> 中的模型提供商配置不一致。</p>
+            <p>按照本文配置完成后，即可让 Codex 客户端通过第三方 OpenAI 兼容接口接入 GPT-5.5 模型，实现代码生成、问题解答、项目开发辅助等功能。</p>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div>发布时间：2026-06-01，最近更新：2026-06-01。</div>
+        <div class="footer-links">
+          <a href="/articles/">首页</a>
+          <a href="/articles/">文章中心</a>
+          <a href="/articles/cli/">CLI</a>
+          <a href="/articles/windows/">Windows</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+
+</body></html>

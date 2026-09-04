@@ -1,0 +1,403 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codex接入GPT-5.5教程：使用CC-Switch配置第三方API | Codex下载</title>
+  <meta name="description" content="使用 CC-Switch 为 Codex 配置第三方 OpenAI 兼容接口，从注册 API 平台、创建 API Key 到切换 api.yudidc.cc 渠道并验证 GPT-5.5 调用。">
+  <meta name="keywords" content="Codex教程,GPT-5.5配置教程,Codex接入第三方API,CC-Switch使用教程,OpenAI兼容接口配置,GPT-5.5模型调用,AI编程工具配置,Codex客户端设置,codex最新版,codex pet,codex客户端,codex下载,codex微软商店,codex官方版">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/articles/codex-cc-switch-gpt-55-third-party-api-guide/">
+  <meta name="author" content="download.yudidc.cc">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="article:published_time" content="2026-06-06">
+  <meta property="article:modified_time" content="2026-06-06">
+  <meta name="theme-color" content="#1f4dff">
+  <link rel="canonical" href="/articles/codex-cc-switch-gpt-55-third-party-api-guide/">
+  <link rel="alternate" hreflang="zh-CN" href="/articles/codex-cc-switch-gpt-55-third-party-api-guide/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Codex下载">
+  <meta property="og:title" content="Codex接入GPT-5.5教程：使用CC-Switch配置第三方API">
+  <meta property="og:description" content="使用 CC-Switch 为 Codex 配置第三方 OpenAI 兼容接口，从注册 API 平台、创建 API Key 到切换 api.yudidc.cc 渠道并验证 GPT-5.5 调用。">
+  <meta property="og:url" content="https://download.yudidc.cc/articles/codex-cc-switch-gpt-55-third-party-api-guide/">
+  <meta property="og:image" content="https://download.yudidc.cc/logo.png">
+  <meta property="og:image:alt" content="Codex接入GPT-5.5教程：使用CC-Switch配置第三方API">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Codex接入GPT-5.5教程：使用CC-Switch配置第三方API">
+  <meta name="twitter:description" content="使用 CC-Switch 为 Codex 配置第三方 OpenAI 兼容接口，从注册 API 平台、创建 API Key 到切换 api.yudidc.cc 渠道并验证 GPT-5.5 调用。">
+  <meta name="twitter:image" content="https://download.yudidc.cc/logo.png">
+  <link rel="stylesheet" href="/mirror/assets/article-460d5ca1bf9a.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://download.yudidc.cc/#website",
+      "url": "https://download.yudidc.cc/",
+      "name": "Codex下载",
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://download.yudidc.cc/articles/codex-cc-switch-gpt-55-third-party-api-guide/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Codex 下载首页",
+          "item": "https://download.yudidc.cc/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "文章中心",
+          "item": "https://download.yudidc.cc/articles/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Codex接入GPT-5.5教程：使用CC-Switch配置第三方API",
+          "item": "https://download.yudidc.cc/articles/codex-cc-switch-gpt-55-third-party-api-guide/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://download.yudidc.cc/articles/codex-cc-switch-gpt-55-third-party-api-guide/#article",
+      "headline": "Codex接入GPT-5.5教程：使用CC-Switch配置第三方API",
+      "description": "使用 CC-Switch 为 Codex 配置第三方 OpenAI 兼容接口，从注册 API 平台、创建 API Key 到切换 api.yudidc.cc 渠道并验证 GPT-5.5 调用。",
+      "url": "https://download.yudidc.cc/articles/codex-cc-switch-gpt-55-third-party-api-guide/",
+      "mainEntityOfPage": "https://download.yudidc.cc/articles/codex-cc-switch-gpt-55-third-party-api-guide/",
+      "image": "https://download.yudidc.cc/logo.png",
+      "datePublished": "2026-06-06",
+      "dateModified": "2026-06-06",
+      "inLanguage": "zh-CN",
+      "author": {
+        "@type": "Organization",
+        "name": "download.yudidc.cc"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Codex下载",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://download.yudidc.cc/logo.png"
+        }
+      },
+      "keywords": [
+        "Codex教程",
+        "GPT-5.5配置教程",
+        "Codex接入第三方API",
+        "CC-Switch使用教程",
+        "OpenAI兼容接口配置",
+        "GPT-5.5模型调用",
+        "AI编程工具配置",
+        "Codex客户端设置"
+      ],
+      "articleSection": "Codex 使用指南"
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://download.yudidc.cc/articles/codex-cc-switch-gpt-55-third-party-api-guide/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "1、Codex没有返回内容",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "检查以下几项："
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "2、提示认证失败",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "重新创建一个新的 API Key。 再次复制粘贴。 确保没有多余空格。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "3、修改配置后没有生效",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "建议： 通常即可解决。"
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ad6645cd757bc1c6dbef1c4a9ca73f7a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+          <span class="brand-name">郁的 Codex 下载指南</span>
+        </a>
+        <nav class="nav-links" aria-label="主导航">
+          <a class="nav-link" href="/">首页</a><a class="nav-link" href="/relay-guide/">中转站搭建</a>
+          <a class="nav-link is-active" href="/articles/">文章</a>
+          <a class="nav-link" href="/cli/">CLI</a>
+          <a class="nav-link" href="/windows/">Windows</a>
+          <a class="nav-link" href="/mac/">macOS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container article-page">
+      <section>
+        <article class="article-panel" itemscope="" itemtype="https://schema.org/Article">
+          <meta itemprop="headline" content="Codex接入GPT-5.5教程：使用CC-Switch配置第三方API">
+          <meta itemprop="datePublished" content="2026-06-06">
+          <meta itemprop="dateModified" content="2026-06-06">
+          <meta itemprop="author" content="download.yudidc.cc">
+          <h1 class="article-title">Codex接入GPT-5.5教程：使用CC-Switch配置第三方API</h1>
+          <div class="article-meta">
+            <span class="article-badge">原创</span>
+            <span>已于 2026-06-06 15:38:14 修改</span>
+            <span class="meta-separator">·</span>
+            <span>3.3w 阅读</span>
+            <span class="meta-separator">·</span>
+            <span>42</span>
+            <span class="meta-separator">·</span>
+            <span>35</span>
+            <span class="meta-separator">·</span>
+            <span>CC 4.0 BY-SA版权</span>
+          </div>
+          <div class="article-tags">
+            <span>文章标签：</span>
+            <a href="/articles/">#Codex教程</a>
+            <a href="/articles/">#GPT-5.5配置教程</a>
+            <a href="/articles/">#Codex接入第三方API</a>
+            <a href="/articles/">#CC-Switch使用教程</a>
+            <a href="/articles/">#OpenAI兼容接口配置</a>
+            <a href="/articles/">#GPT-5.5模型调用</a>
+            <a href="/articles/">#AI编程工具配置</a>
+            <a href="/articles/">#Codex客户端设置</a>
+          </div>
+          <div class="post-content" itemprop="articleBody">
+            <p>最近不少开发者都在体验 OpenAI 推出的 Codex 编程客户端，不过官方接口在部分场景下配置起来相对复杂。</p>
+            <p>前几天有朋友问我：</p>
+            <blockquote><p>能不能让 Codex 直接调用第三方 OpenAI 兼容接口，从而使用 GPT-5.5 模型？</p></blockquote>
+            <p>研究了一下发现其实非常简单，只需要借助 <strong>CC-Switch</strong> 进行接口代理管理即可。</p>
+            <p>本文详细介绍从注册 API 平台到配置 CC-Switch，再到 Codex 成功调用 GPT-5.5 模型的完整流程。</p>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260606/E6E72D99C4AF83F37B028F290CB0D830_w1100h619.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <hr>
+            <h2 id="一-效果展示">一、效果展示</h2>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260606/D775455AE5F20F1C04D9D5CB47A4FC4B_w1219h645.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <p>配置完成后：</p>
+            <ul><li>Codex正常启动</li><li>支持调用第三方OpenAI兼容接口</li><li>使用GPT-5.5模型</li><li>无需复杂命令行配置</li><li>支持后续切换多个供应商</li></ul>
+            <p>整体架构如下：</p>
+            <pre><code class="language-text">Codex客户端
+                  │
+                  ▼
+            CC-Switch
+                  │
+                  ▼
+            第三方API平台（api.yudidc.cc）
+                  │
+                  ▼
+            GPT-5.5模型</code></pre>
+            <hr>
+            <h2 id="二-软件下载">二、软件下载</h2>
+            <h3 id="codex客户端">Codex客户端</h3>
+            <p>下载地址：</p>
+            <pre><code class="language-text">https://download.yudidc.cloud/</code></pre>
+            <h3 id="cc-switch">CC-Switch</h3>
+            <p>下载地址：</p>
+            <div class="table-wrap"><table><thead><tr><th scope="col">软件</th><th scope="col">下载地址</th></tr></thead><tbody><tr><td>CC-Switch</td><td><a href="https://github.com/farion1231/cc-switch/releases/latest" target="_blank" rel="noreferrer">https://github.com/farion1231/cc-switch/releases/latest</a></td></tr></tbody></table></div>
+            <p>下载后完成安装即可。</p>
+            <hr>
+            <h2 id="三-注册api平台">三、注册API平台</h2>
+            <p>首先访问：</p>
+            <pre><code class="language-text">https://api.yudidc.cc</code></pre>
+            <p>完成账号注册。</p>
+            <p>注册成功后登录后台。</p>
+            <hr>
+            <h2 id="四-创建api-key">四、创建API Key</h2>
+            <p>进入：</p>
+            <pre><code class="language-text">https://api.yudidc.cc/console/token</code></pre>
+            <p>可以看到 API Key 管理页面。</p>
+            <h3 id="第一步">第一步</h3>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260606/A428685C017C02F37B9245F63CD6563D_w433h179.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <p>点击右上角：</p>
+            <pre><code class="language-text">创建API密钥</code></pre>
+            <p>如下图所示：</p>
+            <pre><code class="language-text">创建API密钥</code></pre>
+            <hr>
+            <h3 id="第二步">第二步</h3>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260606/A94DAD280F8962B57D9E2BFF6D845481_w933h1962.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <p>名称随便填写即可。</p>
+            <p>例如：</p>
+            <pre><code class="language-text">codex</code></pre>
+            <p>或者：</p>
+            <pre><code class="language-text">gpt55</code></pre>
+            <p>均可。</p>
+            <hr>
+            <h3 id="第三步">第三步</h3>
+            <p>点击右下角：</p>
+            <pre><code class="language-text">保存更改</code></pre>
+            <p>按钮。</p>
+            <p>保存成功后会新增一条 API Key。</p>
+            <hr>
+            <h3 id="第四步">第四步</h3>
+            <p>找到刚刚创建的 Key。</p>
+            <p>点击右侧：</p>
+            <pre><code class="language-text">复制</code></pre>
+            <p>按钮。</p>
+            <p>复制保存好这个 Key，后面需要使用。</p>
+            <p>示意：</p>
+            <pre><code class="language-text">API Key
+            sk-xxxxxxxxxxxxxxxxxxxxx</code></pre>
+            <hr>
+            <h2 id="五-配置cc-switch">五、配置CC-Switch</h2>
+            <p>打开 CC-Switch。</p>
+            <hr>
+            <h3 id="第一步-2">第一步</h3>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260606/220992BF334CE11A82183D515A807357_w1336h126.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <p>点击顶部：</p>
+            <pre><code class="language-text">OpenAI</code></pre>
+            <p>图标。</p>
+            <hr>
+            <h3 id="第二步-2">第二步</h3>
+            <p>点击右上角：</p>
+            <pre><code class="language-text">+</code></pre>
+            <p>新增供应商。</p>
+            <hr>
+            <h3 id="第三步-2">第三步</h3>
+            <p>填写供应商信息。</p>
+            <h4 id="预设供应商">预设供应商</h4>
+            <p>选择：</p>
+            <pre><code class="language-text">自定义配置</code></pre>
+            <hr>
+            <h4 id="供应商名称">供应商名称</h4>
+            <p>填写：</p>
+            <pre><code class="language-text">api.yudidc.cc</code></pre>
+            <hr>
+            <h4 id="api请求地址">API请求地址</h4>
+            <p>填写：</p>
+            <pre><code class="language-text">https://api.yudidc.cc</code></pre>
+            <hr>
+            <h4 id="api-key">API Key</h4>
+            <p>填写刚刚复制的 Key。</p>
+            <p>格式类似：</p>
+            <pre><code class="language-text">sk-xxxxxxxxxxxxxxxx</code></pre>
+            <hr>
+            <p>配置示例：</p>
+            <div class="table-wrap"><table><thead><tr><th scope="col">配置项</th><th scope="col">内容</th></tr></thead><tbody><tr><td>预设供应商</td><td>自定义配置</td></tr><tr><td>供应商名称</td><td>api.yudidc.cc</td></tr><tr><td>API请求地址</td><td><a href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">https://api.yudidc.cc</a></td></tr><tr><td>API Key</td><td>刚刚复制的Key</td></tr></tbody></table></div>
+            <hr>
+            <h3 id="第四步-2">第四步</h3>
+            <p>点击右下角：</p>
+            <pre><code class="language-text">添加</code></pre>
+            <p>按钮。</p>
+            <p>完成供应商创建。</p>
+            <hr>
+            <h2 id="六-切换到 api.yudidc.cc 渠道">六、切换到 api.yudidc.cc 渠道</h2>
+            <p>回到 CC-Switch 主界面。</p>
+            <p>找到刚刚创建的：</p>
+            <pre><code class="language-text">aisz</code></pre>
+            <p>渠道。</p>
+            <p>切换为当前使用渠道。</p>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260606/6F670423EE66738DD795E78F4FF32716_w1301h178.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <p>示意：</p>
+            <pre><code class="language-text">○ OpenAI
+
+            ● aisz</code></pre>
+            <p>确保当前选中的是：</p>
+            <pre><code class="language-text">aisz</code></pre>
+            <hr>
+            <h2 id="七-重启codex客户端">七、重启Codex客户端</h2>
+            <p>配置完成后。</p>
+            <p>关闭 Codex。</p>
+            <p>然后重新启动 Codex。</p>
+            <pre><code class="language-text">退出Codex
+                  ↓
+            重新打开Codex</code></pre>
+            <p>这样 Codex 就会重新读取当前接口配置。</p>
+            <hr>
+            <h2 id="八-验证是否配置成功">八、验证是否配置成功</h2>
+            <p>打开 Codex 后直接发送一个测试问题：</p>
+            <pre><code class="language-text">你好，请介绍一下自己</code></pre>
+            <p>或者：</p>
+            <pre><code class="language-text">帮我写一个Vue组件</code></pre>
+            <p>如果能够正常返回结果，则说明配置成功。</p>
+            <p>此时实际调用的已经是：</p>
+            <pre><code class="language-text">GPT-5.5</code></pre>
+            <p>模型。</p>
+            <hr>
+            <h2 id="九-常见问题">九、常见问题</h2>
+            <h3 id="1-codex没有返回内容">1、Codex没有返回内容</h3>
+            <p>检查以下几项：</p>
+            <ul><li>API Key是否复制完整</li><li>API地址是否填写正确</li><li>当前是否切换到 api.yudidc.cc 渠道</li><li>是否重启Codex客户端</li></ul>
+            <hr>
+            <h3 id="2-提示认证失败">2、提示认证失败</h3>
+            <p>重新创建一个新的 API Key。</p>
+            <p>再次复制粘贴。</p>
+            <p>确保没有多余空格。</p>
+            <hr>
+            <h3 id="3-修改配置后没有生效">3、修改配置后没有生效</h3>
+            <p>建议：</p>
+            <pre><code class="language-text">切换一次渠道
+            ↓
+            关闭CC-Switch
+            ↓
+            重新打开
+            ↓
+            重启Codex</code></pre>
+            <p>通常即可解决。</p>
+            <hr>
+            <h2 id="十-总结">十、总结</h2>
+            <p>本文介绍了如何通过 <strong>CC-Switch</strong> 为 <strong>Codex 客户端</strong> 接入第三方 OpenAI 兼容接口，并成功调用 <strong>GPT-5.5 模型</strong>。</p>
+            <p>整体流程非常简单：</p>
+            <pre><code class="language-text">注册平台
+                ↓
+            创建API Key
+                ↓
+            配置CC-Switch
+                ↓
+            切换渠道
+                ↓
+            重启Codex
+                ↓
+            使用GPT-5.5</code></pre>
+            <p>对于经常使用 AI 编程工具的开发者来说，这种方式能够更加灵活地管理多个模型供应商，并且后续切换接口也更加方便。</p>
+            <p>如果你也在使用 Codex，不妨按照本文步骤配置体验一下。</p>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div>发布时间：2026-06-06，最近更新：2026-06-06。</div>
+        <div class="footer-links">
+          <a href="/">首页</a>
+          <a href="/articles/">文章中心</a>
+          <a href="/cli/">CLI</a>
+          <a href="/windows/">Windows</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+
+</body></html>

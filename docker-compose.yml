@@ -1,0 +1,12 @@
+name: yudidc-codex-download
+
+services:
+  yudidc-codex-download:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      PUBLIC_SITE_URL: https://download.yudidc.cc
+      API_BASE_URL: https://api.yudidc.cc
+    restart: unless-stopped

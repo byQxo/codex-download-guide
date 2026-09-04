@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codex Windsurf 使用指南 2026 - IDE 工作流、CLI 协同与常见问题</title>
+  <meta name="description" content="更新于 2026-04-29，整理 Codex 在 Windsurf 中的使用方式、IDE 工作流、CLI 协同、账号可用性判断与常见问题。">
+  <meta name="keywords" content="Codex Windsurf,Codex Windsurf使用,OpenAI Codex Windsurf,Codex IDE Windsurf,Codex CLI Windsurf,Codex 编辑器,codex最新版,codex pet">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/windsurf/">
+  <meta name="author" content="download.yudidc.cc">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="article:modified_time" content="2026-04-29">
+  <link rel="canonical" href="/windsurf/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Codex Windsurf 使用指南 2026 - IDE 工作流、CLI 协同与常见问题">
+  <meta property="og:description" content="整理 Codex 在 Windsurf 中的使用方式、IDE 工作流、CLI 协同与账号判断方式。">
+  <meta property="og:url" content="https://download.yudidc.cc/windsurf/">
+  <meta property="og:image" content="https://download.yudidc.cc/logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Codex Windsurf 使用指南 2026 - IDE 工作流、CLI 协同与常见问题">
+  <meta name="twitter:description" content="更新于 2026-04-29，整理 Codex 在 Windsurf 中的使用方式、IDE 工作流、CLI 协同与账号判断方式。">
+  <meta name="twitter:image" content="https://download.yudidc.cc/logo.png">
+  <link rel="stylesheet" href="/mirror/assets/topic-page-e7eec377588c.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://download.yudidc.cc/windsurf/#webpage",
+          "url": "https://download.yudidc.cc/windsurf/",
+          "name": "Codex Windsurf 使用指南 2026",
+          "description": "整理 Codex 在 Windsurf 中的使用方式、IDE 工作流、CLI 协同、账号可用性判断与常见问题。",
+          "inLanguage": "zh-CN",
+          "dateModified": "2026-04-29"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://download.yudidc.cc/windsurf/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Codex 下载首页",
+              "item": "https://download.yudidc.cc/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Codex Windsurf",
+              "item": "https://download.yudidc.cc/windsurf/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://download.yudidc.cc/windsurf/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Codex 能在 Windsurf 里使用吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "可以。官方计划说明已把 Windsurf 列为 Codex IDE extension 场景之一，具体展示仍以你的账号和当前版本为准。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex Windsurf 是独立下载包吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "通常不是，而是通过官方 IDE 路线、账号能力和 CLI 协同进入 Windsurf 工作流。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex Windsurf 还需要 CLI 吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "很多情况下会需要，因为 CLI 更适合处理仓库、终端输出和连续任务。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex Windsurf 更适合哪些任务？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "适合在已有项目中处理重构、修 bug、补测试、解释代码和文档整理这类连续任务。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex Windsurf 和 Cursor 页面有什么区别？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "两者都属于 IDE 场景，你可以根据自己实际使用的编辑器查看对应页面。"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head>
+
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+          <span class="brand-name">郁的 Codex 下载指南</span>
+        </a>
+        <nav class="nav-links" aria-label="主导航">
+          <a class="nav-link" href="/">首页</a><a class="nav-link" href="/relay-guide/">中转站搭建</a>
+          <a class="nav-link" href="/windows/">Windows</a>
+          <a class="nav-link" href="/mac/">macOS</a>
+          <a class="nav-link" href="/cli/">CLI</a>
+          <a class="nav-link is-active" href="/windsurf/">Windsurf</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-panel">
+          <span class="eyebrow">Updated 2026-04-29</span>
+          <h1>Codex Windsurf 使用指南</h1>
+          <p class="hero-lead">
+            如果你准备在 Windsurf 里使用 Codex，这页会把 IDE 入口、CLI 协同方式、账号可用性和真实仓库任务场景拆开说明。
+          </p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="https://developers.openai.com/codex/ide" target="_blank" rel="noreferrer">查看官方 IDE 文档</a>
+            <a class="btn btn-secondary" href="/cli/">查看 Codex CLI 页面</a>
+          </div>
+          <div class="chip-row">
+            <span class="chip">Windsurf</span>
+            <span class="chip">IDE Workflow</span>
+            <span class="chip">CLI</span>
+            <span class="chip">Repo Context</span>
+            <span class="chip">Task Execution</span>
+          </div>
+          <div class="topic-links">
+            <a class="topic-link" href="/windows/">Windows</a>
+            <a class="topic-link" href="/mac/">macOS</a>
+            <a class="topic-link" href="/cli/">CLI</a>
+            <a class="topic-link" href="/vscode/">VS Code</a>
+            <a class="topic-link" href="/cursor/">Cursor</a>
+            <a class="topic-link is-current" href="/windsurf/">Windsurf</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>Windsurf 用户开始前先看这三件事</h2>
+            <p>先确认账号与官方 IDE 入口，再决定如何把终端和仓库接进来。</p>
+          </div>
+          <div class="grid grid-3">
+            <article class="card">
+              <div class="card-label">Official</div>
+              <h3 class="card-title">官方计划说明已覆盖 Windsurf</h3>
+              <p class="card-copy">OpenAI 的相关说明已经覆盖 Windsurf 场景，因此可以先按官方 IDE 路线理解入口。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Intent</div>
+              <h3 class="card-title">Windsurf 用户更关心真实任务</h3>
+              <p class="card-copy">这类用户更关注怎么在既有编辑器里做真实任务，而不只是先看概览介绍。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Link Cluster</div>
+              <h3 class="card-title">适合和其他 IDE 页对照</h3>
+              <p class="card-copy">如果你同时在 VS Code 或 Cursor 之间做选择，可以结合这些专题页一起判断。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="grid grid-2">
+          <div class="section-panel steps">
+            <div class="section-head">
+              <h2>Windsurf 用户怎么开始用 Codex</h2>
+              <p>先理解官方入口，再决定如何把终端和仓库接进来。</p>
+            </div>
+            <article class="step">
+              <h3>先确认你的账号里是否已有 Codex 能力</h3>
+              <p class="copy">即使 Windsurf 属于支持场景，也不代表所有账号都立即可见同样能力，因此先看账号状态仍是第一步。</p>
+            </article>
+            <article class="step">
+              <h3>从官方 IDE 语义理解入口</h3>
+              <p class="copy">先按官方 IDE 文档理解产品边界和进入方式，再决定是否结合你当前的 Windsurf 配置。</p>
+            </article>
+            <article class="step">
+              <h3>把 CLI 和真实任务流程接上</h3>
+              <p class="copy">真正高价值的用法，是让 Codex 同时理解文件、终端输出和任务上下文，而不是只在编辑器里做孤立补全。</p>
+            </article>
+          </div>
+
+          <div class="section-panel">
+            <div class="section-head">
+              <h2>Windsurf 用户通常还会关心什么</h2>
+              <p>下面这些问题最常见，按你的编辑器习惯继续看即可。</p>
+            </div>
+            <ul class="list">
+              <li><strong>Codex Windsurf</strong>：先看 Windsurf 场景总览。</li>
+              <li><strong>OpenAI Codex Windsurf</strong>：先核对官方入口和计划说明。</li>
+              <li><strong>Codex IDE Windsurf</strong>：看 IDE 路线如何进入 Windsurf。</li>
+              <li><strong>Codex CLI Windsurf</strong>：看终端和编辑器如何配合。</li>
+              <li><strong>Codex Cursor Windsurf</strong>：如果你还在比较编辑器，可以继续看 Cursor 页面。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>Windsurf 场景下更像真实开发的问题</h2>
+            <p>页面要解释的是“怎么进入真实仓库任务”，而不是只做功能口号。</p>
+          </div>
+          <div class="grid grid-3">
+            <article class="card">
+              <div class="card-label">Context</div>
+              <h3 class="card-title">跨文件上下文修改</h3>
+              <p class="card-copy">适合需要在多个模块间调整代码的人，而不是只补一个小片段。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Terminal</div>
+              <h3 class="card-title">终端输出与编辑器联动</h3>
+              <p class="card-copy">很多 Windsurf 用户依然离不开终端和测试反馈，所以 CLI 协同必须被明确写出来。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Execution</div>
+              <h3 class="card-title">连续任务执行</h3>
+              <p class="card-copy">适合把修 bug、补测试、重构、文档整理串成一个完整任务，而不是一次性补全。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>Codex Windsurf 常见问题</h2>
+            <p>FAQ 继续围绕官方入口、CLI 协同和真实仓库场景来回答。</p>
+          </div>
+          <div class="faq">
+            <article class="faq-item">
+              <h3 class="faq-question">Codex 能在 Windsurf 里使用吗？</h3>
+              <p class="faq-answer">可以。官方计划说明已经把 Windsurf 列为 Codex IDE extension 场景之一，具体展示仍以你的账号和当前版本为准。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex Windsurf 是独立下载包吗？</h3>
+              <p class="faq-answer">通常不是，而是通过官方 IDE 路线、账号能力和 CLI 协同进入 Windsurf 工作流。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex Windsurf 还需要 CLI 吗？</h3>
+              <p class="faq-answer">很多情况下会需要。CLI 更适合处理仓库、终端输出和连续任务，因此和 Windsurf 通常是互补关系。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex Windsurf 更适合哪些任务？</h3>
+              <p class="faq-answer">更适合在已有项目中处理重构、修 bug、补测试、解释代码和文档整理这类连续任务，而不是孤立地做一次补全。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex Windsurf 和 Cursor 页面有什么区别？</h3>
+              <p class="faq-answer">两者都属于 IDE 场景，但你可以根据自己实际使用的编辑器来查看对应页面。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-panel">
+        <div class="cta-copy">
+          <span class="eyebrow">Next Step</span>
+          <h2>如果你想横向比较 IDE 入口，顺着 VS Code 和 Cursor 页一起看更完整</h2>
+          <p class="copy">如果你想横向比较 IDE 入口，顺着 VS Code 和 Cursor 页一起看会更完整。</p>
+        </div>
+        <div class="button-row">
+          <a class="btn btn-primary" href="/vscode/">继续看 Codex VS Code</a>
+          <a class="btn btn-secondary" href="/cursor/">继续看 Codex Cursor</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div>本页更新时间：2026-04-29。Windsurf 场景下的 Codex 可用性仍应以 OpenAI 官方文档和账号内显示为准。</div>
+        <div class="footer-links">
+          <a href="/">首页</a>
+          <a href="/windows/">Windows</a>
+          <a href="/mac/">macOS</a>
+          <a href="/cli/">CLI</a>
+          <a href="/vscode/">VS Code</a>
+          <a href="/cursor/">Cursor</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+
+
+</body></html>

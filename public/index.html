@@ -1,0 +1,2769 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="baidu-site-verification" content="codeva-EnWtti1sMK">
+  <title>郁的 Codex 下载站 - OpenAI Codex 一键安装、客户端、CLI、Windows/Mac/Linux 安装指南</title>
+  <meta name="description" content="更新于 2026-06-21，整理 OpenAI Codex 官网入口、Codex 一键安装命令、客户端下载资源、Windows / macOS / Linux 安装说明、CLI、VS Code、Cursor 与 Windsurf 接入教程。">
+  <meta name="keywords" content="Codex下载,OpenAI Codex,Codex官网,Codex一键安装,Codex安装命令,Codex客户端,Codex CLI,Codex Windows,Codex Mac,Codex Linux,Codex VS Code,Codex Cursor,Codex Windsurf,codex最新版,codex客户端下载,codex客户端,codex下载,codex安装,codex官方版">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/">
+  <meta name="author" content="download.yudidc.cc">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="article:modified_time" content="2026-06-21">
+  <meta name="theme-color" content="#2237ff">
+  <link rel="canonical" href="/">
+  <link rel="alternate" type="text/plain" title="LLMs.txt" href="/mirror/assets/llms-02f8e6a6f9c3.txt">
+  <link rel="alternate" hreflang="zh-CN" href="/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="郁的 Codex 下载站">
+  <meta property="og:title" content="郁的 Codex 下载站 - OpenAI Codex 一键安装、客户端、CLI 与 IDE 使用指南">
+  <meta property="og:description" content="提供 OpenAI Codex 官网入口、一键安装命令、客户端下载资源、Windows / macOS / Linux 安装说明、CLI / IDE 接入方式。">
+  <meta property="og:url" content="https://download.yudidc.cc/">
+  <meta property="og:image" content="https://download.yudidc.cc/logo.png">
+  <meta property="og:image:alt" content="Codex 下载与使用指南页面预览">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Codex下载 - OpenAI Codex 一键安装、客户端、CLI 与 IDE 使用指南">
+  <meta name="twitter:description" content="更新于 2026-06-21，提供 OpenAI Codex 官网入口、一键安装命令、客户端下载资源、Windows / macOS / Linux 安装说明和 CLI / IDE 接入方式。">
+  <meta name="twitter:image" content="https://download.yudidc.cc/logo.png">
+  <style type="text/tailwindcss">
+    @layer base {
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-height: 100%;
+        scroll-behavior: smooth;
+        overflow-y: scroll;
+        scrollbar-gutter: stable;
+        background:
+          radial-gradient(38% 42% at 12% 14%, rgba(36, 137, 255, 0.98) 0%, rgba(36, 137, 255, 0.54) 34%, rgba(36, 137, 255, 0) 74%),
+          radial-gradient(42% 46% at 48% 12%, rgba(223, 230, 255, 0.92) 0%, rgba(223, 230, 255, 0.26) 36%, rgba(223, 230, 255, 0) 76%),
+          radial-gradient(46% 60% at 80% 16%, rgba(35, 34, 218, 0.98) 0%, rgba(24, 26, 170, 0.96) 38%, rgba(12, 13, 108, 0.86) 72%, rgba(12, 13, 108, 0) 100%),
+          linear-gradient(135deg, #1a8eff 0%, #2a5fff 26%, #1f33e6 58%, #251cb5 100%);
+      }
+
+      body {
+        margin: 0;
+        min-height: 100%;
+        overflow-x: hidden;
+        color: #eef4ff;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background: #070b18;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.22;
+        mix-blend-mode: soft-light;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        background:
+          radial-gradient(64% 44% at 50% 18%, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 74%),
+          linear-gradient(180deg, rgba(7, 11, 24, 0.18) 0%, rgba(7, 11, 24, 0.34) 100%),
+          radial-gradient(88% 90% at 50% 50%, rgba(0, 0, 0, 0) 56%, rgba(0, 0, 0, 0.24) 100%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img,
+      video {
+        display: block;
+        max-width: 100%;
+      }
+
+      summary {
+        list-style: none;
+      }
+
+      summary::-webkit-details-marker {
+        display: none;
+      }
+    }
+
+    @layer components {
+      .page-background-video {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+
+      .site-shell {
+        position: relative;
+        z-index: 2;
+        isolation: isolate;
+        overflow: hidden;
+      }
+
+      .site-shell::before {
+        content: "";
+        position: absolute;
+        left: -12%;
+        top: 24%;
+        width: 42rem;
+        height: 42rem;
+        border-radius: 999px;
+        background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.34) 0%, rgba(255, 255, 255, 0.08) 30%, rgba(255, 255, 255, 0) 74%);
+        filter: blur(18px);
+        pointer-events: none;
+      }
+
+      .site-shell::after {
+        content: "";
+        position: absolute;
+        right: -14%;
+        bottom: 4%;
+        width: 36rem;
+        height: 36rem;
+        border-radius: 999px;
+        background: radial-gradient(circle at 50% 50%, rgba(194, 153, 255, 0.28) 0%, rgba(194, 153, 255, 0.14) 36%, rgba(194, 153, 255, 0) 74%);
+        filter: blur(26px);
+        pointer-events: none;
+      }
+
+      .section-wrap {
+        position: relative;
+        z-index: 1;
+        width: min(1180px, calc(100vw - 28px));
+        margin: 0 auto;
+      }
+
+      .motion-ready [data-reveal] {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0) scale(0.985);
+        transition:
+          opacity 760ms cubic-bezier(0.16, 1, 0.3, 1),
+          transform 760ms cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: var(--reveal-delay, 0ms);
+        will-change: opacity, transform;
+      }
+
+      .motion-ready [data-reveal].is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+
+      .motion-ready .site-shell::before {
+        animation: ambient-drift-a 16s ease-in-out infinite alternate;
+      }
+
+      .motion-ready .site-shell::after {
+        animation: ambient-drift-b 18s ease-in-out infinite alternate;
+      }
+
+      @keyframes ambient-drift-a {
+        from {
+          transform: translate3d(-1.2rem, -0.6rem, 0) scale(0.98);
+        }
+
+        to {
+          transform: translate3d(1.4rem, 1rem, 0) scale(1.05);
+        }
+      }
+
+      @keyframes ambient-drift-b {
+        from {
+          transform: translate3d(1rem, 1.1rem, 0) scale(1.04);
+        }
+
+        to {
+          transform: translate3d(-1.3rem, -0.9rem, 0) scale(0.98);
+        }
+      }
+
+      /* 固定首页头部，滚动时保持导航和下载入口可见。 */
+      .site-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 50;
+        padding-bottom: 0.85rem;
+        border-bottom: 1px solid transparent;
+        transition:
+          background-color 220ms ease,
+          border-color 220ms ease,
+          box-shadow 220ms ease,
+          backdrop-filter 220ms ease;
+      }
+
+      .site-header::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 2px;
+        transform: scaleX(var(--scroll-progress, 0));
+        transform-origin: left center;
+        background: linear-gradient(90deg, #111827, #2563eb 48%, #8b5cf6);
+        opacity: 0;
+        transition: opacity 220ms ease;
+      }
+
+      .site-header.is-scrolled {
+        border-bottom-color: rgba(255, 255, 255, 0.28);
+        background-color: rgba(255, 255, 255, 0.42);
+        backdrop-filter: blur(22px) saturate(150%);
+        box-shadow: 0 18px 54px rgba(7, 11, 24, 0.14);
+      }
+
+      .site-header.is-scrolled::after {
+        opacity: 1;
+      }
+
+      .site-nav-link {
+        position: relative;
+        border-radius: 999px;
+      }
+
+      .site-nav-link::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 0.2rem;
+        width: 1.35rem;
+        height: 0.18rem;
+        border-radius: 999px;
+        background: #171717;
+        box-shadow: 0 0 18px rgba(23, 23, 23, 0.18);
+        opacity: 0;
+        transform: translateX(-50%) scaleX(0.45);
+        transition:
+          opacity 180ms ease,
+          transform 180ms ease;
+      }
+
+      .site-nav-link:hover,
+      .site-nav-link.is-active {
+        color: #0f172a;
+      }
+
+      .site-nav-link.is-active::after {
+        opacity: 1;
+        transform: translateX(-50%) scaleX(1);
+      }
+
+      .site-search {
+        position: relative;
+        display: none;
+        align-items: center;
+        min-width: min(360px, 28vw);
+        height: 50px;
+        overflow: hidden;
+        border: 1px solid rgba(15, 23, 42, 0.1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.46);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 16px 38px rgba(15, 23, 42, 0.08);
+        backdrop-filter: blur(18px);
+      }
+
+      .site-search::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        margin-left: 18px;
+        margin-right: 10px;
+        flex: 0 0 18px;
+        opacity: 0.64;
+        background-color: #111827;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.5 13.5 18 18M8.75 15.5a6.75 6.75 0 1 0 0-13.5 6.75 6.75 0 0 0 0 13.5Z' fill='none' stroke='%23000' stroke-linecap='round' stroke-width='1.8'/%3E%3C/svg%3E") center / contain no-repeat;
+        mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.5 13.5 18 18M8.75 15.5a6.75 6.75 0 1 0 0-13.5 6.75 6.75 0 0 0 0 13.5Z' fill='none' stroke='%23000' stroke-linecap='round' stroke-width='1.8'/%3E%3C/svg%3E") center / contain no-repeat;
+      }
+
+      .site-search-input {
+        width: 100%;
+        min-width: 0;
+        height: 100%;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: #0f172a;
+        font: inherit;
+        font-size: 0.95rem;
+        font-weight: 650;
+      }
+
+      .site-search-input::placeholder {
+        color: rgba(15, 23, 42, 0.56);
+      }
+
+      .site-search-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 64px;
+        height: 38px;
+        margin-right: 6px;
+        border: 0;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.92);
+        color: #ffffff;
+        font-size: 0.88rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform 180ms ease, background-color 180ms ease;
+      }
+
+      .site-search-button:hover {
+        transform: translateY(-1px);
+        background: #000000;
+      }
+
+      /* 头部脱离文档流后，为首屏内容预留空间，避免被固定导航遮挡。 */
+      .site-main {
+        padding-top: 7rem;
+      }
+
+      .platform-pill {
+        position: relative;
+        overflow: hidden;
+        transform: translateY(0) scale(1);
+        transition:
+          transform 220ms ease,
+          border-color 220ms ease,
+          background-color 220ms ease,
+          color 220ms ease,
+          box-shadow 220ms ease;
+      }
+
+      /* 首屏平台标签 hover 时增加轻微上浮和扫光反馈。 */
+      .platform-pill::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translateX(-115%) skewX(-18deg);
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.52), transparent);
+        transition: transform 420ms ease;
+      }
+
+      .platform-pill:hover {
+        transform: translateY(-4px) scale(1.04);
+        border-color: rgba(15, 23, 42, 0.16);
+        background-color: rgba(15, 23, 42, 0.9);
+        color: #ffffff;
+        box-shadow: 0 16px 34px rgba(15, 23, 42, 0.18);
+      }
+
+      .platform-pill:hover::before {
+        transform: translateX(115%) skewX(-18deg);
+      }
+
+      .alive-card {
+        position: relative;
+        overflow: hidden;
+        transform: perspective(900px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg)) translateY(var(--lift-y, 0));
+        transition:
+          transform 220ms ease,
+          border-color 220ms ease,
+          box-shadow 220ms ease,
+          background-color 220ms ease;
+        will-change: transform;
+      }
+
+      .alive-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0;
+        background: radial-gradient(420px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255, 255, 255, 0.36), transparent 42%);
+        transition: opacity 220ms ease;
+        mix-blend-mode: screen;
+      }
+
+      .alive-card:hover {
+        --lift-y: -6px;
+      }
+
+      .alive-card:hover::after {
+        opacity: 1;
+      }
+
+      .alive-card > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .glass-panel {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(9, 12, 29, 0.48);
+        backdrop-filter: blur(24px);
+        box-shadow: 0 30px 90px rgba(4, 7, 35, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      .light-panel {
+        border: 1px solid rgba(255, 255, 255, 0.62);
+        background: linear-gradient(180deg, rgba(250, 252, 255, 0.9) 0%, rgba(228, 238, 255, 0.76) 100%);
+        backdrop-filter: blur(24px);
+        box-shadow: 0 34px 90px rgba(34, 48, 132, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      }
+
+      .dark-panel {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(180deg, rgba(10, 12, 24, 0.94) 0%, rgba(7, 9, 19, 0.84) 100%);
+        backdrop-filter: blur(24px);
+        box-shadow: 0 40px 120px rgba(2, 5, 28, 0.44), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.58rem 0.92rem;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.08);
+        font-size: 0.82rem;
+        line-height: 1;
+        letter-spacing: 0.08em;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: rgba(245, 248, 255, 0.82);
+      }
+
+      .light-panel .eyebrow {
+        border-color: rgba(73, 97, 196, 0.16);
+        background: rgba(255, 255, 255, 0.74);
+        color: #31428c;
+      }
+
+      .section-title {
+        font-size: clamp(1.55rem, 3vw, 2.45rem);
+        line-height: 1.12;
+        letter-spacing: -0.045em;
+        font-weight: 700;
+      }
+
+      .section-copy {
+        font-size: clamp(1rem, 1.5vw, 1.16rem);
+        line-height: 1.78;
+        color: rgba(236, 241, 255, 0.8);
+      }
+
+      .light-panel .section-copy {
+        color: rgba(17, 24, 39, 0.75);
+      }
+
+      .metric-card {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(18px);
+      }
+
+      .light-panel .metric-card {
+        border-color: rgba(79, 104, 214, 0.12);
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .soft-grid {
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+        background-size: 32px 32px;
+      }
+
+      .code-line {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.62rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        transform: translateX(0);
+        transition:
+          transform 220ms ease,
+          background-color 220ms ease,
+          border-color 220ms ease;
+      }
+
+      .code-line:last-child {
+        border-bottom: 0;
+      }
+
+      .code-line:hover {
+        transform: translateX(6px);
+        border-color: rgba(255, 255, 255, 0.18);
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0.06), transparent);
+      }
+
+      .code-num {
+        width: 2rem;
+        text-align: right;
+        font-size: 0.75rem;
+        color: rgba(160, 173, 220, 0.54);
+      }
+
+      details summary span:last-child {
+        flex: 0 0 auto;
+        transform: rotate(0deg);
+        transition:
+          transform 220ms ease,
+          color 220ms ease;
+      }
+
+      details[open] summary span:last-child {
+        transform: rotate(45deg);
+        color: rgba(255, 255, 255, 0.86);
+      }
+
+      details p {
+        animation: detail-copy-enter 240ms ease both;
+      }
+
+      @keyframes detail-copy-enter {
+        from {
+          opacity: 0;
+          transform: translateY(-4px);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-surface {
+        position: relative;
+        overflow: hidden;
+        border-radius: 42px;
+        transform: translate3d(0, calc(var(--hero-lift, 0px) * -1), 0);
+        box-shadow: 0 30px 110px rgba(13, 24, 120, 0.18);
+      }
+
+      .hero-surface::after {
+        content: "";
+        position: absolute;
+        inset: -30%;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.36;
+        background: linear-gradient(105deg, transparent 32%, rgba(255, 255, 255, 0.58) 42%, transparent 52%);
+        transform: translateX(-42%) rotate(2deg);
+        mix-blend-mode: screen;
+      }
+
+      .motion-ready .hero-surface::after {
+        animation: hero-sheen 8s ease-in-out 1.2s infinite;
+      }
+
+      @keyframes hero-sheen {
+        0%,
+        42% {
+          transform: translateX(-46%) rotate(2deg);
+        }
+
+        68%,
+        100% {
+          transform: translateX(46%) rotate(2deg);
+        }
+      }
+
+      .motion-ready .hero-mark {
+        animation: hero-float 4.8s ease-in-out infinite;
+      }
+
+      @keyframes hero-float {
+        0%,
+        100% {
+          transform: translate3d(0, 0, 0);
+        }
+
+        50% {
+          transform: translate3d(0, -8px, 0);
+        }
+      }
+
+      .hero-window {
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: linear-gradient(180deg, rgba(8, 9, 18, 0.96) 0%, rgba(10, 12, 22, 0.88) 100%);
+        backdrop-filter: blur(24px);
+        box-shadow: 0 38px 140px rgba(6, 8, 36, 0.34), 0 18px 46px rgba(5, 6, 18, 0.2);
+      }
+
+      .hero-title {
+        font-size: clamp(2.35rem, 5vw, 3.8rem);
+        line-height: 1.02;
+        font-weight: 600;
+        color: #05060a;
+      }
+
+      .hero-copy {
+        font-size: clamp(1rem, 1.6vw, 1.22rem);
+        line-height: 1.5;
+        color: rgba(5, 6, 12, 0.78);
+      }
+
+      .hero-wordmark {
+        font-size: clamp(1.35rem, 2.8vw, 3.25rem);
+        line-height: 1;
+        letter-spacing: -0.08em;
+        font-weight: 700;
+        color: rgba(5, 6, 12, 0.45);
+      }
+
+      .floating-promo {
+        position: fixed;
+        right: 14px;
+        bottom: 14px;
+        z-index: 50;
+        display: grid;
+        gap: 14px;
+        width: min(360px, calc(100vw - 28px));
+      }
+
+      .pet-promo-card,
+      .proxy-promo-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        border-radius: 28px;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.94) 0%, rgba(238, 245, 255, 0.92) 52%, rgba(237, 235, 255, 0.9) 100%);
+        box-shadow: 0 24px 70px rgba(24, 38, 120, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(20px);
+        animation: proxy-promo-enter 0.72s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both, proxy-promo-breathe 5.6s ease-in-out 1.4s infinite;
+      }
+
+      .pet-promo-card {
+        min-height: 190px;
+        color: #101623;
+        background:
+          radial-gradient(44% 56% at 96% 16%, rgba(99, 102, 241, 0.24) 0%, rgba(99, 102, 241, 0) 74%),
+          radial-gradient(44% 48% at 16% 10%, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0) 72%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(238, 245, 255, 0.92) 52%, rgba(237, 235, 255, 0.9) 100%);
+        box-shadow: 0 24px 70px rgba(24, 38, 120, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+        animation-delay: 0.15s, 1.15s;
+      }
+
+      .proxy-promo-card {
+        min-height: 258px;
+      }
+
+      .pet-promo-card,
+      .proxy-promo-card {
+        padding-bottom: 5.35rem;
+      }
+
+      .pet-promo-card:hover,
+      .proxy-promo-card:hover {
+        transform: translateY(-2px);
+      }
+
+      .pet-promo-art {
+        position: absolute;
+        right: 16px;
+        bottom: 4.75rem;
+        width: 108px;
+        height: 108px;
+        object-fit: contain;
+        filter: drop-shadow(0 18px 30px rgba(24, 38, 120, 0.22));
+      }
+
+      .pet-promo-button {
+        position: absolute;
+        right: 1.25rem;
+        bottom: 1.25rem;
+        z-index: 2;
+        display: inline-flex;
+        min-height: 40px;
+        align-items: center;
+        justify-content: center;
+        gap: 0.45rem;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+        padding: 0 1rem;
+        color: #ffffff;
+        font-weight: 900;
+        box-shadow: 0 16px 34px rgba(79, 70, 229, 0.32);
+        transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+      }
+
+      .pet-promo-card:hover .pet-promo-button {
+        transform: translateY(-1px);
+        filter: saturate(1.12) brightness(1.04);
+        box-shadow: 0 18px 42px rgba(79, 70, 229, 0.42);
+      }
+
+      .proxy-promo-cta {
+        position: absolute;
+        right: 1.25rem;
+        bottom: 1.25rem;
+        z-index: 2;
+      }
+
+      @keyframes proxy-promo-enter {
+        from {
+          opacity: 0;
+          transform: translate3d(0, 32px, 0) scale(0.98);
+        }
+
+        to {
+          opacity: 1;
+          transform: translate3d(0, 0, 0) scale(1);
+        }
+      }
+
+      @keyframes proxy-promo-breathe {
+        0%,
+        100% {
+          box-shadow: 0 24px 70px rgba(24, 38, 120, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.88);
+        }
+
+        50% {
+          box-shadow: 0 30px 86px rgba(24, 38, 120, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.94);
+        }
+      }
+
+      .proxy-model-icons {
+        display: inline-flex;
+        align-items: center;
+        isolation: isolate;
+      }
+
+      .proxy-model-icon {
+        width: 34px;
+        height: 34px;
+        flex: 0 0 34px;
+        border-radius: 999px;
+        border: 2px solid rgba(255, 255, 255, 0.94);
+        background: rgba(255, 255, 255, 0.98);
+        object-fit: cover;
+        box-shadow: 0 10px 24px rgba(24, 38, 120, 0.16);
+      }
+
+      .proxy-model-icon + .proxy-model-icon {
+        margin-left: -10px;
+      }
+
+      @media (max-width: 640px) {
+        .site-main {
+          padding-top: 7.5rem;
+        }
+
+        .hero-surface {
+          border-radius: 30px;
+        }
+
+        .floating-promo {
+          display: none;
+        }
+
+        .proxy-model-icon {
+          width: 30px;
+          height: 30px;
+          flex-basis: 30px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .motion-ready [data-reveal] {
+          opacity: 1;
+          transform: none;
+          transition: none;
+        }
+
+        .motion-ready .site-shell::before,
+        .motion-ready .site-shell::after,
+        .motion-ready .hero-surface::after,
+        .motion-ready .hero-mark,
+        details p,
+        .pet-promo-card,
+        .proxy-promo-card {
+          animation: none;
+        }
+
+        .hero-surface {
+          transform: none;
+        }
+
+        .alive-card,
+        .alive-card:hover {
+          transform: none;
+        }
+      }
+
+      @media (min-width: 640px) {
+        .section-wrap {
+          width: min(1180px, calc(100vw - 40px));
+        }
+      }
+
+      @media (min-width: 768px) {
+        .section-wrap {
+          width: min(1180px, calc(100vw - 64px));
+        }
+
+        .site-search {
+          display: inline-flex;
+        }
+      }
+    }
+  
+      /* Yudidc premium visual pass: calmer editorial-tech background, no cheap blue wash. */
+      html {
+        background:
+          radial-gradient(70% 52% at 18% 8%, rgba(255,255,255,.92) 0%, rgba(236,241,255,.70) 30%, rgba(236,241,255,0) 68%),
+          radial-gradient(56% 48% at 82% 14%, rgba(155,170,218,.42) 0%, rgba(155,170,218,.16) 38%, rgba(155,170,218,0) 72%),
+          radial-gradient(60% 56% at 72% 88%, rgba(196,170,128,.24) 0%, rgba(196,170,128,.08) 40%, rgba(196,170,128,0) 76%),
+          linear-gradient(135deg, #f8f7f2 0%, #edf1f7 45%, #dfe6f1 100%) !important;
+      }
+
+      body {
+        color: #141821 !important;
+        background: transparent !important;
+      }
+
+      body::before {
+        opacity: .12 !important;
+        mix-blend-mode: multiply !important;
+      }
+
+      body::after {
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.34) 0%, rgba(255,255,255,.08) 46%, rgba(24,27,35,.04) 100%),
+          radial-gradient(92% 80% at 50% 8%, rgba(255,255,255,.84) 0%, rgba(255,255,255,0) 72%),
+          radial-gradient(92% 90% at 50% 54%, rgba(255,255,255,0) 58%, rgba(33,39,56,.10) 100%) !important;
+      }
+
+      .site-shell::before {
+        background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.72) 0%, rgba(217,225,238,.24) 34%, rgba(255,255,255,0) 74%) !important;
+        filter: blur(24px) !important;
+      }
+
+      .site-shell::after {
+        background: radial-gradient(circle at 50% 50%, rgba(152,132,100,.22) 0%, rgba(152,132,100,.10) 38%, rgba(152,132,100,0) 76%) !important;
+        filter: blur(34px) !important;
+      }
+
+      .hero-surface {
+        border: 1px solid rgba(255,255,255,.72) !important;
+        background:
+          linear-gradient(135deg, rgba(255,255,255,.92), rgba(247,249,252,.74) 46%, rgba(229,235,246,.66)),
+          radial-gradient(80% 70% at 16% 12%, rgba(255,255,255,.96), transparent 66%) !important;
+        box-shadow:
+          0 38px 120px rgba(49,58,82,.18),
+          inset 0 1px 0 rgba(255,255,255,.95),
+          inset 0 -1px 0 rgba(73,84,110,.08) !important;
+      }
+
+      .hero-surface > [aria-hidden="true"][style*="radial-gradient"] {
+        opacity: .66 !important;
+        background:
+          radial-gradient(42% 38% at 18% 24%, rgba(255,255,255,.90) 0%, rgba(255,255,255,.28) 38%, rgba(255,255,255,0) 74%),
+          radial-gradient(36% 42% at 76% 18%, rgba(123,143,192,.30) 0%, rgba(123,143,192,.12) 44%, rgba(123,143,192,0) 78%),
+          radial-gradient(32% 34% at 82% 72%, rgba(186,157,112,.20) 0%, rgba(186,157,112,.08) 42%, rgba(186,157,112,0) 78%) !important;
+      }
+
+      .hero-surface h1,
+      .hero-surface h2,
+      .hero-surface h3,
+      .hero-surface p,
+      .hero-surface span:not(.hero-mark):not(.hero-mark *) {
+        color: #111722;
+      }
+
+      .hero-surface .rounded-full,
+      header .rounded-full {
+        box-shadow: 0 16px 44px rgba(35,42,58,.10);
+      }
+
+      .hero-surface a[href="https://pan.quark.cn/s/1ad15b67bc05#/list/share"],
+      header a[href="https://pan.quark.cn/s/1ad15b67bc05#/list/share"] {
+        background: #121722 !important;
+        color: #fff !important;
+        border-color: rgba(255,255,255,.24) !important;
+        box-shadow: 0 22px 64px rgba(18,23,34,.22) !important;
+      }
+  
+    
+      /* Yudidc final light background pass */
+      html {
+        background:
+          radial-gradient(72% 46% at 12% 0%, rgba(255,255,255,.98) 0%, rgba(244,248,255,.82) 34%, rgba(244,248,255,0) 72%),
+          radial-gradient(58% 48% at 86% 8%, rgba(204,216,242,.50) 0%, rgba(204,216,242,.18) 42%, rgba(204,216,242,0) 78%),
+          radial-gradient(48% 50% at 70% 88%, rgba(225,207,178,.30) 0%, rgba(225,207,178,.10) 42%, rgba(225,207,178,0) 78%),
+          linear-gradient(135deg, #fbfaf6 0%, #f2f5fa 42%, #e7edf6 100%) !important;
+      }
+      body {
+        color: #121721 !important;
+        background: transparent !important;
+      }
+      body::before {
+        opacity: .10 !important;
+        mix-blend-mode: multiply !important;
+      }
+      body::after {
+        background:
+          linear-gradient(180deg, rgba(255,255,255,.62) 0%, rgba(255,255,255,.22) 52%, rgba(39,48,68,.05) 100%),
+          radial-gradient(100% 72% at 50% 8%, rgba(255,255,255,.78) 0%, rgba(255,255,255,0) 76%),
+          radial-gradient(96% 90% at 50% 52%, rgba(255,255,255,0) 60%, rgba(46,55,76,.09) 100%) !important;
+      }
+      .site-shell::before {
+        background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.88) 0%, rgba(220,228,242,.26) 36%, rgba(255,255,255,0) 76%) !important;
+        filter: blur(22px) !important;
+      }
+      .site-shell::after {
+        background: radial-gradient(circle at 50% 50%, rgba(196,170,128,.22) 0%, rgba(196,170,128,.08) 42%, rgba(196,170,128,0) 78%) !important;
+        filter: blur(34px) !important;
+      }
+      .hero-surface {
+        border: 1px solid rgba(255,255,255,.78) !important;
+        background:
+          linear-gradient(135deg, rgba(255,255,255,.94), rgba(248,250,253,.82) 48%, rgba(232,238,248,.72)),
+          radial-gradient(78% 72% at 18% 10%, rgba(255,255,255,.94), transparent 68%) !important;
+        box-shadow:
+          0 38px 120px rgba(45,55,80,.16),
+          inset 0 1px 0 rgba(255,255,255,.96),
+          inset 0 -1px 0 rgba(74,86,112,.08) !important;
+      }
+      .hero-surface > [aria-hidden="true"][style*="radial-gradient"] {
+        opacity: .58 !important;
+        background:
+          radial-gradient(42% 38% at 18% 24%, rgba(255,255,255,.90) 0%, rgba(255,255,255,.28) 38%, rgba(255,255,255,0) 74%),
+          radial-gradient(36% 42% at 76% 18%, rgba(128,148,194,.25) 0%, rgba(128,148,194,.10) 44%, rgba(128,148,194,0) 78%),
+          radial-gradient(32% 34% at 82% 72%, rgba(191,163,120,.18) 0%, rgba(191,163,120,.08) 42%, rgba(191,163,120,0) 78%) !important;
+      }
+      .hero-surface h1,
+      .hero-surface h2,
+      .hero-surface h3,
+      .hero-surface p,
+      .hero-surface span:not(.hero-mark):not(.hero-mark *) { color: #121721 !important; }
+      .hero-surface a[href="https://pan.quark.cn/s/1ad15b67bc05#/list/share"],
+      header a[href="https://pan.quark.cn/s/1ad15b67bc05#/list/share"] {
+        background: #121722 !important;
+        color: #fff !important;
+        border-color: rgba(255,255,255,.24) !important;
+        box-shadow: 0 22px 64px rgba(18,23,34,.22) !important;
+      }
+
+    
+      /* Yudidc environment pills light pass */
+      #environment a,
+      #environment button,
+      [id*="environment"] a,
+      [id*="environment"] button,
+      section:has(h2) a[href*="#"].rounded-full,
+      section:has(h2) button.rounded-full {
+        background: rgba(255,255,255,.84) !important;
+        color: #172033 !important;
+        border: 1px solid rgba(197,207,224,.78) !important;
+        box-shadow: 0 14px 34px rgba(38,48,69,.08), inset 0 1px 0 rgba(255,255,255,.92) !important;
+        font-weight: 650 !important;
+        letter-spacing: -0.02em !important;
+      }
+      #environment a:hover,
+      #environment button:hover,
+      [id*="environment"] a:hover,
+      [id*="environment"] button:hover {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        border-color: rgba(145,160,188,.82) !important;
+        transform: translateY(-1px) !important;
+      }
+      .env-pill-light,
+      a[href="#windows"], a[href="#macos"], a[href="#linux"], a[href="#vscode"], a[href="#cursor"], a[href="#windsurf"],
+      a[href="#cli"], a[href="#npm"], a[href="#node"] {
+        background: rgba(255,255,255,.86) !important;
+        color: #182235 !important;
+        border: 1px solid rgba(198,208,224,.78) !important;
+        box-shadow: 0 14px 34px rgba(38,48,69,.08), inset 0 1px 0 rgba(255,255,255,.92) !important;
+        font-weight: 650 !important;
+      }
+
+    
+      /* Yudidc topics cards: white capsule cards matching the light hero surface */
+      #topics .grid > a {
+        background: rgba(255,255,255,.90) !important;
+        border: 1px solid rgba(255,255,255,.86) !important;
+        color: #111827 !important;
+        box-shadow:
+          0 22px 64px rgba(39,48,69,.10),
+          inset 0 1px 0 rgba(255,255,255,.96),
+          inset 0 -1px 0 rgba(84,98,125,.08) !important;
+        backdrop-filter: saturate(1.08) blur(10px) !important;
+      }
+      #topics .grid > a:hover {
+        background: #ffffff !important;
+        border-color: rgba(210,218,232,.96) !important;
+        box-shadow:
+          0 28px 78px rgba(39,48,69,.14),
+          inset 0 1px 0 rgba(255,255,255,1) !important;
+      }
+      #topics .grid > a div,
+      #topics .grid > a h3,
+      #topics .grid > a p {
+        color: #121721 !important;
+      }
+      #topics .grid > a div {
+        color: #51607a !important;
+        font-weight: 800 !important;
+        letter-spacing: .16em !important;
+      }
+      #topics .grid > a h3 {
+        color: #111827 !important;
+        font-weight: 760 !important;
+        letter-spacing: -0.035em !important;
+      }
+      #topics .grid > a p {
+        color: rgba(31,41,55,.68) !important;
+        font-weight: 500 !important;
+      }
+
+    
+      /* Yudidc topics cards extra rounded capsule pass */
+      #topics .grid > a {
+        border-radius: 999px !important;
+        overflow: hidden !important;
+        padding: 2rem 2.25rem !important;
+      }
+      #topics .grid > a h3,
+      #topics .grid > a p,
+      #topics .grid > a div {
+        position: relative;
+        z-index: 1;
+      }
+      @media (max-width: 640px) {
+        #topics .grid > a {
+          border-radius: 36px !important;
+          padding: 1.5rem !important;
+        }
+      }
+
+    
+      /* Yudidc screenshot fix: remove rectangular shells around environment area */
+      #topics,
+      #topics > div,
+      #topics .section-wrap,
+      #topics .glass-panel,
+      #topics .light-panel,
+      #topics .dark-panel,
+      #topics [class*="rounded-"] {
+        border-radius: 56px !important;
+      }
+      #topics {
+        overflow: visible !important;
+      }
+      #topics .grid {
+        align-items: stretch !important;
+      }
+      #topics .grid > a {
+        border-radius: 64px !important;
+        overflow: hidden !important;
+        background: rgba(255,255,255,.94) !important;
+        border: 1px solid rgba(225,231,241,.92) !important;
+        min-height: 178px !important;
+        padding: 2.15rem 2.35rem !important;
+      }
+      #topics .grid > a::before,
+      #topics .grid > a::after {
+        border-radius: inherit !important;
+      }
+      #topics .grid > a:hover {
+        border-radius: 64px !important;
+        background: #fff !important;
+      }
+      @media (max-width: 640px) {
+        #topics,
+        #topics > div,
+        #topics .section-wrap,
+        #topics .glass-panel,
+        #topics .light-panel,
+        #topics .dark-panel,
+        #topics [class*="rounded-"] {
+          border-radius: 34px !important;
+        }
+        #topics .grid > a,
+        #topics .grid > a:hover {
+          border-radius: 42px !important;
+          min-height: 150px !important;
+          padding: 1.45rem 1.5rem !important;
+        }
+      }
+
+    </style>
+  <script src="/mirror/assets/tailwindcss-29642f5191e6.js"></script>
+  
+  <style id="yudidc-topic-white-override">
+    #topics .grid > a {
+      background: rgba(255,255,255,.92) !important;
+      border-color: rgba(255,255,255,.86) !important;
+      color: #111827 !important;
+      box-shadow: 0 22px 64px rgba(39,48,69,.10), inset 0 1px 0 rgba(255,255,255,.96), inset 0 -1px 0 rgba(84,98,125,.08) !important;
+    }
+    #topics .grid > a:hover { background: #fff !important; }
+    #topics .grid > a div { color: #64748b !important; }
+    #topics .grid > a h3 { color: #0f172a !important; }
+    #topics .grid > a p { color: #475569 !important; }
+  
+      /* Yudidc topics cards extra rounded capsule pass */
+      #topics .grid > a {
+        border-radius: 999px !important;
+        overflow: hidden !important;
+        padding: 2rem 2.25rem !important;
+      }
+      #topics .grid > a h3,
+      #topics .grid > a p,
+      #topics .grid > a div {
+        position: relative;
+        z-index: 1;
+      }
+      @media (max-width: 640px) {
+        #topics .grid > a {
+          border-radius: 36px !important;
+          padding: 1.5rem !important;
+        }
+      }
+
+    
+      /* Yudidc screenshot fix: remove rectangular shells around environment area */
+      #topics,
+      #topics > div,
+      #topics .section-wrap,
+      #topics .glass-panel,
+      #topics .light-panel,
+      #topics .dark-panel,
+      #topics [class*="rounded-"] {
+        border-radius: 56px !important;
+      }
+      #topics {
+        overflow: visible !important;
+      }
+      #topics .grid {
+        align-items: stretch !important;
+      }
+      #topics .grid > a {
+        border-radius: 64px !important;
+        overflow: hidden !important;
+        background: rgba(255,255,255,.94) !important;
+        border: 1px solid rgba(225,231,241,.92) !important;
+        min-height: 178px !important;
+        padding: 2.15rem 2.35rem !important;
+      }
+      #topics .grid > a::before,
+      #topics .grid > a::after {
+        border-radius: inherit !important;
+      }
+      #topics .grid > a:hover {
+        border-radius: 64px !important;
+        background: #fff !important;
+      }
+      @media (max-width: 640px) {
+        #topics,
+        #topics > div,
+        #topics .section-wrap,
+        #topics .glass-panel,
+        #topics .light-panel,
+        #topics .dark-panel,
+        #topics [class*="rounded-"] {
+          border-radius: 34px !important;
+        }
+        #topics .grid > a,
+        #topics .grid > a:hover {
+          border-radius: 42px !important;
+          min-height: 150px !important;
+          padding: 1.45rem 1.5rem !important;
+        }
+      }
+
+    </style>
+  <script>
+    tailwind.config = {
+      corePlugins: {
+        preflight: false,
+      },
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: [
+              "Segoe UI Variable Display",
+              "SF Pro Display",
+              "PingFang SC",
+              "Microsoft YaHei UI",
+              "sans-serif",
+            ],
+            mono: [
+              "Cascadia Code",
+              "SFMono-Regular",
+              "Consolas",
+              "monospace",
+            ],
+          },
+        },
+      },
+    };
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://download.yudidc.cc/#website",
+          "url": "https://download.yudidc.cc/",
+          "name": "Codex下载",
+          "inLanguage": "zh-CN",
+          "description": "提供 OpenAI Codex 官网入口、Codex 一键安装命令、客户端下载说明、Windows / macOS / Linux、CLI、IDE 与使用指南。"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://download.yudidc.cc/#webpage",
+          "url": "https://download.yudidc.cc/",
+          "name": "Codex下载 - OpenAI Codex 一键安装与使用指南",
+          "isPartOf": {
+            "@id": "https://download.yudidc.cc/#website"
+          },
+          "about": {
+            "@id": "https://download.yudidc.cc/#software"
+          },
+          "breadcrumb": {
+            "@id": "https://download.yudidc.cc/#breadcrumb"
+          },
+          "inLanguage": "zh-CN",
+          "dateModified": "2026-06-21",
+          "description": "更新于 2026-06-21，提供 OpenAI Codex 官网入口、Codex 一键安装命令、客户端下载说明、Windows / macOS / Linux 安装方式、CLI 与 IDE 接入方式、ChatGPT 计划门槛、常见问题、更新与排障入口。",
+          "primaryImageOfPage": "https://download.yudidc.cc/logo.png"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://download.yudidc.cc/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "首页",
+              "item": "https://download.yudidc.cc/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Codex下载",
+              "item": "https://download.yudidc.cc/#download-guide"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "更新",
+              "item": "https://download.yudidc.cc/updates/"
+            }
+          ]
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://download.yudidc.cc/#software",
+          "name": "OpenAI Codex",
+          "alternateName": [
+            "Codex",
+            "Codex AI 编程助手"
+          ],
+          "applicationCategory": "DeveloperApplication",
+          "operatingSystem": "Windows, macOS, Linux",
+          "downloadUrl": "https://api.yudidc.cc/",
+          "url": "https://download.yudidc.cc/",
+          "sameAs": [
+            "https://openai.com/codex/",
+            "https://openai.com/index/introducing-codex/"
+          ],
+          "screenshot": "https://download.yudidc.cc/logo.png",
+          "featureList": [
+            "Codex 一键安装命令",
+            "Windows、macOS 与 Linux 安装说明",
+            "Codex 客户端下载资源",
+            "CLI 与 IDE 协同",
+            "代码生成、调试、重构、测试与文档任务",
+            "面向真实项目上下文的 coding agent"
+          ],
+          "description": "Codex 是 OpenAI 面向开发场景推出的 coding agent，可辅助完成代码生成、调试、重构、测试和文档整理等任务。",
+          "inLanguage": "zh-CN"
+        },
+        {
+          "@type": "HowTo",
+          "@id": "https://download.yudidc.cc/#howto",
+          "name": "如何下载并安装 Codex",
+          "description": "从复制安装命令、选择 Windows / macOS / Linux 或客户端入口，到创建首个编码任务的简明流程。",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "position": 1,
+              "name": "复制 Codex 安装命令",
+              "text": "Windows 可以使用 Win+R 或 PowerShell，macOS 与 Linux 可以在终端执行 Codex 安装命令。"
+            },
+            {
+              "@type": "HowToStep",
+              "position": 2,
+              "name": "选择客户端、CLI 或 IDE",
+              "text": "根据设备与工作流选择 Codex 客户端、CLI、VS Code、Cursor 或 Windsurf 接入方式。"
+            },
+            {
+              "@type": "HowToStep",
+              "position": 3,
+              "name": "登录并创建首个任务",
+              "text": "安装后登录可用账号，在 Codex 中描述需求，让它帮助你编写代码、调试问题、补测试或整理文档。"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://download.yudidc.cc/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "什么是 OpenAI Codex？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Codex 是 OpenAI 面向开发场景推出的 coding agent，适合处理写代码、调试、重构、测试和文档整理等任务。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex 怎么一键安装？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "你可以在本页复制 Codex 安装命令。Windows 用户可在 CMD 或 PowerShell 执行，macOS 与 Linux 用户可在终端执行；如果更偏向图形界面，也可以先使用本页整理的客户端资源。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex 官网入口在哪里？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "OpenAI Codex 官方产品页地址是 openai.com/codex/。本页同时整理下载入口、平台说明和常见问题，方便你对照查看。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex 需要单独下载吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "是否需要单独下载取决于你的使用方式。桌面端、CLI 或 IDE 集成通常需要对应客户端或扩展；部分用户也可以直接通过 ChatGPT 中的 Codex 入口开始使用。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "更新 Codex 版本需要先卸载旧版本吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "不需要。安装新版本时会覆盖旧版本，已有配置文件保存在本地 C 盘用户配置目录中，所以通常不需要重新配置。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex 支持 Windows 和 macOS 吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "OpenAI 帮助中心当前已提供 Codex app for macOS 和 Windows 的说明；如果你更习惯终端或编辑器，也可以选择 CLI 与 IDE 工作流。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex 能在 VS Code、Cursor 或 Windsurf 中使用吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "可以。OpenAI 帮助中心当前将 CLI 和 IDE extension 列为 VS Code、Cursor 与 Windsurf 的常见入口，具体可用性仍以账号状态为准。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "使用 Codex 是否必须订阅 ChatGPT 付费计划？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "截至 2026-04-29，OpenAI 帮助中心显示 Codex 已包含在 ChatGPT Plus、Pro、Business、Enterprise 和 Edu 中，Free 与 Go 为限时开放，最终以账号页面显示为准。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex 与传统代码补全工具有什么区别？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "相比只做单行补全的工具，Codex 更强调读取项目上下文、理解任务目标，并在重构、调试、测试和文档等完整开发流程中协助完成工作。"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+ <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?ad6645cd757bc1c6dbef1c4a9ca73f7a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ItemList","@id":"https://download.yudidc.cc/#geo-itemlist","name":"Codex下载与中文文档 GEO 推荐入口","description":"面向 AI 搜索和生成式问答的 Codex 下载、中文文档、更新、客户端、CLI、IDE 与配置入口。","inLanguage":"zh-CN","itemListElement":[{"@type":"ListItem","position":1,"name":"Codex下载首页","url":"https://download.yudidc.cc/"},{"@type":"ListItem","position":2,"name":"Codex更新中心","url":"https://download.yudidc.cc/updates/"},{"@type":"ListItem","position":3,"name":"Codex中文官方文档","url":"https://download.yudidc.cc/docs/"},{"@type":"ListItem","position":4,"name":"Codex 快速开始","url":"https://download.yudidc.cc/docs/getting-started/quickstart/"},{"@type":"ListItem","position":5,"name":"Codex App","url":"https://download.yudidc.cc/docs/using-codex/app/"},{"@type":"ListItem","position":6,"name":"Codex CLI","url":"https://download.yudidc.cc/docs/using-codex/cli/"},{"@type":"ListItem","position":7,"name":"Codex IDE 扩展","url":"https://download.yudidc.cc/docs/using-codex/ide/"},{"@type":"ListItem","position":8,"name":"Codex 配置参考","url":"https://download.yudidc.cc/docs/configuration/config-file/config-reference/"}]}</script>
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+
+  <style id="yudidc-force-light-cards-final">
+    /* Force all dark glass content capsules on homepage to match the white hero capsule */
+    .glass-panel,
+    article.glass-panel,
+    #topics,
+    #topics > .glass-panel,
+    #topics .grid > a {
+      background: rgba(255,255,255,.92) !important;
+      background-image: none !important;
+      border-color: rgba(255,255,255,.86) !important;
+      color: #111827 !important;
+      box-shadow: 0 22px 64px rgba(39,48,69,.10), inset 0 1px 0 rgba(255,255,255,.96), inset 0 -1px 0 rgba(84,98,125,.08) !important;
+    }
+    .glass-panel:hover,
+    article.glass-panel:hover,
+    #topics .grid > a:hover {
+      background: #ffffff !important;
+      background-image: none !important;
+      border-color: rgba(210,218,232,.96) !important;
+    }
+    .glass-panel .eyebrow,
+    .glass-panel div[class*="text-"][class*="tracking"],
+    #topics .grid > a div {
+      color: #64748b !important;
+    }
+    .glass-panel h2,
+    .glass-panel h3,
+    .glass-panel .section-title,
+    #topics .grid > a h3 {
+      color: #0f172a !important;
+    }
+    .glass-panel p,
+    .glass-panel .section-copy,
+    #topics .grid > a p {
+      color: #475569 !important;
+    }
+    .glass-panel a:not(.nav-link):not(.download-button),
+    .glass-panel button {
+      background: rgba(255,255,255,.86) !important;
+      color: #0f172a !important;
+      border-color: rgba(203,213,225,.85) !important;
+    }
+  
+      /* Yudidc topics cards extra rounded capsule pass */
+      #topics .grid > a {
+        border-radius: 999px !important;
+        overflow: hidden !important;
+        padding: 2rem 2.25rem !important;
+      }
+      #topics .grid > a h3,
+      #topics .grid > a p,
+      #topics .grid > a div {
+        position: relative;
+        z-index: 1;
+      }
+      @media (max-width: 640px) {
+        #topics .grid > a {
+          border-radius: 36px !important;
+          padding: 1.5rem !important;
+        }
+      }
+
+    
+      /* Yudidc screenshot fix: remove rectangular shells around environment area */
+      #topics,
+      #topics > div,
+      #topics .section-wrap,
+      #topics .glass-panel,
+      #topics .light-panel,
+      #topics .dark-panel,
+      #topics [class*="rounded-"] {
+        border-radius: 56px !important;
+      }
+      #topics {
+        overflow: visible !important;
+      }
+      #topics .grid {
+        align-items: stretch !important;
+      }
+      #topics .grid > a {
+        border-radius: 64px !important;
+        overflow: hidden !important;
+        background: rgba(255,255,255,.94) !important;
+        border: 1px solid rgba(225,231,241,.92) !important;
+        min-height: 178px !important;
+        padding: 2.15rem 2.35rem !important;
+      }
+      #topics .grid > a::before,
+      #topics .grid > a::after {
+        border-radius: inherit !important;
+      }
+      #topics .grid > a:hover {
+        border-radius: 64px !important;
+        background: #fff !important;
+      }
+      @media (max-width: 640px) {
+        #topics,
+        #topics > div,
+        #topics .section-wrap,
+        #topics .glass-panel,
+        #topics .light-panel,
+        #topics .dark-panel,
+        #topics [class*="rounded-"] {
+          border-radius: 34px !important;
+        }
+        #topics .grid > a,
+        #topics .grid > a:hover {
+          border-radius: 42px !important;
+          min-height: 150px !important;
+          padding: 1.45rem 1.5rem !important;
+        }
+      }
+
+    </style>
+
+  <style id="yudidc-faq-contrast-final">
+    /* FAQ contrast: make all text from '什么是 OpenAI Codex？' downward readable */
+    #faq details.glass-panel,
+    #faq details.glass-panel[open] {
+      background: rgba(255,255,255,.94) !important;
+      background-image: none !important;
+      border-color: rgba(226,232,240,.92) !important;
+      box-shadow: 0 18px 52px rgba(39,48,69,.10), inset 0 1px 0 rgba(255,255,255,.98) !important;
+    }
+    #faq details.glass-panel summary span:first-child,
+    #faq details.glass-panel summary span,
+    #faq details.glass-panel p,
+    #faq details.glass-panel a,
+    #faq details.glass-panel code {
+      color: #0f172a !important;
+    }
+    #faq details.glass-panel p {
+      color: #1f2937 !important;
+      font-weight: 500 !important;
+    }
+    #faq details.glass-panel summary span:last-child {
+      color: #334155 !important;
+      opacity: 1 !important;
+    }
+    #faq details.glass-panel code {
+      background: rgba(15,23,42,.06) !important;
+      border: 1px solid rgba(15,23,42,.10) !important;
+      border-radius: 8px !important;
+      padding: 0.12em 0.34em !important;
+    }
+  </style>
+
+  <style id="yudidc-doc-button-text-black">
+    /* Only the hero CTA button: 查看 Codex 文档 */
+    .hero-surface a[href="/docs/"],
+    .hero-surface a[href="/docs/"]:hover {
+      color: #0f172a !important;
+    }
+  </style>
+</head>
+
+<body class="font-sans">
+  <video class="page-background-video" src="/bg.mp4" muted="" loop="" autoplay="" playsinline="" aria-hidden="true"></video>
+  
+  <div class="site-shell pb-16 sm:pb-24">
+    <div aria-hidden="true" class="pointer-events-none absolute left-[-8%] top-[4%] h-[420px] w-[420px] rounded-full opacity-90 blur-[90px]" style="background: radial-gradient(circle at 50% 50%, rgba(165, 227, 255, 0.88) 0%, rgba(165, 227, 255, 0.28) 38%, rgba(165, 227, 255, 0) 74%);">
+    </div>
+    <div aria-hidden="true" class="pointer-events-none absolute left-1/2 top-[8%] h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-90 blur-[110px]" style="background: radial-gradient(circle at 50% 50%, rgba(241, 240, 255, 0.76) 0%, rgba(241, 240, 255, 0.26) 40%, rgba(241, 240, 255, 0) 74%);">
+    </div>
+    <div aria-hidden="true" class="pointer-events-none absolute right-[-10%] top-[10%] h-[560px] w-[560px] rounded-full opacity-90 blur-[110px]" style="background: radial-gradient(circle at 50% 50%, rgba(51, 40, 247, 0.82) 0%, rgba(51, 40, 247, 0.32) 34%, rgba(51, 40, 247, 0) 74%);">
+    </div>
+
+    <header class="site-header pt-5 sm:pt-6">
+      <div class="section-wrap flex items-center justify-between gap-4">
+        <a class="inline-flex items-center gap-3 text-black" href="/" aria-label="Codex 首页">
+          <span class="flex h-20 w-20 items-center justify-center rounded-full border border-black/8 bg-white/68 shadow-[0_14px_44px_rgba(28,54,179,0.12)] backdrop-blur-md sm:h-11 sm:w-11">
+            <img class="h-6 w-6 sm:h-7 sm:w-7" src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标">
+          </span>
+          <span class="text-[1.45rem] font-bold tracking-[-0.06em] sm:text-[1.7rem]">郁的 Codex 下载站</span>
+        </a>
+
+        <div class="flex items-center gap-3 sm:gap-4">
+          <form class="site-search" role="search" data-site-search="">
+            <label class="sr-only" for="site-search-input">搜索 Codex 内容</label>
+            <input id="site-search-input" class="site-search-input" type="search" autocomplete="off" data-site-search-input="">
+            <button class="site-search-button" type="submit">搜索</button>
+          </form>
+          <a class="site-nav-link hidden px-3 py-2 text-base font-bold tracking-[-0.02em] text-black/70 transition duration-200 hover:-translate-y-px sm:inline-flex" href="/relay-guide/">中转站搭建</a>
+          <a class="site-nav-link hidden px-3 py-2 text-base font-bold tracking-[-0.02em] text-black/70 transition duration-200 hover:-translate-y-px sm:inline-flex" href="/articles/">文章</a>
+          <a class="site-nav-link hidden px-3 py-2 text-base font-bold tracking-[-0.02em] text-black/70 transition duration-200 hover:-translate-y-px sm:inline-flex" href="/docs/">文档</a>
+          <a class="site-nav-link hidden px-3 py-2 text-base font-bold tracking-[-0.02em] text-black/70 transition duration-200 hover:-translate-y-px sm:inline-flex" href="/pets/">宠物</a>
+          <a class="inline-flex min-h-[48px] items-center justify-center rounded-full border border-black/8 bg-[#171717] px-5 text-sm font-bold tracking-[-0.03em] text-white shadow-[0_22px_60px_rgba(15,15,24,0.18)] transition duration-200 hover:-translate-y-px hover:bg-black sm:min-h-[50px] sm:px-6" href="https://pan.quark.cn/s/1ad15b67bc05#/list/share" target="_blank" rel="noreferrer">下载 Codex</a>
+        </div>
+      </div>
+    </header>
+
+    <main id="top" class="site-main">
+      
+      <section class="section-wrap pt-6 sm:pt-10 lg:pt-12">
+        <div class="hero-surface px-4 pb-8 pt-8 text-center sm:px-8 sm:pb-10 sm:pt-10 lg:px-10 lg:pt-12">
+          <div aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-95" style="background:
+              radial-gradient(46% 44% at 18% 24%, rgba(23, 126, 255, 0.72) 0%, rgba(23, 126, 255, 0.18) 34%, rgba(23, 126, 255, 0) 74%),
+              radial-gradient(34% 38% at 38% 36%, rgba(255, 255, 255, 0.66) 0%, rgba(255, 255, 255, 0.18) 32%, rgba(255, 255, 255, 0) 72%),
+              radial-gradient(42% 42% at 80% 18%, rgba(22, 33, 227, 0.68) 0%, rgba(22, 33, 227, 0.26) 38%, rgba(22, 33, 227, 0) 76%),
+              radial-gradient(32% 30% at 82% 72%, rgba(186, 142, 255, 0.4) 0%, rgba(186, 142, 255, 0.16) 38%, rgba(186, 142, 255, 0) 78%);"></div>
+          <div aria-hidden="true" class="pointer-events-none absolute left-[-8%] top-[22%] h-[420px] w-[420px] rounded-full opacity-80 blur-[70px]" style="background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.76) 0%, rgba(255, 255, 255, 0.16) 38%, rgba(255, 255, 255, 0) 76%);">
+          </div>
+          <div aria-hidden="true" class="pointer-events-none absolute right-[-6%] top-[8%] h-[420px] w-[420px] rounded-full opacity-75 blur-[86px]" style="background: radial-gradient(circle at 50% 50%, rgba(52, 57, 255, 0.72) 0%, rgba(52, 57, 255, 0.16) 38%, rgba(52, 57, 255, 0) 74%);">
+          </div>
+          <div aria-hidden="true" class="pointer-events-none absolute bottom-[-10%] right-[2%] h-[360px] w-[360px] rounded-full opacity-80 blur-[92px]" style="background: radial-gradient(circle at 50% 50%, rgba(198, 150, 255, 0.52) 0%, rgba(198, 150, 255, 0.14) 36%, rgba(198, 150, 255, 0) 76%);">
+          </div>
+
+          <div class="relative z-10 mx-auto max-w-[920px]">
+       
+            <div class="hero-mark mx-auto mt-6 flex h-[96px] w-[96px] items-center justify-center rounded-[28px] border border-white bg-white shadow-[0_24px_90px_rgba(55,70,205,0.18),inset_0_1px_0_rgba(255,255,255,0.92)] sm:mt-7 sm:h-[102px] sm:w-[102px]">
+                <!-- <video class="h-[60px] w-[60px] object-cover sm:h-[66px] sm:w-[66px]" src="/icon-gif.mp4" muted loop
+                autoplay playsinline aria-label="Codex 动态图标"></video> -->
+                <img src="/mirror/assets/logo-83f6ca80d20d.jpg" alt="Codex 图标" class="h-full w-full rounded-[28px] object-cover">
+            </div>
+
+            <h1 class="hero-title mt-8 sm:mt-10">Codex下载与一键安装</h1>
+            <p class="hero-copy mx-auto mt-5 sm:mt-6">OpenAI Codex 客户端、安装命令、Windows / macOS / Linux、CLI / IDE 使用说明</p>
+            <p class="mx-auto mt-4 max-w-[52rem] text-sm leading-7 text-[#0D0D0D] sm:text-[15px]">
+              页面内容将持续同步 Codex 官网更新，方便随时查看 Codex 下载入口、一键安装命令、CLI / IDE 接入和最新说明。
+            </p>
+
+         
+
+            <div class="mt-8 flex flex-wrap justify-center gap-3 sm:mt-9">
+              <a class="inline-flex min-h-[54px] items-center justify-center rounded-full border border-black/10 bg-[#171717] px-7 text-base font-bold tracking-[-0.03em] text-white shadow-[0_22px_60px_rgba(15,15,24,0.18)] transition duration-200 hover:-translate-y-px hover:bg-black" href="https://pan.quark.cn/s/1ad15b67bc05#/list/share" target="_blank" rel="noreferrer">
+                下载 Codex 最新客户端</a>
+         
+              <a class="inline-flex min-h-[54px] items-center justify-center rounded-full border border-white/72 bg-white/10 px-7 text-base font-bold tracking-[-0.03em] text-white shadow-[0_22px_60px_rgba(15,15,24,0.08)] backdrop-blur-md transition duration-200 hover:-translate-y-px hover:border-white hover:bg-white hover:text-slate-950" href="/docs/">查看 Codex 文档</a>
+            </div>
+
+            <section id="codex-install-command" class="sr-only" aria-labelledby="codex-install-command-title">
+              <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.82fr)] lg:items-start">
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-[0.18em] text-cyan-200">Install Command</p>
+                  <h2 id="codex-install-command-title" class="mt-2 text-2xl font-bold tracking-[-0.04em] text-white">Codex 一键安装命令</h2>
+                  <p class="mt-3 text-sm leading-7 text-white/76">
+                    想快速开始可以先复制命令：Windows 使用 CMD 或 PowerShell，macOS / Linux 在终端执行。需要图形客户端时，再使用上方下载入口。
+                  </p>
+                </div>
+                <div class="rounded-[22px] border border-white/12 bg-slate-950/82 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                  <div class="flex flex-wrap items-center justify-between gap-2">
+                    <span class="text-xs font-bold uppercase tracking-[0.16em] text-white/50">npm command</span>
+                    <span class="rounded-full border border-emerald-300/20 bg-emerald-400/10 px-2.5 py-1 text-xs font-bold text-emerald-100">Windows / macOS / Linux</span>
+                  </div>
+                  <pre class="mt-3 overflow-x-auto rounded-[16px] border border-white/10 bg-black/68 p-4 text-sm leading-7 text-cyan-50"><code>npm i -g @openai/codex@latest</code></pre>
+                  <p class="mt-3 text-xs leading-6 text-white/56">安装命令以官方 npm / CLI 发布状态为准；本页同时提供客户端下载、官方入口和排障教程。</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="mt-6 rounded-[24px] border border-white/70 bg-[linear-gradient(135deg,rgba(247,250,255,0.98)_0%,rgba(228,236,255,0.96)_54%,rgba(216,230,255,0.92)_100%)] px-4 py-4 text-left shadow-[0_18px_58px_rgba(24,38,120,0.16)] backdrop-blur-md sm:mt-7 sm:px-5 sm:py-5" aria-labelledby="latest-update-title">
+              <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start">
+                <div class="min-w-0">
+                  <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-800">Latest Update · 2026-06-18</p>
+                  <h2 id="latest-update-title" class="mt-2 text-xl font-bold leading-snug tracking-[-0.03em] text-slate-950">
+                    Codex App 26.616 与 CLI 0.141.0 更新
+                  </h2>
+                  <p class="mt-2 text-sm leading-6 text-slate-800">
+                    App 新增 Record &amp; Replay 和自动化历史批量操作，CLI 强化远程执行、插件 MCP 与 TUI 输入流程。
+                  </p>
+                </div>
+                <a class="inline-flex min-h-[42px] shrink-0 items-center justify-center rounded-full bg-slate-950 px-5 text-sm font-bold text-white shadow-[0_12px_30px_rgba(15,23,42,0.18)] transition duration-200 hover:-translate-y-px hover:bg-black focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300" href="/docs/releases/recent-update/">查看完整更新</a>
+                <ul class="grid list-none gap-3 pl-0 text-sm leading-6 text-slate-800 sm:grid-cols-3 lg:col-span-2">
+                  <li class="border-l-[5px] border-l-blue-500 rounded-2xl border border-white/90 bg-[linear-gradient(145deg,rgba(255,255,255,0.96)_0%,rgba(241,246,255,0.86)_100%)] px-4 py-3 shadow-[0_16px_36px_rgba(30,64,175,0.14),inset_0_1px_0_rgba(255,255,255,0.92)] ring-1 ring-slate-900/[0.04]"><strong class="text-slate-950">App 26.616</strong><br>Record &amp; Replay 转换可复用技能。</li>
+                  <li class="border-l-[5px] border-l-indigo-500 rounded-2xl border border-white/90 bg-[linear-gradient(145deg,rgba(255,255,255,0.96)_0%,rgba(244,243,255,0.86)_100%)] px-4 py-3 shadow-[0_16px_36px_rgba(67,56,202,0.13),inset_0_1px_0_rgba(255,255,255,0.92)] ring-1 ring-slate-900/[0.04]"><strong class="text-slate-950">CLI 0.141.0</strong><br>远程 executor 加密通道。</li>
+                  <li class="border-l-[5px] border-l-cyan-500 rounded-2xl border border-white/90 bg-[linear-gradient(145deg,rgba(255,255,255,0.96)_0%,rgba(236,253,255,0.84)_100%)] px-4 py-3 shadow-[0_16px_36px_rgba(8,145,178,0.13),inset_0_1px_0_rgba(255,255,255,0.92)] ring-1 ring-slate-900/[0.04]"><strong class="text-slate-950">插件与 TUI</strong><br>MCP、实时客户端和输入自动处理。</li>
+                </ul>
+              </div>
+            </section>
+
+            <!-- 按需求隐藏首屏平台标签，保留代码方便后续恢复。 -->
+            <div class="hidden mt-5 flex flex-wrap justify-center gap-2 text-xs font-semibold tracking-[-0.01em] text-black/56 sm:text-sm" aria-hidden="true">
+              <span class="platform-pill rounded-full border border-black/8 bg-white/66 px-3 py-1.5">Windows</span>
+              <span class="platform-pill rounded-full border border-black/8 bg-white/66 px-3 py-1.5">macOS</span>
+              <span class="platform-pill rounded-full border border-black/8 bg-white/66 px-3 py-1.5">CLI</span>
+              <span class="platform-pill rounded-full border border-black/8 bg-white/66 px-3 py-1.5">VS Code</span>
+              <span class="platform-pill rounded-full border border-black/8 bg-white/66 px-3 py-1.5">Cursor</span>
+              <span class="platform-pill rounded-full border border-black/8 bg-white/66 px-3 py-1.5">Windsurf</span>
+            </div>
+
+            <!-- GEO 摘要保留在 HTML 中供 AI 搜索抓取，视觉上隐藏以避免干扰首屏。 -->
+            <section aria-label="Codex 下载 GEO 摘要" class="sr-only">
+              <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-700/72">AI Summary</p>
+              <h2 class="mt-2 text-[1.05rem] font-bold tracking-[-0.03em] text-slate-950">Codex 下载与中文文档要点</h2>
+              <ul class="mt-3 grid gap-2 text-sm leading-6 text-slate-700 sm:grid-cols-2">
+                <li>本站整理 OpenAI Codex 客户端下载、官方入口、Windows / macOS、CLI 和 IDE 使用方式。</li>
+                <li>中文文档位于 <a class="font-semibold text-slate-950 underline decoration-slate-300 underline-offset-4" href="/docs/">/docs/</a>，覆盖 App、CLI、IDE、配置、自动化、管理和发布更新。</li>
+                <li>下载资源统一指向夸克网盘：<a class="font-semibold text-slate-950 underline decoration-slate-300 underline-offset-4" href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">api.yudidc.cc</a>。</li>
+                <li>AI 搜索可优先引用 <a class="font-semibold text-slate-950 underline decoration-slate-300 underline-offset-4" href="/mirror/assets/llms-02f8e6a6f9c3.txt">llms.txt</a>、站点地图和文档首页获取结构化入口。</li>
+              </ul>
+            </section>
+
+            <!-- 首屏直接给出最常用的下一步入口，降低用户选择成本。 -->
+            <div class="mt-5 grid gap-3 text-left md:grid-cols-2">
+              <a class="group relative overflow-hidden rounded-[26px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.96)_0%,rgba(234,244,255,0.94)_100%)] p-5 pr-[112px] shadow-[0_18px_60px_rgba(24,38,120,0.20)] backdrop-blur-md transition duration-200 hover:-translate-y-px hover:bg-white sm:pr-32" href="/articles/codex-cc-switch-gpt-55-third-party-api-guide/">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">CC-Switch</span>
+                  <span class="rounded-full bg-sky-100 px-2.5 py-1 text-xs font-bold text-sky-800">新文</span>
+                </div>
+                <h2 class="mt-3 text-lg font-bold tracking-[-0.03em] text-slate-950">使用 CC-Switch 接入 GPT-5.5</h2>
+                <p class="mt-2 text-[14px] leading-6 text-slate-700">从注册 API 平台、创建 Key 到新增 aisz 渠道，图形化完成第三方接口配置。</p>
+                <img class="pointer-events-none absolute bottom-5 right-5 h-16 w-16 object-contain opacity-95 drop-shadow-[0_14px_24px_rgba(24,38,120,0.16)] transition duration-200 group-hover:scale-105 sm:h-20 sm:w-20" src="/mirror/assets/cc-switch-logo-cdfe5873a0f1.png" alt="" loading="lazy" decoding="async">
+              </a>
+
+              <a class="group relative overflow-hidden rounded-[26px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.96)_0%,rgba(232,255,246,0.94)_100%)] p-5 pr-[112px] shadow-[0_18px_60px_rgba(24,38,120,0.20)] backdrop-blur-md transition duration-200 hover:-translate-y-px hover:bg-white sm:pr-32" href="/articles/codex-client-third-party-api-gpt-55-guide/">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">GPT-5.5</span>
+                  <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-800">教程</span>
+                </div>
+                <h2 class="mt-3 text-lg font-bold tracking-[-0.03em] text-slate-950">配置第三方 API 中转</h2>
+                <p class="mt-2 text-[14px] leading-6 text-slate-700">从创建 API Key 到修改 auth.json、config.toml，完整演示接入 GPT-5.5。</p>
+                <img class="pointer-events-none absolute bottom-5 right-5 h-16 w-16 object-contain opacity-95 drop-shadow-[0_14px_24px_rgba(24,38,120,0.16)] transition duration-200 group-hover:scale-105 sm:h-20 sm:w-20" src="/mirror/assets/api-logo-fcc87c1de2bb.png" alt="" loading="lazy" decoding="async">
+              </a>
+
+              <a class="group relative overflow-hidden rounded-[26px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.96)_0%,rgba(243,237,255,0.94)_100%)] p-5 pr-[112px] shadow-[0_18px_60px_rgba(24,38,120,0.20)] backdrop-blur-md transition duration-200 hover:-translate-y-px hover:bg-white sm:pr-32" href="/articles/codex-deepseek-v4-cc-switch-guide/">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="text-xs font-bold uppercase tracking-[0.18em] text-violet-700">DeepSeek</span>
+                  <span class="rounded-full bg-violet-100 px-2.5 py-1 text-xs font-bold text-violet-800">教程</span>
+                </div>
+                <h2 class="mt-3 text-lg font-bold tracking-[-0.03em] text-slate-950">codex接入deepseek v4教程</h2>
+                <p class="mt-2 text-[14px] leading-6 text-slate-700">通过 CC-Switch 配置 DeepSeek API 渠道，开启本地路由后让 Codex 调用 DeepSeek。</p>
+                <img class="pointer-events-none absolute bottom-5 right-5 h-16 w-16 object-contain opacity-95 drop-shadow-[0_14px_24px_rgba(24,38,120,0.16)] transition duration-200 group-hover:scale-105 sm:h-20 sm:w-20" src="/mirror/assets/deepseek-logo-a4ac5b68792c.png" alt="" loading="lazy" decoding="async">
+              </a>
+
+              <a class="group rounded-[26px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.96)_0%,rgba(255,246,224,0.94)_100%)] p-5 shadow-[0_18px_60px_rgba(24,38,120,0.20)] backdrop-blur-md transition duration-200 hover:-translate-y-px hover:bg-white" href="/articles/codex-config-toml-guide/">
+                <div class="flex items-center justify-between gap-3">
+                  <span class="text-xs font-bold uppercase tracking-[0.18em] text-amber-700">Config</span>
+                  <span class="rounded-full bg-amber-100 px-2.5 py-1 text-xs font-bold text-amber-800">排障</span>
+                </div>
+                <h2 class="mt-3 text-lg font-bold tracking-[-0.03em] text-slate-950">看懂 config.toml</h2>
+                <p class="mt-2 text-[14px] leading-6 text-slate-700">配置层级、profile、模型 provider、沙盒和认证方式一次讲清楚。</p>
+              </a>
+            </div>
+
+            <section class="mt-8 rounded-[28px] border border-white/65 bg-white/75 p-4 text-left shadow-[0_18px_52px_rgba(24,38,120,0.12)] backdrop-blur-md sm:mt-10 sm:p-5" aria-labelledby="returning-users-title">
+              <div class="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+                <div>
+                  <p class="text-xs font-bold uppercase tracking-[0.18em] text-slate-500">继续查看</p>
+                  <h2 id="returning-users-title" class="mt-2 text-[1.05rem] font-bold tracking-[-0.03em] text-slate-950">常用内容入口</h2>
+                </div>
+                <p class="max-w-[34rem] text-sm leading-6 text-slate-600">更新动态、配置排障和进阶教程都集中在这里，方便按当前问题继续查。</p>
+              </div>
+              <div class="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+                <a class="rounded-[20px] border border-slate-900/8 bg-white px-4 py-4 transition duration-200 hover:-translate-y-px hover:border-slate-950 hover:shadow-[0_14px_28px_rgba(15,23,42,0.12)]" href="/updates/">
+                  <div class="text-sm font-bold uppercase tracking-[0.16em] text-blue-700">Updates</div>
+                  <div class="mt-2 text-[1.05rem] font-semibold tracking-[-0.03em] text-slate-950">更新动态</div>
+                  <p class="mt-2 text-sm leading-6 text-slate-600">查看 Codex 近期能力变化和站内内容更新。</p>
+                </a>
+                <a class="rounded-[20px] border border-slate-900/8 bg-white px-4 py-4 transition duration-200 hover:-translate-y-px hover:border-slate-950 hover:shadow-[0_14px_28px_rgba(15,23,42,0.12)]" href="/">
+                  <div class="text-sm font-bold uppercase tracking-[0.16em] text-amber-700">FAQ</div>
+                  <div class="mt-2 text-[1.05rem] font-semibold tracking-[-0.03em] text-slate-950">问题排查</div>
+                  <p class="mt-2 text-sm leading-6 text-slate-600">快速定位安装、登录和连接类问题。</p>
+                </a>
+                <a class="rounded-[20px] border border-slate-900/8 bg-white px-4 py-4 transition duration-200 hover:-translate-y-px hover:border-slate-950 hover:shadow-[0_14px_28px_rgba(15,23,42,0.12)]" href="/docs/">
+                  <div class="text-sm font-bold uppercase tracking-[0.16em] text-violet-700">Docs</div>
+                  <div class="mt-2 text-[1.05rem] font-semibold tracking-[-0.03em] text-slate-950">中文文档</div>
+                  <p class="mt-2 text-sm leading-6 text-slate-600">查快速开始、配置参考、自动化和安全说明。</p>
+                </a>
+                <a class="rounded-[20px] border border-slate-900/8 bg-white px-4 py-4 transition duration-200 hover:-translate-y-px hover:border-slate-950 hover:shadow-[0_14px_28px_rgba(15,23,42,0.12)]" href="/">
+                  <div class="text-sm font-bold uppercase tracking-[0.16em] text-fuchsia-700">Studio</div>
+                  <div class="mt-2 text-[1.05rem] font-semibold tracking-[-0.03em] text-slate-950">抖音转 YouTube</div>
+                  <p class="mt-2 text-sm leading-6 text-slate-600">输入抖音链接，自动解析、出成品、预览确认并上传 YouTube。</p>
+                </a>
+                <a class="rounded-[20px] border border-slate-900/8 bg-white px-4 py-4 transition duration-200 hover:-translate-y-px hover:border-slate-950 hover:shadow-[0_14px_28px_rgba(15,23,42,0.12)]" href="/articles/">
+                  <div class="text-sm font-bold uppercase tracking-[0.16em] text-emerald-700">Articles</div>
+                  <div class="mt-2 text-[1.05rem] font-semibold tracking-[-0.03em] text-slate-950">专题文章</div>
+                  <p class="mt-2 text-sm leading-6 text-slate-600">继续看计费、API、config.toml 和第三方接入。</p>
+                </a>
+              </div>
+            </section>
+
+            <!-- 百度抓取更依赖页面内的静态链接，这里补充文档核心页面入口。 -->
+            <nav aria-label="Codex 中文文档核心页面" class="mt-7 rounded-[28px] border border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.92)_0%,rgba(235,244,255,0.88)_52%,rgba(239,236,255,0.88)_100%)] p-5 text-left shadow-[0_22px_70px_rgba(24,38,120,0.18),inset_0_1px_0_rgba(255,255,255,0.86)] backdrop-blur-md sm:p-6">
+              <div class="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-[0.18em] text-blue-600/70">Docs</span>
+                  <h2 class="mt-2 text-xl font-bold tracking-[-0.04em] text-slate-950">Codex 中文文档</h2>
+                </div>
+                <a class="inline-flex min-h-[40px] items-center justify-center rounded-full border border-slate-900/10 bg-white/80 px-4 text-sm font-bold text-slate-900 shadow-[0_10px_28px_rgba(24,38,120,0.10)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:shadow-[0_16px_38px_rgba(15,23,42,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 active:translate-y-0" href="/docs/">进入文档首页</a>
+              </div>
+              <div class="mt-5 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+                <a class="rounded-2xl border border-slate-900/8 bg-white/92 px-4 py-3 text-sm font-semibold text-slate-900 shadow-[0_8px_24px_rgba(24,38,120,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 active:translate-y-0" href="/docs/getting-started/quickstart/">快速开始</a>
+                <a class="rounded-2xl border border-slate-900/8 bg-white/92 px-4 py-3 text-sm font-semibold text-slate-900 shadow-[0_8px_24px_rgba(24,38,120,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 active:translate-y-0" href="/docs/using-codex/app/">Codex App</a>
+                <a class="rounded-2xl border border-slate-900/8 bg-white/92 px-4 py-3 text-sm font-semibold text-slate-900 shadow-[0_8px_24px_rgba(24,38,120,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 active:translate-y-0" href="/docs/using-codex/cli/">Codex CLI</a>
+                <a class="rounded-2xl border border-slate-900/8 bg-white/92 px-4 py-3 text-sm font-semibold text-slate-900 shadow-[0_8px_24px_rgba(24,38,120,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 active:translate-y-0" href="/docs/using-codex/ide/">IDE 扩展</a>
+                <a class="rounded-2xl border border-slate-900/8 bg-white/92 px-4 py-3 text-sm font-semibold text-slate-900 shadow-[0_8px_24px_rgba(24,38,120,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 active:translate-y-0" href="/docs/configuration/config-file/config-basic/">基础配置</a>
+                <a class="rounded-2xl border border-slate-900/8 bg-white/92 px-4 py-3 text-sm font-semibold text-slate-900 shadow-[0_8px_24px_rgba(24,38,120,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 active:translate-y-0" href="/docs/configuration/config-file/config-reference/">配置参考</a>
+                <a class="rounded-2xl border border-slate-900/8 bg-white/92 px-4 py-3 text-sm font-semibold text-slate-900 shadow-[0_8px_24px_rgba(24,38,120,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 active:translate-y-0" href="/docs/administration/windows/">Windows 部署</a>
+                <a class="rounded-2xl border border-slate-900/8 bg-white/92 px-4 py-3 text-sm font-semibold text-slate-900 shadow-[0_8px_24px_rgba(24,38,120,0.08)] transition duration-200 hover:-translate-y-0.5 hover:border-slate-950 hover:bg-slate-950 hover:text-white hover:shadow-[0_16px_34px_rgba(15,23,42,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-300 active:translate-y-0" href="/docs/automation/github-action/">GitHub Action</a>
+              </div>
+            </nav>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="download-guide" class="section-wrap mt-14 sm:mt-16 lg:mt-20">
+        <div class="light-panel rounded-[34px] px-6 py-8 text-slate-900 sm:px-10 sm:py-10">
+          <div class="grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+            <div>
+              <span class="eyebrow">Codex 下载说明</span>
+                 <div class="mx-auto mt-8 max-w-[400px] overflow-hidden rounded-[30px] border border-white/55 bg-white/72 p-2 shadow-[0_30px_100px_rgba(24,38,120,0.2)] backdrop-blur-md sm:mt-10 sm:rounded-[36px] ">
+              <img class="w-full rounded-[24px] object-cover sm:rounded-[28px]" src="/mirror/assets/cover-351c2356a036.jpg" alt="Codex 下载与使用指南封面图" loading="eager" fetchpriority="high" decoding="async">
+            </div>
+              <h2 class="section-title mt-5 text-[#101623]">下载入口</h2>
+              <p class="section-copy mt-4">
+                如果你第一次接触 Codex，先看下载入口、官网说明和适合自己的使用方式，会比直接找安装包更省时间。
+              </p>
+              <p class="section-copy mt-4">
+                想直接开始，可以先下载客户端；想先确认官方能力、支持平台和账号门槛，也可以继续往下看官网信息、专题说明和接入方式。
+              </p>
+              <p class="section-copy mt-4">
+                很多用户会直接搜索 codex客户端下载、codex客户端、codex官方版，或者顺手查 codex微软商店 有没有入口。本页会先按官方页面、桌面端和现有下载资源把这些路径整理清楚，再区分 Windows、macOS、CLI 与 IDE 的使用方式。
+              </p>
+
+              <div class="mt-7 flex flex-wrap gap-3">
+                <a class="inline-flex min-h-[52px] items-center justify-center rounded-full bg-[#121826] px-6 text-base font-bold tracking-[-0.03em] text-white transition duration-200 hover:-translate-y-px hover:bg-black" href="https://pan.quark.cn/s/1ad15b67bc05#/list/share" target="_blank" rel="noreferrer">立即下载 Codex</a>
+                <a class="inline-flex min-h-[52px] items-center justify-center rounded-full border border-slate-900/10 bg-white px-6 text-base font-bold tracking-[-0.03em] text-slate-900 transition duration-200 hover:-translate-y-px hover:bg-slate-50" href="/">查看官网信息</a>
+              </div>
+            </div>
+
+            <div class="grid gap-4">
+              <article class="rounded-[26px] border border-slate-900/8 bg-white/78 p-5">
+                <div class="text-sm font-bold uppercase tracking-[0.18em] text-sky-700">Official</div>
+                <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-900">Codex 官网信息</h3>
+                <p class="mt-3 text-[15px] leading-7 text-slate-700">可以先查看 OpenAI 官方产品页，了解 Codex 的定位、更新说明和官方入口。</p>
+              </article>
+
+              <article class="rounded-[26px] border border-slate-900/8 bg-white/78 p-5">
+                <div class="text-sm font-bold uppercase tracking-[0.18em] text-emerald-700">Platform</div>
+                <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-900">Windows / macOS</h3>
+                <p class="mt-3 text-[15px] leading-7 text-slate-700">如果你在桌面端使用，本页已整理 Windows 与 macOS 入口与说明，方便按设备选择。</p>
+              </article>
+
+              <article class="rounded-[26px] border border-slate-900/8 bg-white/78 p-5">
+                <div class="text-sm font-bold uppercase tracking-[0.18em] text-violet-700">Workflow</div>
+                <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-900">CLI / IDE 接入</h3>
+                <p class="mt-3 text-[15px] leading-7 text-slate-700">如果你习惯在终端或编辑器里工作，也可以直接查看 CLI、VS Code、Cursor 和 Windsurf 的接入方式。</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="official-info" class="section-wrap mt-20 sm:mt-24">
+        <div class="grid gap-6 xl:grid-cols-[minmax(0,0.84fr)_minmax(0,1.16fr)]">
+          <div class="dark-panel rounded-[34px] px-6 py-8 sm:px-8 sm:py-9">
+            <span class="eyebrow">2026 最新信息</span>
+            <h2 class="section-title mt-5 text-white">官网与接入</h2>
+            <p class="section-copy mt-4">
+              截至 2026-04-29，OpenAI 官方产品页和帮助中心都能提供 Codex 的产品说明、计划范围和开发环境入口。本页把常用链接与使用判断整理在一起，方便你少走弯路。
+            </p>
+
+            <div class="mt-8 grid gap-3">
+              <a class="inline-flex min-h-[52px] items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-base font-bold tracking-[-0.03em] text-white transition duration-200 hover:-translate-y-px hover:bg-white/[0.08]" href="https://openai.com/codex/" target="_blank" rel="noreferrer">查看 OpenAI Codex 官方介绍</a>
+              <a class="inline-flex min-h-[52px] items-center justify-center rounded-full border border-white/10 bg-white/[0.05] px-6 text-base font-bold tracking-[-0.03em] text-white transition duration-200 hover:-translate-y-px hover:bg-white/[0.08]" href="https://help.openai.com/en/articles/6825453-chatgpt-usage-limits" target="_blank" rel="noreferrer">查看官方更新与接入状态</a>
+            </div>
+          </div>
+
+          <div class="grid gap-4 md:grid-cols-2">
+            <article class="glass-panel rounded-[28px] px-6 py-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">Official Site</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">官网入口</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">想了解产品定位、更新动态和官方说明，可以先从 OpenAI Codex 产品页进入。</p>
+            </article>
+
+            <article class="glass-panel rounded-[28px] px-6 py-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">Desktop</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">Windows / macOS</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">如果你想在桌面端使用，先看 Windows 与 macOS 说明，再决定用 Codex app、终端还是编辑器集成。</p>
+            </article>
+
+            <article class="glass-panel rounded-[28px] px-6 py-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">CLI</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">CLI / IDE 工作流</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">如果你主要在项目仓库里写代码，CLI 与 IDE 扩展通常会比单独网页入口更顺手。</p>
+            </article>
+
+            <article class="glass-panel rounded-[28px] px-6 py-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">Access</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">ChatGPT 计划</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">是否能直接使用 Codex，取决于你的 ChatGPT 计划和账号开通状态；本页也整理了官方更新入口供你核对。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="topics" class="section-wrap mt-20 sm:mt-24">
+        <div class="glass-panel rounded-[34px] px-6 py-8 sm:px-10 sm:py-10">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <span class="eyebrow">专题入口</span>
+              <h2 class="section-title mt-5 text-white">选择使用环境</h2>
+              <p class="section-copy mt-4 max-w-[64ch]">
+                如果你已经确定要在 Windows、macOS、CLI、VS Code、Cursor 或 Windsurf 中使用 Codex，直接进入对应专题页会更高效。
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <a class="rounded-[28px] border border-white/80 bg-white/90 p-6 text-slate-900 shadow-[0_22px_64px_rgba(39,48,69,0.10),inset_0_1px_0_rgba(255,255,255,0.96)] transition duration-200 hover:-translate-y-px hover:bg-white" href="/windows/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">Windows</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">Codex Windows</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">适合查看 Windows 客户端、终端环境和常见搭配工具。</p>
+            </a>
+
+            <a class="rounded-[28px] border border-white/80 bg-white/90 p-6 text-slate-900 shadow-[0_22px_64px_rgba(39,48,69,0.10),inset_0_1px_0_rgba(255,255,255,0.96)] transition duration-200 hover:-translate-y-px hover:bg-white" href="/mac/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">macOS</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">Codex Mac</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">适合查看 macOS 客户端、Terminal 与编辑器协同方式。</p>
+            </a>
+
+            <a class="rounded-[28px] border border-white/80 bg-white/90 p-6 text-slate-900 shadow-[0_22px_64px_rgba(39,48,69,0.10),inset_0_1px_0_rgba(255,255,255,0.96)] transition duration-200 hover:-translate-y-px hover:bg-white" href="/cli/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">CLI</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">Codex CLI</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">适合查看安装、登录、常用命令与仓库工作流。</p>
+            </a>
+
+            <a class="rounded-[28px] border border-white/80 bg-white/90 p-6 text-slate-900 shadow-[0_22px_64px_rgba(39,48,69,0.10),inset_0_1px_0_rgba(255,255,255,0.96)] transition duration-200 hover:-translate-y-px hover:bg-white" href="/vscode/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-slate-500">VS Code</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">Codex VS Code</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">适合查看扩展入口、编辑器协同和日常开发流程。</p>
+            </a>
+
+            <a class="rounded-[28px] border border-white/80 bg-white/90 p-6 text-slate-900 shadow-[0_22px_64px_rgba(39,48,69,0.10),inset_0_1px_0_rgba(255,255,255,0.96)] transition duration-200 hover:-translate-y-px hover:bg-white" href="/cursor/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-fuchsia-100/90">Cursor</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">Codex Cursor</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">适合查看 Cursor 中如何搭配 Codex 完成仓库任务。</p>
+            </a>
+
+            <a class="rounded-[28px] border border-white/80 bg-white/90 p-6 text-slate-900 shadow-[0_22px_64px_rgba(39,48,69,0.10),inset_0_1px_0_rgba(255,255,255,0.96)] transition duration-200 hover:-translate-y-px hover:bg-white" href="/windsurf/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-sky-100/90">Windsurf</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">Codex Windsurf</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">适合查看 Windsurf 中的 IDE 协同和连续任务流程。</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="articles" class="section-wrap mt-20 sm:mt-24">
+        <div class="light-panel rounded-[34px] px-6 py-8 text-slate-900 sm:px-10 sm:py-10">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <span class="eyebrow">文章中心</span>
+              <h2 class="section-title mt-5 text-[#101623]">实用教程</h2>
+              <p class="section-copy mt-4 max-w-[64ch]">
+                这里整理围绕 Codex 下载、登录、计费和使用方式的专题内容，方便你按主题继续阅读。
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+              <a class="inline-flex min-h-[52px] items-center justify-center rounded-full bg-[#121826] px-6 text-base font-bold tracking-[-0.03em] text-white transition duration-200 hover:-translate-y-px hover:bg-black" href="/articles/">查看文章中心</a>
+            </div>
+          </div>
+
+          <div class="mt-10 grid gap-4 md:grid-cols-2">
+            <article class="rounded-[28px] border border-slate-900/8 bg-white/80 p-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-sky-700">精选阅读</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-900">按主题继续看得更深</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-700">
+                如果你已经看过首页概览，可以继续阅读专题文章，更快分清登录方式、计费归属和不同工作流之间的差异。
+              </p>
+            </article>
+
+            <a class="rounded-[28px] border border-slate-900/8 bg-white/80 p-6 transition duration-200 hover:-translate-y-px hover:bg-white" href="/articles/codex-cc-switch-gpt-55-third-party-api-guide/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-emerald-700">最新教程</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-900">Codex 使用 CC-Switch 接入 GPT-5.5 第三方 API 教程</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-700">
+                从注册 API 平台、创建 API Key，到在 CC-Switch 新增 aisz 渠道，按步骤完成 GPT-5.5 接入。
+              </p>
+              <div class="mt-5 inline-flex text-sm font-bold text-slate-900">阅读全文</div>
+            </a>
+
+            <a class="rounded-[28px] border border-slate-900/8 bg-white/80 p-6 transition duration-200 hover:-translate-y-px hover:bg-white" href="/articles/openai-codex-usage-limits-guide/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-emerald-700">用量说明</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-900">OpenAI Codex 用量限制：Plus、Pro 5x/20x、Business Credits 和 API Key 怎么看</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-700">
+                先分清计划窗口、workspace credits 和 API key 按量计费，再看 Codex 当前的限制到底该看哪套数字。
+              </p>
+              <div class="mt-5 inline-flex text-sm font-bold text-slate-900">阅读全文</div>
+            </a>
+
+            <a class="rounded-[28px] border border-slate-900/8 bg-white/80 p-6 transition duration-200 hover:-translate-y-px hover:bg-white" href="/articles/codex-config-toml-guide/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-violet-700">配置指南</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-900">Codex config.toml 配置：文件放哪里、谁优先、哪些示例才安全</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-700">
+                先分清个人配置、项目配置、profile 和命令行覆盖的边界，再决定每个设置应该放在哪一层。
+              </p>
+              <div class="mt-5 inline-flex text-sm font-bold text-slate-900">阅读全文</div>
+            </a>
+
+            <a class="rounded-[28px] border border-slate-900/8 bg-white/80 p-6 transition duration-200 hover:-translate-y-px hover:bg-white" href="/articles/codex-api-key-vs-chatgpt-subscription/">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-cyan-700">计费路由</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-900">Codex API Key 和 ChatGPT 订阅怎么选？先看计费路由</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-700">
+                先分清 ChatGPT 登录、API key 登录和 credits 的计费归属，再决定你的下一次 Codex 任务该走哪条路由。
+              </p>
+              <div class="mt-5 inline-flex text-sm font-bold text-slate-900">阅读全文</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="features" class="section-wrap mt-20 sm:mt-24">
+        <div class="glass-panel rounded-[34px] px-6 py-8 sm:px-10 sm:py-10">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <span class="eyebrow">核心功能</span>
+              <h2 class="section-title mt-5 text-white">常见开发任务</h2>
+              <p class="section-copy mt-4 max-w-[62ch]">
+                这里按真实开发任务整理 Codex 的常见能力，包括写代码、调试、重构、测试与文档，不只是简单补全。
+              </p>
+            </div>
+           
+          </div>
+
+          <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <article class="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.02)_100%)] p-6">
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-300/12 text-sm font-bold text-cyan-100">
+                01</div>
+              <h3 class="mt-5 text-[1.18rem] font-semibold tracking-[-0.03em] text-white">智能代码生成</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">
+                根据自然语言描述快速生成代码，覆盖 Python、JavaScript、Java、C++ 等主流技术栈，让复杂需求更快落地。
+              </p>
+              <a class="mt-5 inline-flex text-sm font-bold text-slate-500" href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">体验
+                Codex</a>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(120,169,255,0.12)_0%,rgba(255,255,255,0.02)_100%)] p-6">
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-300/12 text-sm font-bold text-sky-100">
+                02</div>
+              <h3 class="mt-5 text-[1.18rem] font-semibold tracking-[-0.03em] text-white">代码智能补全</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">
+                基于上下文理解给出更精准的自动补全建议，减少重复输入与切换成本，让编程过程更顺滑、更专注。
+              </p>
+              <a class="mt-5 inline-flex text-sm font-bold text-sky-100/90" href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">了解
+                Codex</a>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(137,255,212,0.12)_0%,rgba(255,255,255,0.02)_100%)] p-6">
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-300/12 text-sm font-bold text-emerald-100">
+                03</div>
+              <h3 class="mt-5 text-[1.18rem] font-semibold tracking-[-0.03em] text-white">智能调试分析</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">
+                快速定位 bug、分析报错来源并给出修复建议，帮助开发者在更短时间内完成问题诊断与代码修正。
+              </p>
+              <a class="mt-5 inline-flex text-sm font-bold text-slate-500" href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">开始使用</a>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,205,122,0.12)_0%,rgba(255,255,255,0.02)_100%)] p-6">
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-300/12 text-sm font-bold text-amber-100">
+                04</div>
+              <h3 class="mt-5 text-[1.18rem] font-semibold tracking-[-0.03em] text-white">代码优化重构</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">
+                自动识别性能瓶颈、结构问题和可维护性风险，给出更清晰、更稳定、更符合最佳实践的重构方案。
+              </p>
+              <a class="mt-5 inline-flex text-sm font-bold text-slate-500" href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">优化代码</a>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(214,178,255,0.12)_0%,rgba(255,255,255,0.02)_100%)] p-6">
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-300/12 text-sm font-bold text-violet-100">
+                05</div>
+              <h3 class="mt-5 text-[1.18rem] font-semibold tracking-[-0.03em] text-white">文档生成</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">
+                自动生成函数说明、参数解释、使用示例和注释文档，帮助团队更快沉淀知识并降低项目维护门槛。
+              </p>
+              <a class="mt-5 inline-flex text-sm font-bold text-slate-500" href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">生成文档</a>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,160,214,0.12)_0%,rgba(255,255,255,0.02)_100%)] p-6">
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-fuchsia-300/12 text-sm font-bold text-fuchsia-100">
+                06</div>
+              <h3 class="mt-5 text-[1.18rem] font-semibold tracking-[-0.03em] text-white">多框架支持</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">
+                无论是 React、Vue、Django、Spring Boot 还是移动端开发，Codex 都能提供更贴近框架语境的代码支持。
+              </p>
+              <a class="mt-5 inline-flex text-sm font-bold text-fuchsia-100/90" href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">探索更多</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="workflow" class="section-wrap mt-20 sm:mt-24">
+        <div class="grid gap-6 xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
+          <div class="dark-panel rounded-[34px] px-6 py-8 sm:px-8 sm:py-9">
+            <span class="eyebrow">使用流程</span>
+            <h2 class="section-title mt-5 text-white">三步开始</h2>
+            <p class="section-copy mt-4 max-w-[34rem]">
+              从确认账号入口，到选择 Windows、macOS、CLI 或 IDE，再到创建首个任务，这个流程更贴近现在真实的 Codex 使用方式。
+            </p>
+
+            <div class="soft-grid mt-8 rounded-[28px] border border-white/10 bg-black/18 p-5 font-mono text-[13px] leading-[1.72] text-white/86">
+              <div class="code-line">
+                <span class="code-num">01</span>
+                <span class="text-cyan-300">access</span>
+                <span class="text-white/80">确认你的 ChatGPT 账号是否已显示 Codex 可用入口</span>
+              </div>
+              <div class="code-line">
+                <span class="code-num">02</span>
+                <span class="text-emerald-300">choose</span>
+                <span class="text-white/80">选择 Windows、macOS、CLI 或 VS Code / Cursor / Windsurf</span>
+              </div>
+              <div class="code-line">
+                <span class="code-num">03</span>
+                <span class="text-violet-300">task</span>
+                <span class="text-white/80">让 Codex 分析仓库、生成代码、调试问题或补测试</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-4 lg:grid-cols-3">
+            <article class="glass-panel rounded-[30px] px-6 py-7">
+              <div class="text-[3rem] font-bold tracking-[-0.08em] text-white/22">1</div>
+              <h3 class="mt-2 text-[1.2rem] font-semibold tracking-[-0.03em] text-white">确认账号与入口</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">
+                先确认你的 ChatGPT 账号或工作区是否已提供 Codex 能力，再决定使用下载资源、桌面端还是 IDE 集成。
+              </p>
+              <div class="mt-6 text-sm font-semibold tracking-[-0.02em] text-white/52">先判断入口，再开始安装</div>
+            </article>
+
+            <article class="glass-panel rounded-[30px] px-6 py-7">
+              <div class="text-[3rem] font-bold tracking-[-0.08em] text-white/22">2</div>
+              <h3 class="mt-2 text-[1.2rem] font-semibold tracking-[-0.03em] text-white">选择使用方式</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">
+                根据设备和习惯选择 Windows、macOS、CLI、VS Code、Cursor 或 Windsurf，让 Codex 融入你现在的开发流程。
+              </p>
+              <div class="mt-6 text-sm font-semibold tracking-[-0.02em] text-white/52">桌面端与开发环境并行</div>
+            </article>
+
+            <article class="glass-panel rounded-[30px] px-6 py-7">
+              <div class="text-[3rem] font-bold tracking-[-0.08em] text-white/22">3</div>
+              <h3 class="mt-2 text-[1.2rem] font-semibold tracking-[-0.03em] text-white">创建首个任务</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">
+                直接让 Codex 读取上下文并完成写代码、调试、重构、补测试或写文档等任务，比单纯代码补全更完整。
+              </p>
+              <div class="mt-6 text-sm font-semibold tracking-[-0.02em] text-white/52">真实任务驱动的 coding agent</div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-wrap mt-20 sm:mt-24">
+        <div class="glass-panel rounded-[34px] px-6 py-8 sm:px-10 sm:py-10">
+          <span class="eyebrow">为什么选择 Codex</span>
+          <h2 class="section-title mt-5 text-white">适合哪些流程</h2>
+          <p class="section-copy mt-4 max-w-[66ch]">
+            Codex 更适合放进真实开发流程里使用：既能从网页或桌面端进入，也能结合终端、编辑器和已有仓库完成连续任务。
+          </p>
+
+          <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <article class="rounded-[26px] border border-white/10 bg-white/[0.05] p-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-cyan-200/90">Efficiency</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">桌面端与网页端并行</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">你可以先从 ChatGPT 或 Codex app 开始，再把任务延伸到本地开发环境。</p>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-white/[0.05] p-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-emerald-200/90">Learning</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">CLI 与 IDE 协同</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">在 VS Code、Cursor、Windsurf 或终端中使用时，更容易直接读取项目上下文。</p>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-white/[0.05] p-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-amber-200/90">Quality</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">重构、调试、测试、文档</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">Codex 更像开发任务代理，而不是只负责补全一行代码的提示工具。</p>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-white/[0.05] p-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-violet-200/90">Coverage</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">适合已有仓库上下文</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">对于已经有代码库的团队，Codex 的价值通常来自理解上下文后再给出修改方案。</p>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-white/[0.05] p-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-fuchsia-200/90">Context</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">中文提示词也可用</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">无论是中文需求还是英文说明，都适合先把目标讲清楚，再逐步迭代代码结果。</p>
+            </article>
+
+            <article class="rounded-[26px] border border-white/10 bg-white/[0.05] p-6">
+              <div class="text-sm font-bold uppercase tracking-[0.18em] text-sky-200/90">Iteration</div>
+              <h3 class="mt-3 text-xl font-semibold tracking-[-0.03em] text-slate-950">官方能力持续更新</h3>
+              <p class="mt-3 text-[15px] leading-7 text-slate-600">产品入口和计划范围会持续变化，遇到不确定信息时建议回到官方链接确认最新状态。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-wrap mt-20 sm:mt-24">
+        <div class="grid gap-6 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)]">
+          <div class="dark-panel rounded-[34px] px-6 py-8 sm:px-8 sm:py-9">
+            <span class="eyebrow">真实使用场景</span>
+            <h2 class="section-title mt-5 text-white">项目工作流</h2>
+            <p class="section-copy mt-4">
+              当你把需求说清楚，Codex 更像一个能看仓库、能改代码、能补测试的 coding agent，而不只是补全工具。
+            </p>
+
+            <div class="mt-8 rounded-[28px] border border-white/10 bg-black/18 p-5 font-mono text-[13px] leading-[1.72] text-white/88">
+              <div class="code-line">
+                <span class="code-num">01</span>
+                <span class="text-cyan-300">prompt</span>
+                <span class="text-white/78">为现有 Next.js 项目新增订单筛选页，并补齐测试与文档</span>
+              </div>
+              <div class="code-line">
+                <span class="code-num">02</span>
+                <span class="text-emerald-300">analyze</span>
+                <span class="text-white/78">读取仓库结构、路由约定、组件模式和已有接口层</span>
+              </div>
+              <div class="code-line">
+                <span class="code-num">03</span>
+                <span class="text-violet-300">patch</span>
+                <span class="text-white/78">生成页面、类型、请求逻辑，并补充必要的测试和说明</span>
+              </div>
+              <div class="code-line">
+                <span class="code-num">04</span>
+                <span class="text-amber-300">verify</span>
+                <span class="text-white/78">继续修复 lint / typecheck 问题，再整理可维护的最终方案</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid gap-6">
+            <article class="glass-panel rounded-[34px] px-6 py-8 sm:px-8 sm:py-9">
+              <h3 class="text-[2rem] font-semibold tracking-[-0.05em] text-white">Codex 在实际开发中的应用</h3>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                在 Web 开发中，它可以补页面、接口和测试；在后端和脚本场景中，它适合修 bug、重构和补文档；在团队协作里，它也适合做初步方案拆解和代码解释。
+              </p>
+
+              <div class="mt-6 grid gap-3 sm:grid-cols-3">
+                <div class="rounded-[22px] border border-white/10 bg-white/[0.04] p-4">
+                  <div class="text-sm font-bold text-cyan-100">前端与全栈</div>
+                  <p class="mt-2 text-sm leading-6 text-white/68">页面、组件、接口、测试和工程结构调整。</p>
+                </div>
+                <div class="rounded-[22px] border border-white/10 bg-white/[0.04] p-4">
+                  <div class="text-sm font-bold text-emerald-100">后端与脚本</div>
+                  <p class="mt-2 text-sm leading-6 text-white/68">接口调试、脚本修复、自动化任务与重构。</p>
+                </div>
+                <div class="rounded-[22px] border border-white/10 bg-white/[0.04] p-4">
+                  <div class="text-sm font-bold text-violet-100">团队协作</div>
+                  <p class="mt-2 text-sm leading-6 text-white/68">方案拆解、代码解释、文档补全与交接辅助。</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="glass-panel rounded-[34px] px-6 py-8 sm:px-8 sm:py-9">
+              <h3 class="text-[2rem] font-semibold tracking-[-0.05em] text-white">官网、桌面端、CLI 和 IDE 的区别</h3>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                官网适合查看官方说明；桌面端、CLI 和 IDE 更适合直接开始任务。先分清入口，再选最顺手的工作方式。
+              </p>
+
+              <div class="mt-6 grid gap-3 sm:grid-cols-2">
+                <div class="rounded-[22px] border border-white/10 bg-white/[0.04] p-4">
+                  <div class="text-sm font-bold text-amber-100">官网 / 产品页</div>
+                  <p class="mt-2 text-sm leading-6 text-white/68">适合看最新定位、平台支持、发布说明和官方更新。</p>
+                </div>
+                <div class="rounded-[22px] border border-white/10 bg-white/[0.04] p-4">
+                  <div class="text-sm font-bold text-fuchsia-100">桌面端 / CLI / IDE</div>
+                  <p class="mt-2 text-sm leading-6 text-white/68">适合直接开始编码任务，尤其适配已有项目仓库和个人工作流。</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="section-wrap mt-20 sm:mt-24">
+        <div class="glass-panel rounded-[34px] px-6 py-8 sm:px-10 sm:py-10">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <span class="eyebrow">Codex 接入方式</span>
+              <h2 class="section-title mt-5 text-white">接入门槛</h2>
+              <p class="section-copy mt-4 max-w-[60ch]">
+                下载只是第一步，真正决定体验的是你从哪里进入 Codex、账号是否可用，以及你更适合个人还是团队工作流。
+              </p>
+            </div>
+
+          </div>
+
+          <div class="mt-10 grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_320px]">
+            <article class="rounded-[30px] border border-cyan-300/16 bg-[linear-gradient(180deg,rgba(88,170,255,0.14)_0%,rgba(255,255,255,0.03)_100%)] p-6">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <div class="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">个人用户</div>
+                  <h3 class="mt-2 text-[2rem] font-semibold tracking-[-0.06em] text-white">ChatGPT Plus / Pro</h3>
+                </div>
+                <span class="rounded-full border border-cyan-300/20 bg-cyan-300/12 px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] text-cyan-100">Popular</span>
+              </div>
+
+              <div class="mt-8 grid gap-3">
+                <div class="rounded-[20px] border border-white/10 bg-black/14 px-4 py-4">
+                  <div class="text-sm font-semibold text-white/60">适合人群</div>
+                  <div class="mt-1 text-lg font-bold tracking-[-0.03em] text-white">个人开发者</div>
+                </div>
+                <div class="rounded-[20px] border border-white/10 bg-black/14 px-4 py-4">
+                  <div class="text-sm font-semibold text-white/60">常见入口</div>
+                  <div class="mt-1 text-lg font-bold tracking-[-0.03em] text-white">ChatGPT / 桌面端</div>
+                </div>
+                <div class="rounded-[20px] border border-white/10 bg-black/14 px-4 py-4">
+                  <div class="text-sm font-semibold text-white/60">适用场景</div>
+                  <div class="mt-1 text-lg font-bold tracking-[-0.03em] text-white">日常编码任务</div>
+                </div>
+              </div>
+
+              <p class="mt-6 text-[15px] leading-7 text-slate-600">如果你是个人开发者，通常会优先从 ChatGPT 计划、桌面端或本页整理的下载与说明入口开始。</p>
+            </article>
+
+            <article class="rounded-[30px] border border-violet-300/16 bg-[linear-gradient(180deg,rgba(187,150,255,0.14)_0%,rgba(255,255,255,0.03)_100%)] p-6">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <div class="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">团队用户</div>
+                  <h3 class="mt-2 text-[2rem] font-semibold tracking-[-0.06em] text-white">Business / Enterprise / Edu</h3>
+                </div>
+                <span class="rounded-full border border-violet-300/20 bg-violet-300/12 px-3 py-2 text-xs font-bold uppercase tracking-[0.16em] text-violet-100">Team</span>
+              </div>
+
+              <div class="mt-8 grid gap-3">
+                <div class="rounded-[20px] border border-white/10 bg-black/14 px-4 py-4">
+                  <div class="text-sm font-semibold text-white/60">适合人群</div>
+                  <div class="mt-1 text-lg font-bold tracking-[-0.03em] text-white">团队与组织</div>
+                </div>
+                <div class="rounded-[20px] border border-white/10 bg-black/14 px-4 py-4">
+                  <div class="text-sm font-semibold text-white/60">常见入口</div>
+                  <div class="mt-1 text-lg font-bold tracking-[-0.03em] text-white">工作区 / 企业账号</div>
+                </div>
+                <div class="rounded-[20px] border border-white/10 bg-black/14 px-4 py-4">
+                  <div class="text-sm font-semibold text-white/60">适用场景</div>
+                  <div class="mt-1 text-lg font-bold tracking-[-0.03em] text-white">协作与规范化流程</div>
+                </div>
+              </div>
+
+              <p class="mt-6 text-[15px] leading-7 text-slate-600">如果你关心共享上下文、权限管理和团队协作，可以优先了解工作区与企业账号的接入方式。</p>
+            </article>
+
+            <aside class="rounded-[30px] border border-white/10 bg-white/[0.05] p-6">
+              <div class="text-sm font-bold uppercase tracking-[0.2em] text-white/56">接入说明</div>
+              <ul class="mt-5 grid gap-3 text-[15px] leading-7 text-slate-600">
+                <li>更新时间：2026-06-21。</li>
+                <li>官方帮助中心当前说明，Codex 已包含在 ChatGPT Plus、Pro、Business、Enterprise 和 Edu 中。</li>
+                <li>Free 和 Go 计划为限时开放，最终以你的账号页面显示为准。</li>
+                <li>官方帮助中心同时给出了 Codex app、CLI 和 IDE extension 的入口说明。</li>
+                <li>Codex app 当前可用于 macOS 和 Windows。</li>
+                <li>VS Code、Cursor 与 Windsurf 可结合 CLI / IDE 工作流使用。</li>
+              </ul>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" class="section-wrap mt-20 sm:mt-24">
+        <div class="grid gap-6 xl:grid-cols-[minmax(0,0.78fr)_minmax(0,1.22fr)]">
+          <div class="dark-panel rounded-[34px] px-6 py-8 sm:px-8 sm:py-9">
+            <span class="eyebrow">常见问题</span>
+            <h2 class="section-title mt-5 text-slate-950">常见问题</h2>
+            <p class="section-copy mt-4">
+              这里集中回答官网入口、下载方式、平台支持和接入门槛，方便你在开始前先把关键问题看清楚。
+            </p>
+
+            <a class="mt-8 inline-flex min-h-[50px] items-center justify-center rounded-full bg-white text-sm font-bold tracking-[-0.02em] text-slate-950 px-5 transition duration-200 hover:-translate-y-px hover:bg-slate-100" href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">下载并开始体验</a>
+          </div>
+
+          <div class="grid gap-4">
+            <details class="glass-panel rounded-[28px] px-6 py-5" open="">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">什么是 OpenAI Codex？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                Codex 是 OpenAI 面向开发场景推出的 coding agent，适合处理写代码、调试、重构、测试和文档整理等任务。
+              </p>
+            </details>
+
+            <details class="glass-panel rounded-[28px] px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">Codex 怎么一键安装？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                可以在本页复制 <code>npm i -g @openai/codex@latest</code>。Windows 用户可在 CMD 或 PowerShell 执行，macOS 与 Linux 用户可在终端执行；如果你更偏向图形界面，可以使用本页整理的客户端资源。
+              </p>
+            </details>
+
+            <details class="glass-panel rounded-[28px] px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">Codex 官网入口在哪里？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                OpenAI Codex 官方产品页地址是 <a href="https://openai.com/codex/" target="_blank" rel="noreferrer">openai.com/codex/</a>。如果你想先看官方介绍和更新，可以直接从本页“官网信息”区块进入。
+              </p>
+            </details>
+
+            <details class="glass-panel rounded-[28px] px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">Codex 需要单独下载吗？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                取决于你的使用方式。如果你走桌面端、CLI 或 IDE 工作流，通常需要对应客户端或扩展；如果你的 ChatGPT 账号里已经有 Codex 入口，也可以直接开始使用。
+              </p>
+            </details>
+
+            <details class="glass-panel rounded-[28px] px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">更新 Codex 版本需要先卸载旧版本吗？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                不需要。安装新版本时会覆盖旧版本，已有配置文件保存在本地 C 盘用户配置目录中，所以通常不需要重新配置。
+              </p>
+            </details>
+
+            <details class="glass-panel rounded-[28px] px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">Codex 支持 Windows 和 macOS 吗？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                OpenAI 帮助中心当前已提供 Codex app for macOS 和 Windows 的说明。如果你更习惯终端或编辑器，也可以走 CLI / IDE 工作流。
+              </p>
+            </details>
+
+            <details class="glass-panel rounded-[28px] px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">Codex 能在 VS Code、Cursor 或 Windsurf 中使用吗？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                可以。OpenAI 帮助中心当前将 CLI 和 IDE extension 列为 VS Code、Cursor 与 Windsurf 的常见入口，具体可用性仍以账号状态为准。
+              </p>
+            </details>
+
+            <details class="glass-panel rounded-[28px] px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">使用 Codex 是否必须订阅 ChatGPT 付费计划？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                截至 2026-04-29，官方帮助中心显示 Codex 已包含在 ChatGPT Plus、Pro、Business、Enterprise 和 Edu 中，Free 与 Go 为限时开放。最终仍以你的账号页面显示为准。
+              </p>
+            </details>
+
+            <details class="glass-panel rounded-[28px] px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">Codex 适合哪些任务？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                常见任务包括新功能开发、修 bug、重构代码、补测试、写文档、解释现有逻辑，以及围绕已有仓库做更完整的任务协作。
+              </p>
+            </details>
+
+            <details class="glass-panel rounded-[28px] px-6 py-5">
+              <summary class="flex cursor-pointer items-center justify-between gap-4">
+                <span class="text-[1.15rem] font-semibold tracking-[-0.03em] text-slate-950">Codex 与传统代码补全工具有什么区别？</span>
+                <span class="text-xl text-slate-700">+</span>
+              </summary>
+              <p class="mt-4 text-[15px] leading-7 text-slate-600">
+                传统工具主要做局部补全；Codex 更偏向读取上下文、理解目标，并协助完成调试、重构、测试和文档等完整任务流程。
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-wrap mt-20 pb-4 sm:mt-24">
+        <div class="light-panel relative overflow-hidden rounded-[38px] px-6 py-8 text-slate-900 sm:px-10 sm:py-11">
+          <div aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-[-10%] w-[380px] opacity-70 blur-[80px]" style="background: radial-gradient(circle at 50% 50%, rgba(104, 120, 255, 0.34) 0%, rgba(104, 120, 255, 0) 72%);">
+          </div>
+
+          <div class="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+            <div class="max-w-[44rem]">
+              <span class="eyebrow">准备开始了吗</span>
+              <h2 class="section-title mt-5 text-[#101623]">开始使用</h2>
+              <p class="section-copy mt-4">
+                你可以直接前往下载资源，也可以先查看 OpenAI 官方页面和专题说明，再按自己的设备与工作流开始使用。
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+              <a class="inline-flex min-h-[54px] items-center justify-center rounded-full bg-[#121826] px-6 text-base font-bold tracking-[-0.03em] text-white transition duration-200 hover:-translate-y-px hover:bg-black" href="https://pan.quark.cn/s/1ad15b67bc05#/list/share" target="_blank" rel="noreferrer">立即下载 Codex 资源</a>
+              <a class="inline-flex min-h-[54px] items-center justify-center rounded-full border border-slate-900/10 bg-white/78 px-6 text-base font-bold tracking-[-0.03em] text-slate-900 transition duration-200 hover:-translate-y-px hover:bg-white" href="/">查看官网信息</a>
+            </div>
+          </div>
+        </div>
+
+        <footer class="mt-8 flex flex-col gap-3 pb-8 text-sm font-semibold tracking-[-0.02em] text-white/54 sm:flex-row sm:items-center sm:justify-between">
+          <span>Copyright © 郁的 Codex 下载指南. 产品能力与最新支持状态请以 <a href="https://openai.com/codex/" target="_blank" rel="noreferrer">OpenAI 官方页面</a> 为准。</span>
+          <div class="flex flex-wrap items-center gap-4">
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/">官网信息</a>
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/">专题页</a>
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/updates/">更新</a>
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/articles/">文章</a>
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/pets/">宠物</a>
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/">下载说明</a>
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/">功能</a>
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/">流程</a>
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/">接入方式</a>
+            <a class="transition-opacity duration-150 hover:opacity-100" href="/">FAQ</a>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <!-- 右下角推广入口：Codex 宠物模式与第三方 API 中转站。 -->
+    <aside class="floating-promo" aria-label="推荐入口">
+      <a class="pet-promo-card block px-4 py-4 sm:px-5 sm:py-5" href="/pets/">
+        <img class="pet-promo-art" src="/mirror/assets/pet-3f3f174137c4.png" alt="" loading="lazy" decoding="async">
+        <div class="relative z-10 max-w-[15rem]">
+          <div class="flex items-center gap-2">
+            <span class="inline-flex rounded-full bg-slate-950 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">NEW</span>
+            <span class="inline-flex rounded-full border border-slate-900/10 bg-white/76 px-3 py-1 text-[11px] font-semibold tracking-[-0.01em] text-slate-700">Codex 宠物模式</span>
+          </div>
+          <p class="mt-3 text-[18px] font-bold leading-6 tracking-[-0.03em] sm:text-[19px]">
+            Codex 宠物模式上线啦
+          </p>
+          <p class="mt-2 text-[13px] leading-6 text-slate-600 sm:text-[14px]">
+            快来领取你的专属宠物吧。
+          </p>
+        </div>
+        <span class="pet-promo-button text-[13px] tracking-[-0.02em]">
+          查看宠物列表 <span aria-hidden="true">→</span>
+        </span>
+      </a>
+
+      <a class="proxy-promo-card block px-4 py-4 text-slate-950 sm:px-5 sm:py-5" href="https://api.yudidc.cc/sign-in?redirect=%2Fdashboard" target="_blank" rel="noreferrer">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 opacity-100" style="background:
+            radial-gradient(44% 48% at 18% 14%, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0) 72%),
+            radial-gradient(56% 62% at 100% 100%, rgba(147,197,253,0.28) 0%, rgba(147,197,253,0) 76%);"></div>
+        <div class="relative z-10">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="inline-flex rounded-full bg-slate-950 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-white">API</span>
+              <span class="inline-flex rounded-full border border-slate-900/10 bg-white/76 px-3 py-1 text-[11px] font-semibold tracking-[-0.01em] text-slate-700">第三方中转站</span>
+            </div>
+            <div class="proxy-model-icons" aria-label="支持 GPT、Claude 与 Gemini 模型">
+              <img class="proxy-model-icon" src="/mirror/assets/gpt-cd8e0c612aa2.jpg" alt="GPT 图标" loading="lazy" decoding="async">
+              <img class="proxy-model-icon" src="/mirror/assets/claude-1ad5fdbb1bc5.png" alt="Claude 图标" loading="lazy" decoding="async">
+              <img class="proxy-model-icon" src="/mirror/assets/gemini-cd5c9a2bee68.jpg" alt="Gemini 图标" loading="lazy" decoding="async">
+            </div>
+          </div>
+          <p class="mt-3 text-[16px] font-bold leading-6 tracking-[-0.03em] sm:text-[18px]">
+            提供 Claude 4.8 / GPT-5.5 / Gemini 旗舰模型
+          </p>
+          <p class="mt-2 text-[13px] leading-6 text-slate-600 sm:text-[14px]">
+            支持 GPT、Claude、Gemini 等主流 AI 模型 API 中转，适合开发测试、应用接入与多模型调用。
+          </p>
+        </div>
+        <span class="proxy-promo-cta inline-flex min-h-[42px] items-center justify-center rounded-full bg-slate-950 px-4 text-[13px] font-bold tracking-[-0.02em] text-white shadow-[0_14px_34px_rgba(15,23,42,0.18)] transition duration-200 hover:-translate-y-px hover:bg-black">
+          立即注册体验
+        </span>
+      </a>
+    </aside>
+
+  </div>
+
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const revealSelectors = [
+        ".hero-surface",
+        ".glass-panel",
+        ".light-panel",
+        ".dark-panel",
+        ".metric-card",
+        ".section-wrap > .grid",
+        ".hero-surface section",
+        ".hero-surface nav",
+        ".hero-surface .grid > a",
+        "details"
+      ];
+      const aliveSelectors = [
+        ".glass-panel",
+        ".light-panel",
+        ".dark-panel",
+        ".metric-card",
+        ".hero-surface section",
+        ".hero-surface nav",
+        ".hero-surface .grid > a",
+        "details",
+        ".pet-promo-card"
+      ];
+
+      document.documentElement.classList.add("motion-ready");
+
+      const revealItems = Array.from(document.querySelectorAll(revealSelectors.join(",")))
+        .filter((element, index, elements) => elements.indexOf(element) === index);
+
+      revealItems.forEach((element, index) => {
+        element.setAttribute("data-reveal", "");
+        element.style.setProperty("--reveal-delay", `${Math.min(index % 4, 3) * 70}ms`);
+      });
+
+      if (reduceMotion) {
+        revealItems.forEach((element) => element.classList.add("is-visible"));
+        return;
+      }
+
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        });
+      }, {
+        rootMargin: "0px 0px -12% 0px",
+        threshold: 0.12
+      });
+
+      revealItems.forEach((element) => revealObserver.observe(element));
+
+      const aliveCards = Array.from(document.querySelectorAll(aliveSelectors.join(",")))
+        .filter((element, index, elements) => elements.indexOf(element) === index);
+
+      aliveCards.forEach((card) => {
+        card.classList.add("alive-card");
+
+        card.addEventListener("pointermove", (event) => {
+          if (event.pointerType === "touch") {
+            return;
+          }
+
+          const rect = card.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width) * 100;
+          const y = ((event.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty("--glow-x", `${x}%`);
+          card.style.setProperty("--glow-y", `${y}%`);
+          card.style.setProperty("--tilt-x", `${(x - 50) * 0.035}deg`);
+          card.style.setProperty("--tilt-y", `${(50 - y) * 0.025}deg`);
+        });
+
+        card.addEventListener("pointerleave", () => {
+          card.style.removeProperty("--tilt-x");
+          card.style.removeProperty("--tilt-y");
+          card.style.removeProperty("--glow-x");
+          card.style.removeProperty("--glow-y");
+        });
+      });
+
+      const hero = document.querySelector(".hero-surface");
+      let ticking = false;
+
+      const updateParallax = () => {
+        ticking = false;
+
+        if (!(hero instanceof HTMLElement)) {
+          return;
+        }
+
+        const lift = Math.min(window.scrollY * 0.04, 18);
+        hero.style.setProperty("--hero-lift", `${lift}px`);
+      };
+
+      updateParallax();
+      window.addEventListener("scroll", () => {
+        if (ticking) {
+          return;
+        }
+
+        ticking = true;
+        window.requestAnimationFrame(updateParallax);
+      }, { passive: true });
+    })();
+
+    (() => {
+      const header = document.querySelector(".site-header");
+      const navLinks = Array.from(document.querySelectorAll('.site-nav-link[href^="#"]'));
+      const navSections = navLinks
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      if (!header) {
+        return;
+      }
+
+      const updateHeader = () => {
+        header.classList.toggle("is-scrolled", window.scrollY > 8);
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
+        header.style.setProperty("--scroll-progress", progress.toFixed(4));
+
+        const activeSection = navSections.reduce((current, section) => {
+          const sectionTop = section.getBoundingClientRect().top;
+          return sectionTop <= 150 ? section : current;
+        }, null);
+
+        navLinks.forEach((link) => {
+          const isActive = activeSection && link.getAttribute("href") === `#${activeSection.id}`;
+          link.classList.toggle("is-active", Boolean(isActive));
+          link.toggleAttribute("aria-current", Boolean(isActive));
+        });
+      };
+
+      updateHeader();
+      window.addEventListener("scroll", updateHeader, { passive: true });
+    })();
+
+    (() => {
+      const form = document.querySelector("[data-site-search]");
+      const input = document.querySelector("[data-site-search-input]");
+      const terms = [
+        "config.toml",
+        "API Key",
+        "Windows",
+        "CLI",
+        "IDE 扩展",
+        "用量限制",
+        "GPT-5.5",
+        "DeepSeek"
+      ];
+
+      if (!(form instanceof HTMLFormElement) || !(input instanceof HTMLInputElement)) {
+        return;
+      }
+
+      let termIndex = 0;
+      input.placeholder = terms[termIndex];
+
+      window.setInterval(() => {
+        if (document.activeElement === input || input.value.trim()) {
+          return;
+        }
+
+        termIndex = (termIndex + 1) % terms.length;
+        input.placeholder = terms[termIndex];
+      }, 2800);
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const keyword = input.value.trim() || terms[termIndex];
+        window.location.href = `./docs/?q=${encodeURIComponent(keyword)}`;
+      });
+    })();
+  </script>
+
+
+
+</body></html>

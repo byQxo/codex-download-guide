@@ -1,0 +1,320 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>codex接入deepseek v4教程 | Codex下载</title>
+  <meta name="description" content="使用 CC-Switch 为 Codex 配置 DeepSeek API 渠道，从获取 DeepSeek API Key 到开启本地路由并重启 Codex。">
+  <meta name="keywords" content="Codex接入DeepSeek,DeepSeek V4教程,CC-Switch配置教程,Codex教程,DeepSeek API Key,Codex本地路由,codex最新版,codex pet,codex客户端,codex下载,codex微软商店,codex官方版">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/articles/codex-deepseek-v4-cc-switch-guide/">
+  <meta name="author" content="download.yudidc.cc">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="article:published_time" content="2026-06-18">
+  <meta property="article:modified_time" content="2026-06-18">
+  <meta name="theme-color" content="#1f4dff">
+  <link rel="canonical" href="/articles/codex-deepseek-v4-cc-switch-guide/">
+  <link rel="alternate" hreflang="zh-CN" href="/articles/codex-deepseek-v4-cc-switch-guide/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Codex下载">
+  <meta property="og:title" content="codex接入deepseek v4教程">
+  <meta property="og:description" content="使用 CC-Switch 为 Codex 配置 DeepSeek API 渠道，从获取 DeepSeek API Key 到开启本地路由并重启 Codex。">
+  <meta property="og:url" content="https://download.yudidc.cc/articles/codex-deepseek-v4-cc-switch-guide/">
+  <meta property="og:image" content="https://download.yudidc.cc/logo.png">
+  <meta property="og:image:alt" content="codex接入deepseek v4教程">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="codex接入deepseek v4教程">
+  <meta name="twitter:description" content="使用 CC-Switch 为 Codex 配置 DeepSeek API 渠道，从获取 DeepSeek API Key 到开启本地路由并重启 Codex。">
+  <meta name="twitter:image" content="https://download.yudidc.cc/logo.png">
+  <link rel="stylesheet" href="/mirror/assets/article-460d5ca1bf9a.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://download.yudidc.cc/#website",
+      "url": "https://download.yudidc.cc/",
+      "name": "Codex下载",
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://download.yudidc.cc/articles/codex-deepseek-v4-cc-switch-guide/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Codex 下载首页",
+          "item": "https://download.yudidc.cc/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "文章中心",
+          "item": "https://download.yudidc.cc/articles/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "codex接入deepseek v4教程",
+          "item": "https://download.yudidc.cc/articles/codex-deepseek-v4-cc-switch-guide/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://download.yudidc.cc/articles/codex-deepseek-v4-cc-switch-guide/#article",
+      "headline": "codex接入deepseek v4教程",
+      "description": "使用 CC-Switch 为 Codex 配置 DeepSeek API 渠道，从获取 DeepSeek API Key 到开启本地路由并重启 Codex。",
+      "url": "https://download.yudidc.cc/articles/codex-deepseek-v4-cc-switch-guide/",
+      "mainEntityOfPage": "https://download.yudidc.cc/articles/codex-deepseek-v4-cc-switch-guide/",
+      "image": "https://download.yudidc.cc/logo.png",
+      "datePublished": "2026-06-18",
+      "dateModified": "2026-06-18",
+      "inLanguage": "zh-CN",
+      "author": {
+        "@type": "Organization",
+        "name": "download.yudidc.cc"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Codex下载",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://download.yudidc.cc/logo.png"
+        }
+      },
+      "keywords": [
+        "Codex接入DeepSeek",
+        "DeepSeek V4教程",
+        "CC-Switch配置教程",
+        "Codex教程",
+        "DeepSeek API Key",
+        "Codex本地路由"
+      ],
+      "articleSection": "Codex 使用指南"
+    }
+  ]
+}
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ad6645cd757bc1c6dbef1c4a9ca73f7a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+          <span class="brand-name">郁的 Codex 下载指南</span>
+        </a>
+        <nav class="nav-links" aria-label="主导航">
+          <a class="nav-link" href="/">首页</a><a class="nav-link" href="/relay-guide/">中转站搭建</a>
+          <a class="nav-link is-active" href="/articles/">文章</a>
+          <a class="nav-link" href="/cli/">CLI</a>
+          <a class="nav-link" href="/windows/">Windows</a>
+          <a class="nav-link" href="/mac/">macOS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container article-page">
+      <section>
+        <article class="article-panel" itemscope="" itemtype="https://schema.org/Article">
+          <meta itemprop="headline" content="codex接入deepseek v4教程">
+          <meta itemprop="datePublished" content="2026-06-18">
+          <meta itemprop="dateModified" content="2026-06-18">
+          <meta itemprop="author" content="download.yudidc.cc">
+          <h1 class="article-title">codex接入deepseek v4教程</h1>
+          <div class="article-meta">
+            <span class="article-badge">原创</span>
+            <span>已于 2026-06-18 15:38:14 修改</span>
+            <span class="meta-separator">·</span>
+            <span>3.3w 阅读</span>
+            <span class="meta-separator">·</span>
+            <span>42</span>
+            <span class="meta-separator">·</span>
+            <span>35</span>
+            <span class="meta-separator">·</span>
+            <span>CC 4.0 BY-SA版权</span>
+          </div>
+          <div class="article-tags">
+            <span>文章标签：</span>
+            <a href="/articles/">#Codex接入DeepSeek</a>
+            <a href="/articles/">#DeepSeek V4教程</a>
+            <a href="/articles/">#CC-Switch配置教程</a>
+            <a href="/articles/">#Codex教程</a>
+            <a href="/articles/">#DeepSeek API Key</a>
+            <a href="/articles/">#Codex本地路由</a>
+          </div>
+          <div class="post-content" itemprop="articleBody">
+            <figure class="post-image"><img src="https://i-blog.csdnimg.cn/direct/7a4789b14fcf414681e32e1b1d30e45c.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <h2 id="deepseek-api-codex客户端-cc-switch-ai编程助手">DeepSeek API、Codex客户端、CC-Switch、AI编程助手</h2>
+            <p>最近不少开发者都在体验 OpenAI 推出的 Codex 客户端，不过由于网络环境和接口配置等原因，很多朋友希望能够直接通过 DeepSeek API 来驱动 Codex。</p>
+            <p>今天分享一个比较简单的方案，通过 <strong>CC-Switch</strong> 实现 Codex 客户端接入 DeepSeek API，全程几分钟即可完成配置。</p>
+            <hr>
+            <h1 id="一-准备工作">一、准备工作</h1>
+            <p>首先需要下载两个软件：</p>
+            <div class="table-wrap"><table><thead><tr><th scope="col">软件</th><th scope="col">下载地址</th></tr></thead><tbody><tr><td>Codex客户端</td><td><a href="/" target="_blank" rel="noreferrer">https://download.yudidc.cloud/</a></td></tr><tr><td>CC-Switch</td><td><a href="https://api.yudidc.cc/" target="_blank" rel="noreferrer">https://api.yudidc.cc/</a></td></tr></tbody></table></div>
+            <p>下载完成后分别安装。</p>
+            <hr>
+            <h1 id="二-获取deepseek-api-key">二、获取DeepSeek API Key</h1>
+            <p>DeepSeek 官方API管理地址：</p>
+            <pre><code class="language-text">https://platform.deepseek.com/api_keys</code></pre>
+            <p>打开后登录账号。</p>
+            <p>如果之前没有创建过 API Key：</p>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260618/7AD9C33605BF4697107D1E1972120D6F_w1628h807.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <p>点击：</p>
+            <pre><code class="language-text">创建 API Key</code></pre>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260618/F1ED517C5BB282D8B732A59A0C232BBC_w658h385.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <p>填写一个名称 创建后会得到类似：</p>
+            <pre><code class="language-text">sk-xxxxxxxxxxxxxxxxxxxx</code></pre>
+            <p>格式的密钥。</p>
+            <h2 id="注意事项">注意事项</h2>
+            <p>API Key 只会在创建的时候完整显示一次。</p>
+            <p>因此创建后务必立即保存到本地，例如：</p>
+            <pre><code class="language-text">记事本
+            密码管理工具
+            浏览器安全笔记</code></pre>
+            <p>如果忘记保存，只能删除重新创建新的 API Key。</p>
+            <hr>
+            <h1 id="三-配置cc-switch">三、配置CC-Switch</h1>
+            <p>安装并打开 CC-Switch。</p>
+            <p>进入软件后：</p>
+            <p>点击顶部：</p>
+            <pre><code class="language-text">OpenAI 图标</code></pre>
+            <p>如下图所示：</p>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260618/2F19A424EDB4658BDCDDBC0E4867C47F_w1354h947.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <hr>
+            <p>然后点击右上角：</p>
+            <pre><code class="language-text">+</code></pre>
+            <p>新增一个渠道。</p>
+            <hr>
+            <h1 id="四-创建deepseek供应商">四、创建DeepSeek供应商</h1>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260618/A94B608856794C4B52AC6B0E10B5D068_w1350h1916.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <p>在预设供应商位置选择：</p>
+            <pre><code class="language-text">DeepSeek</code></pre>
+            <p>选择完成后向下滚动。</p>
+            <p>找到：</p>
+            <pre><code class="language-text">API Key</code></pre>
+            <p>输入框。</p>
+            <p>将刚刚获取的 DeepSeek API Key 粘贴进去。</p>
+            <p>例如：</p>
+            <pre><code class="language-text">sk-xxxxxxxxxxxxxxxxxxxx</code></pre>
+            <p>填写完成后点击：</p>
+            <pre><code class="language-text">保存</code></pre>
+            <hr>
+            <h1 id="五-开启本地路由">五、开启本地路由</h1>
+            <p>很多朋友配置完成后发现 Codex 无法调用。</p>
+            <p>原因通常是本地路由没有开启。</p>
+            <p>进入：</p>
+            <pre><code class="language-text">设置</code></pre>
+            <p>找到：</p>
+            <pre><code class="language-text">本地路由</code></pre>
+            <p>进入后开启以下两个开关：</p>
+            <figure class="post-image"><img src="https://gbres.dfcfw.com/Files/iimage/20260618/905E44D78BC42F6169D82043BF583564_w1284h854.png" alt="在这里插入图片描述" loading="lazy"></figure>
+            <h3 id="路由总开关">路由总开关</h3>
+            <pre><code class="language-text">开启</code></pre>
+            <h3 id="codex开关">Codex开关</h3>
+            <pre><code class="language-text">开启</code></pre>
+            <p>如下：</p>
+            <pre><code class="language-text">设置
+             └── 本地路由
+                  ├── 路由总开关（开启）
+                  └── Codex（开启）</code></pre>
+            <p>这一步非常关键。</p>
+            <p>如果没有打开，Codex 将无法通过 CC-Switch 转发请求。</p>
+            <hr>
+            <h1 id="六-切换到deepseek渠道">六、切换到DeepSeek渠道</h1>
+            <p>回到 CC-Switch 主界面。</p>
+            <p>在渠道列表中选择刚刚创建的：</p>
+            <pre><code class="language-text">DeepSeek</code></pre>
+            <p>确认当前激活渠道已经切换成功。</p>
+            <hr>
+            <h1 id="七-重启codex客户端">七、重启Codex客户端</h1>
+            <p>完成上述配置后：</p>
+            <p>关闭 Codex 客户端。</p>
+            <p>然后重新启动。</p>
+            <pre><code class="language-text">退出 Codex
+            ↓
+            重新打开</code></pre>
+            <p>重启后客户端会重新读取本地代理配置。</p>
+            <p>此时即可通过 DeepSeek API 进行调用。</p>
+            <hr>
+            <h1 id="八-常见问题">八、常见问题</h1>
+            <h2 id="1-提示api-key无效">1、提示API Key无效</h2>
+            <p>检查：</p>
+            <ul><li>API Key是否复制完整</li><li>是否多复制了空格</li><li>是否使用了已删除的Key</li></ul>
+            <p>建议重新创建一个新的 API Key 测试。</p>
+            <hr>
+            <h2 id="2-codex没有响应">2、Codex没有响应</h2>
+            <p>优先检查：</p>
+            <pre><code class="language-text">设置
+            → 本地路由</code></pre>
+            <p>确认：</p>
+            <ul><li>路由总开关已开启</li><li>Codex开关已开启</li></ul>
+            <hr>
+            <h2 id="3-配置完成仍然无法连接">3、配置完成仍然无法连接</h2>
+            <p>尝试：</p>
+            <pre><code class="language-text">切换渠道
+            ↓
+            保存
+            ↓
+            重启CC-Switch
+            ↓
+            重启Codex</code></pre>
+            <p>多数情况下即可恢复正常。</p>
+            <hr>
+            <h1 id="配置流程总结">配置流程总结</h1>
+            <p>整个配置流程实际上非常简单：</p>
+            <pre><code class="language-text">安装Codex
+            ↓
+            安装CC-Switch
+            ↓
+            获取DeepSeek API Key
+            ↓
+            CC-Switch新增DeepSeek渠道
+            ↓
+            填写API Key
+            ↓
+            开启本地路由
+            ↓
+            开启Codex开关
+            ↓
+            切换到DeepSeek渠道
+            ↓
+            重启Codex</code></pre>
+            <p>完成以上步骤后，Codex 客户端即可通过 CC-Switch 调用 DeepSeek API，实现更加灵活的模型接入方案。对于经常使用 AI 编程助手进行代码生成、调试、重构和项目开发的开发者来说，这种方式配置简单且兼容性较好，几分钟即可完成全部部署。</p>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div>发布时间：2026-06-18，最近更新：2026-06-18。</div>
+        <div class="footer-links">
+          <a href="/">首页</a>
+          <a href="/articles/">文章中心</a>
+          <a href="/cli/">CLI</a>
+          <a href="/windows/">Windows</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+
+</body></html>

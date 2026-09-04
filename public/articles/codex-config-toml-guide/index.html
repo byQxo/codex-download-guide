@@ -1,0 +1,222 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codex config.toml 配置：文件放哪里、谁优先、哪些示例才安全 | Codex下载</title>
+  <meta name="description" content="先分清个人配置、项目配置、profile 和命令行覆盖的边界，再决定 Codex config.toml 应该放在哪一层。">
+  <meta name="keywords" content="Codex config.toml,Codex配置,Codex profile,Codex MCP,Codex 沙盒,codex最新版,codex pet,codex客户端,codex下载,codex微软商店,codex官方版">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/articles/codex-config-toml-guide/">
+  <meta name="author" content="download.yudidc.cc">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="article:published_time" content="2026-05-03">
+  <meta property="article:modified_time" content="2026-05-28">
+  <meta name="theme-color" content="#1f4dff">
+  <link rel="canonical" href="/articles/codex-config-toml-guide/">
+  <link rel="alternate" hreflang="zh-CN" href="/articles/codex-config-toml-guide/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Codex下载">
+  <meta property="og:title" content="Codex config.toml 配置：文件放哪里、谁优先、哪些示例才安全">
+  <meta property="og:description" content="先分清个人配置、项目配置、profile 和命令行覆盖的边界，再决定 Codex config.toml 应该放在哪一层。">
+  <meta property="og:url" content="https://download.yudidc.cc/articles/codex-config-toml-guide/">
+  <meta property="og:image" content="https://download.yudidc.cc/logo.png">
+  <meta property="og:image:alt" content="Codex config.toml 配置：文件放哪里、谁优先、哪些示例才安全">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Codex config.toml 配置：文件放哪里、谁优先、哪些示例才安全">
+  <meta name="twitter:description" content="先分清个人配置、项目配置、profile 和命令行覆盖的边界，再决定 Codex config.toml 应该放在哪一层。">
+  <meta name="twitter:image" content="https://download.yudidc.cc/logo.png">
+  <link rel="stylesheet" href="/mirror/assets/article-460d5ca1bf9a.css">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://download.yudidc.cc/#website",
+      "url": "https://download.yudidc.cc/",
+      "name": "Codex下载",
+      "inLanguage": "zh-CN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://download.yudidc.cc/articles/codex-config-toml-guide/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Codex 下载首页",
+          "item": "https://download.yudidc.cc/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "文章中心",
+          "item": "https://download.yudidc.cc/articles/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Codex config.toml 配置：文件放哪里、谁优先、哪些示例才安全",
+          "item": "https://download.yudidc.cc/articles/codex-config-toml-guide/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://download.yudidc.cc/articles/codex-config-toml-guide/#article",
+      "headline": "Codex config.toml 配置：文件放哪里、谁优先、哪些示例才安全",
+      "description": "先分清个人配置、项目配置、profile 和命令行覆盖的边界，再决定 Codex config.toml 应该放在哪一层。",
+      "url": "https://download.yudidc.cc/articles/codex-config-toml-guide/",
+      "mainEntityOfPage": "https://download.yudidc.cc/articles/codex-config-toml-guide/",
+      "image": "https://download.yudidc.cc/logo.png",
+      "datePublished": "2026-05-03",
+      "dateModified": "2026-05-28",
+      "inLanguage": "zh-CN",
+      "author": {
+        "@type": "Organization",
+        "name": "download.yudidc.cc"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Codex下载",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://download.yudidc.cc/logo.png"
+        }
+      },
+      "keywords": [
+        "Codex config.toml",
+        "Codex配置",
+        "Codex profile",
+        "Codex MCP",
+        "Codex 沙盒"
+      ],
+      "articleSection": "Codex 使用指南"
+    }
+  ]
+}
+  </script>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?ad6645cd757bc1c6dbef1c4a9ca73f7a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+          <span class="brand-name">郁的 Codex 下载指南</span>
+        </a>
+        <nav class="nav-links" aria-label="主导航">
+          <a class="nav-link" href="/">首页</a><a class="nav-link" href="/relay-guide/">中转站搭建</a>
+          <a class="nav-link is-active" href="/articles/">文章</a>
+          <a class="nav-link" href="/cli/">CLI</a>
+          <a class="nav-link" href="/windows/">Windows</a>
+          <a class="nav-link" href="/mac/">macOS</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container article-page">
+      <section>
+        <article class="article-panel" itemscope="" itemtype="https://schema.org/Article">
+          <meta itemprop="headline" content="Codex config.toml 配置：文件放哪里、谁优先、哪些示例才安全">
+          <meta itemprop="datePublished" content="2026-05-03">
+          <meta itemprop="dateModified" content="2026-05-28">
+          <meta itemprop="author" content="download.yudidc.cc">
+          <h1 class="article-title">Codex config.toml 配置：文件放哪里、谁优先、哪些示例才安全</h1>
+          <div class="article-meta">
+            <span class="article-badge">原创</span>
+            <span>已于 2026-05-28 15:38:14 修改</span>
+            <span class="meta-separator">·</span>
+            <span>3.3w 阅读</span>
+            <span class="meta-separator">·</span>
+            <span>42</span>
+            <span class="meta-separator">·</span>
+            <span>35</span>
+            <span class="meta-separator">·</span>
+            <span>CC 4.0 BY-SA版权</span>
+          </div>
+          <div class="article-tags">
+            <span>文章标签：</span>
+            <a href="/articles/">#Codex config.toml</a>
+            <a href="/articles/">#Codex配置</a>
+            <a href="/articles/">#Codex profile</a>
+            <a href="/articles/">#Codex MCP</a>
+            <a href="/articles/">#Codex 沙盒</a>
+          </div>
+          <div class="post-content" itemprop="articleBody">
+            <p>Codex config.toml 不是一个随便粘贴模板的文件。个人默认值放在 <code>~/.codex/config.toml</code>，可信仓库策略才放 <code>.codex/config.toml</code>，临时实验用命令覆盖，密钥不要写进共享项目。</p>
+            <p>Codex <code>config.toml</code> 最先要解决的不是“复制哪段配置”，而是“这个设置应该归谁管”。个人默认值放在 <code>~/.codex/config.toml</code>，可信仓库策略放在 <code>.codex/config.toml</code>，只试一次的模型或权限变化用命令行覆盖，重复使用的 CLI 模式再放进 profile。</p>
+            <p>不要把 API key、bearer token 或 <code>auth.json</code> 写进共享项目配置。OpenAI 的 Codex 配置、MCP、认证和沙盒文档已按 2026 年 4 月 21 日重新核对。</p>
+            <h2 id="先决定配置层-而不是先打开文件">先决定配置层，而不是先打开文件</h2>
+            <div class="table-wrap"><table><thead><tr><th scope="col">你要改什么</th><th scope="col">优先放哪里</th><th scope="col">原因</th></tr></thead><tbody><tr><td>默认模型、审批习惯、通知命令、凭据存储偏好</td><td><code>~/.codex/config.toml</code></td><td>这是你的个人习惯，不应该跟着仓库走</td></tr><tr><td>仓库说明、保守沙盒、团队共用 MCP 名称</td><td>可信项目里的 <code>.codex/config.toml</code></td><td>这是项目策略，应该被代码审查看到</td></tr><tr><td>临时模型、临时沙盒、某个嵌套 key</td><td>CLI flag 或 <code>--config</code></td><td>只影响这一次，不污染长期文件</td></tr><tr><td>review、fast edit 这类重复 CLI 模式</td><td><code>[profiles.&lt;name&gt;]</code></td><td>需要显式 <code>--profile</code> 选择，适合个人预设</td></tr><tr><td>新 MCP server</td><td>先用 <code>codex mcp add</code></td><td>helper 更不容易写错 TOML，也更容易处理 env</td></tr></tbody></table></div>
+            <p>如果你还没分清 ChatGPT 订阅和 API key 该走哪条路线，先看 <a href="/articles/codex-api-key-vs-chatgpt-subscription/">Codex API Key 和 ChatGPT 订阅怎么选？先看计费路由</a>。如果问题其实是额度或限制，可以继续看 <a href="/articles/openai-codex-usage-limits-guide/">OpenAI Codex 用量限制：Plus、Pro 5x/20x、Business Credits 和 API Key 怎么看</a>。</p>
+            <h2 id="优先级-冲突时到底谁赢">优先级：冲突时到底谁赢</h2>
+            <p>当前 Codex 配置优先级从强到弱是：</p>
+            <div class="table-wrap"><table><thead><tr><th scope="col">顺位</th><th scope="col">层级</th><th scope="col">结果</th></tr></thead><tbody><tr><td>1</td><td>CLI flags 和 <code>--config</code></td><td>单次命令可以覆盖下面所有文件</td></tr><tr><td>2</td><td><code>--profile &lt;name&gt;</code> 选中的 profile</td><td>命名预设覆盖普通文件默认值</td></tr><tr><td>3</td><td>项目 <code>.codex/config.toml</code></td><td>只在可信项目里生效；离当前目录最近的可信项目配置优先</td></tr><tr><td>4</td><td>用户 <code>~/.codex/config.toml</code></td><td>你的个人默认层</td></tr><tr><td>5</td><td>系统 <code>/etc/codex/config.toml</code></td><td>机器或组织级默认值</td></tr><tr><td>6</td><td>内置默认值</td><td>上面都没设置时才使用</td></tr></tbody></table></div>
+            <p>所以“我改了 config.toml 但没生效”通常不是 Codex 忽略文件，而是别的层级正在赢。先查当前命令有没有 alias、<code>--config</code> 或 <code>--profile</code>，再查当前目录和项目 trust 状态。</p>
+            <h2 id="个人配置-只放跟你有关的默认值">个人配置：只放跟你有关的默认值</h2>
+            <p>个人配置适合放模型、审批策略、沙盒偏好和本机凭据存储方式。保持短小比复制完整模板更稳。优先放默认模型、常用审批习惯和本机认证方式，不要把只对某一个仓库生效的策略塞进用户层。</p>
+            <p>好的个人配置有两个特点：一是能减少你每次启动 Codex 的重复选择，二是不会把 token 写死，也不会默认给整台机器开过宽权限。</p>
+            <h2 id="项目配置-写共享策略-不写私人状态">项目配置：写共享策略，不写私人状态</h2>
+            <p>项目配置应该保守。它可以告诉 Codex 这个仓库的规则、默认沙盒和项目专用说明，但不应该保存你的私密路由、账号 token 或本机路径。</p>
+            <p>尤其不要把 <code>danger-full-access</code> 和 <code>approval_policy = "never"</code> 当成共享默认值。<code>danger-full-access</code> 会关闭沙盒；如果再不提示确认，就等于把高信任自动化放进仓库策略。只有在隔离、可丢弃、明确授权的环境里，这类设置才有意义。</p>
+            <h2 id="mcp-模型和-provider-示例要短-密钥要间接">MCP、模型和 provider：示例要短，密钥要间接</h2>
+            <p>配置 MCP 时，优先用 <code>codex mcp add</code> 这类 helper，让 Codex 帮你生成更不容易写错的 TOML 结构。</p>
+            <p>如果确实要直接写 TOML，secret 也应该通过环境变量或系统凭据存储间接注入，而不是直接写进共享文件。</p>
+            <p>模型默认值也一样：稳定长期使用再写进文件，只试一次就用命令。</p>
+            <p><code>openai_base_url</code> 可以让内置 OpenAI provider 走代理、网关或特定 endpoint，但这只是请求路由，不等于自动改变订阅、API 计费或 workspace 政策。</p>
+            <h2 id="沙盒-审批和-profile">沙盒、审批和 profile</h2>
+            <p>日常本地开发通常从 <code>workspace-write</code> + <code>on-request</code> 开始：Codex 能改当前工作区，但高风险动作仍会停下来确认。代码审查或只读排查可以用 <code>read-only</code>。共享项目里要谨慎使用宽权限。</p>
+            <p>Profile 适合重复使用的 CLI 预设，例如把 review、fast edit 或只读排查分成几个命名模式。真正执行时，再显式加 <code>--profile &lt;name&gt;</code>。</p>
+            <p>注意：OpenAI 当前把 profiles 标为 experimental，并说明 IDE extension 不支持它。也就是说，profile 是 CLI 便利功能，不是所有 Codex 表面的通用策略。</p>
+            <h2 id="配置没生效时按这个顺序查">配置没生效时按这个顺序查</h2>
+            <div class="table-wrap"><table><thead><tr><th scope="col">先查什么</th><th scope="col">具体看什么</th></tr></thead><tbody><tr><td>当前命令</td><td>alias、flag、<code>--config</code>、<code>--profile</code></td></tr><tr><td>当前目录</td><td><code>pwd</code>、仓库根目录、子目录里的 <code>.codex/config.toml</code></td></tr><tr><td>项目 trust</td><td>项目没被信任时，项目配置会被跳过</td></tr><tr><td>TOML 语法</td><td>字符串引号、数组、表名、schema hint</td></tr><tr><td>key 是否还支持</td><td>官方配置参考和本机 <code>codex --help</code></td></tr><tr><td>MCP server</td><td><code>codex mcp get &lt;name&gt; --json</code></td></tr><tr><td>认证状态</td><td><code>auth.json</code>、keyring、环境变量</td></tr></tbody></table></div>
+            <p>如果你的问题是桌面控制、浏览器权限或应用交互，不要把它全塞进 <code>config.toml</code>。那是另一条权限路径，应该单独看对应的能力和授权说明。</p>
+            <h2 id="faq">FAQ</h2>
+            <h3 id="codex-配置文件到底在哪">Codex 配置文件到底在哪？</h3>
+            <p>用户配置默认是 <code>~/.codex/config.toml</code>。可信项目可以有 <code>.codex/config.toml</code>。系统级默认可以是 <code>/etc/codex/config.toml</code>。</p>
+            <h3 id="api-key-应该写进-config-toml-吗">API key 应该写进 config.toml 吗？</h3>
+            <p>不要写进共享项目配置。API key、bearer token 和 <code>auth.json</code> 应该放在环境变量、系统凭据存储或其它私密 secret 管理位置。</p>
+            <h3 id="为什么项目里的-codex-config-toml-没生效">为什么项目里的 .codex/config.toml 没生效？</h3>
+            <p>先查项目是否 trusted，再查当前目录、是否有更近的项目配置、是否选了 profile，以及命令里是否有 <code>--config</code> 或 flag 覆盖。</p>
+            <h3 id="什么时候用-config">什么时候用 --config？</h3>
+            <p>临时实验、一次性模型、临时沙盒变化、嵌套 key 测试都适合 <code>--config</code>。如果这个值变成长期习惯，再移到用户配置或 profile。</p>
+            <h3 id="danger-full-access-可以用吗">danger-full-access 可以用吗？</h3>
+            <p>可以，但只应出现在已经隔离、可丢弃、明确需要宽权限的环境里。普通个人仓库或共享项目不应该把它当默认值。</p>
+            <h3 id="官方-schema-在哪里">官方 schema 在哪里？</h3>
+            <p>当前 schema 是 <code>https://developers.openai.com/codex/config-schema.json</code>。支持 schema hint 的编辑器可以在 TOML 顶部加入 <code>#:schema https://developers.openai.com/codex/config-schema.json</code>。</p>
+          </div>
+        </article>
+      </section>
+
+      <footer class="footer">
+        <div>发布时间：2026-05-03，最近更新：2026-05-28。</div>
+        <div class="footer-links">
+          <a href="/">首页</a>
+          <a href="/articles/">文章中心</a>
+          <a href="/cli/">CLI</a>
+          <a href="/windows/">Windows</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+
+</body></html>

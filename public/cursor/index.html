@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codex Cursor 使用指南 2026 - IDE 工作流、CLI 协同与常见问题</title>
+  <meta name="description" content="更新于 2026-04-29，整理 Codex 在 Cursor 中的使用方式、IDE 工作流、CLI 协同、账号可用性判断与常见问题。">
+  <meta name="keywords" content="Codex Cursor,Codex Cursor使用,OpenAI Codex Cursor,Codex IDE Cursor,Codex CLI Cursor,Codex 编辑器,codex最新版,codex pet">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/cursor/">
+  <meta name="author" content="download.yudidc.cc">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="article:modified_time" content="2026-04-29">
+  <link rel="canonical" href="/cursor/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Codex Cursor 使用指南 2026 - IDE 工作流、CLI 协同与常见问题">
+  <meta property="og:description" content="整理 Codex 在 Cursor 中的使用方式、IDE 工作流、CLI 协同与账号判断方式。">
+  <meta property="og:url" content="https://download.yudidc.cc/cursor/">
+  <meta property="og:image" content="https://download.yudidc.cc/logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Codex Cursor 使用指南 2026 - IDE 工作流、CLI 协同与常见问题">
+  <meta name="twitter:description" content="更新于 2026-04-29，整理 Codex 在 Cursor 中的使用方式、IDE 工作流、CLI 协同与账号判断方式。">
+  <meta name="twitter:image" content="https://download.yudidc.cc/logo.png">
+  <link rel="stylesheet" href="/mirror/assets/topic-page-e7eec377588c.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://download.yudidc.cc/cursor/#webpage",
+          "url": "https://download.yudidc.cc/cursor/",
+          "name": "Codex Cursor 使用指南 2026",
+          "description": "整理 Codex 在 Cursor 中的使用方式、IDE 工作流、CLI 协同、账号可用性判断与常见问题。",
+          "inLanguage": "zh-CN",
+          "dateModified": "2026-04-29"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://download.yudidc.cc/cursor/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Codex 下载首页",
+              "item": "https://download.yudidc.cc/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Codex Cursor",
+              "item": "https://download.yudidc.cc/cursor/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://download.yudidc.cc/cursor/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Codex 能在 Cursor 里使用吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "可以。官方计划说明已把 Cursor 列为 Codex IDE extension 场景之一，具体展示仍以你的账号和当前版本为准。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex Cursor 是独立下载包吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "通常不是单独的第三方下载包概念，而是通过官方 IDE 路线、账号能力和 CLI 协同进入 Cursor 工作流。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex Cursor 还需要 CLI 吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "很多情况下会需要。CLI 能把仓库、终端和任务执行过程连接起来，适合和 Cursor 配套使用。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex Cursor 适合哪些人？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "适合已经长期在 Cursor 中写代码，并希望把 Codex 加进现有仓库和任务流程的人。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex Cursor 和 VS Code 页面有什么区别？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "VS Code 页面更偏基础 IDE 入口；Cursor 页面更偏 AI-first 编辑器工作流和与 CLI 的配合方式。"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head>
+
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+          <span class="brand-name">郁的 Codex 下载指南</span>
+        </a>
+        <nav class="nav-links" aria-label="主导航">
+          <a class="nav-link" href="/">首页</a><a class="nav-link" href="/relay-guide/">中转站搭建</a>
+          <a class="nav-link" href="/windows/">Windows</a>
+          <a class="nav-link" href="/mac/">macOS</a>
+          <a class="nav-link" href="/cli/">CLI</a>
+          <a class="nav-link is-active" href="/cursor/">Cursor</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-panel">
+          <span class="eyebrow">Updated 2026-04-29</span>
+          <h1>Codex Cursor 使用指南</h1>
+          <p class="hero-lead">
+            如果你准备在 Cursor 里使用 Codex，这页重点解释的不是单独安装包，而是 Codex 如何通过官方 IDE 路线、账号入口和 CLI 协同进入 Cursor 工作流。
+          </p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="https://developers.openai.com/codex/ide" target="_blank" rel="noreferrer">查看官方 IDE 文档</a>
+            <a class="btn btn-secondary" href="/cli/">查看 Codex CLI 页面</a>
+          </div>
+          <div class="chip-row">
+            <span class="chip">Cursor</span>
+            <span class="chip">AI-first Editor</span>
+            <span class="chip">CLI</span>
+            <span class="chip">Repo Tasks</span>
+            <span class="chip">IDE Workflow</span>
+          </div>
+          <div class="topic-links">
+            <a class="topic-link" href="/windows/">Windows</a>
+            <a class="topic-link" href="/mac/">macOS</a>
+            <a class="topic-link" href="/cli/">CLI</a>
+            <a class="topic-link" href="/vscode/">VS Code</a>
+            <a class="topic-link is-current" href="/cursor/">Cursor</a>
+            <a class="topic-link" href="/windsurf/">Windsurf</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>Cursor 用户开始前先看这三件事</h2>
+            <p>先确认账号和官方 IDE 入口，再决定如何把 CLI 和仓库任务接进来。</p>
+          </div>
+          <div class="grid grid-3">
+            <article class="card">
+              <div class="card-label">Official</div>
+              <h3 class="card-title">官方计划说明已覆盖 Cursor</h3>
+              <p class="card-copy">OpenAI 的相关说明已经覆盖 Cursor 场景，因此先按官方 IDE 路线理解入口会更稳妥。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Intent</div>
+              <h3 class="card-title">Cursor 用户通常已有工作流</h3>
+              <p class="card-copy">这类用户通常更关心怎么把 Codex 插进现有仓库、终端和多文件开发场景。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Positioning</div>
+              <h3 class="card-title">重点在 IDE 协同</h3>
+              <p class="card-copy">Cursor 场景的重点是 IDE 路线和 CLI 协同，而不是去找一个所谓的独立资源包。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="grid grid-2">
+          <div class="section-panel steps">
+            <div class="section-head">
+              <h2>Cursor 用户开始用 Codex 的顺序</h2>
+              <p>先看账号和官方 IDE 路线，再决定如何把 CLI 接进来。</p>
+            </div>
+            <article class="step">
+              <h3>先确认账号是否可见 Codex 能力</h3>
+              <p class="copy">无论编辑器多强，第一步仍然是确认你的 ChatGPT 账号和计划是否已经暴露出对应的 Codex 能力。</p>
+            </article>
+            <article class="step">
+              <h3>优先沿官方 IDE 线路理解入口</h3>
+              <p class="copy">官方已经给出 IDE 场景说明。比起四处找非官方教程，先按官方路线理解产品边界更稳。</p>
+            </article>
+            <article class="step">
+              <h3>再把终端和仓库任务接上</h3>
+              <p class="copy">Cursor 用户通常不缺编辑器能力，真正的增量价值来自让 Codex 读懂仓库、终端反馈和连续任务目标。</p>
+            </article>
+          </div>
+
+          <div class="section-panel">
+            <div class="section-head">
+              <h2>Cursor 用户通常还会关心什么</h2>
+              <p>下面这些问题最常见，可以按自己的工作方式继续看。</p>
+            </div>
+            <ul class="list">
+              <li><strong>Codex Cursor</strong>：先看 Cursor 场景总览。</li>
+              <li><strong>OpenAI Codex Cursor</strong>：先核对官方入口和计划说明。</li>
+              <li><strong>Codex IDE Cursor</strong>：看 IDE 路线怎么进入 Cursor。</li>
+              <li><strong>Codex CLI Cursor</strong>：看终端和编辑器如何配合。</li>
+              <li><strong>Codex VS Code Cursor</strong>：如果你还在比较两类编辑器，可以继续看 VS Code 页面。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>Cursor 场景下最像真实需求的三类问题</h2>
+            <p>这一页要解决的是“怎么在现有 Cursor 工作流里用”，而不是泛介绍产品概念。</p>
+          </div>
+          <div class="grid grid-3">
+            <article class="card">
+              <div class="card-label">Repo</div>
+              <h3 class="card-title">多文件、多模块改动</h3>
+              <p class="card-copy">对于已经有仓库的人，Codex 的价值在于理解上下文后再给出实际改动建议。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">CLI</div>
+              <h3 class="card-title">终端输出与编辑器协同</h3>
+              <p class="card-copy">Cursor 用户通常仍要依赖终端和测试结果，所以 CLI 协同是页面里必须明确写出的要点。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Task</div>
+              <h3 class="card-title">连续任务而不是单次补全</h3>
+              <p class="card-copy">适合修复一组问题、补一套测试、调整一个模块，而不是只补完一小段代码。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>Codex Cursor 常见问题</h2>
+            <p>FAQ 继续围绕官方入口、CLI 协同和真实工作流这三件事展开。</p>
+          </div>
+          <div class="faq">
+            <article class="faq-item">
+              <h3 class="faq-question">Codex 能在 Cursor 里使用吗？</h3>
+              <p class="faq-answer">可以。官方计划说明已经把 Cursor 列为 Codex IDE extension 场景之一，具体界面和能力仍以你的账号与版本为准。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex Cursor 是独立下载包吗？</h3>
+              <p class="faq-answer">通常不是独立第三方下载包的概念，而是通过官方 IDE 路线、账号能力和 CLI 协同进入 Cursor 工作流。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex Cursor 还需要 CLI 吗？</h3>
+              <p class="faq-answer">很多情况下会需要。CLI 能把仓库、终端输出和任务执行过程连接起来，这对 Cursor 用户尤其重要。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex Cursor 适合哪些人？</h3>
+              <p class="faq-answer">适合已经长期在 Cursor 中开发，并希望把 Codex 加入现有仓库、终端和多文件任务流的人。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex Cursor 和 VS Code 页面有什么区别？</h3>
+              <p class="faq-answer">VS Code 页面更偏基础 IDE 入口；Cursor 页面更偏 AI-first 编辑器场景，以及如何把 Codex 和 CLI 串成连续工作流。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-panel">
+        <div class="cta-copy">
+          <span class="eyebrow">Next Step</span>
+          <h2>如果你还在比较不同编辑器，接下来顺着 VS Code 和 Windsurf 页看就够了</h2>
+          <p class="copy">如果你还在比较不同编辑器，顺着 VS Code 和 Windsurf 页继续看会更完整。</p>
+        </div>
+        <div class="button-row">
+          <a class="btn btn-primary" href="/vscode/">继续看 Codex VS Code</a>
+          <a class="btn btn-secondary" href="/windsurf/">继续看 Codex Windsurf</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div>本页更新时间：2026-04-29。Cursor 场景下的 Codex 可用性仍应以 OpenAI 官方文档和账号内显示为准。</div>
+        <div class="footer-links">
+          <a href="/">首页</a>
+          <a href="/windows/">Windows</a>
+          <a href="/mac/">macOS</a>
+          <a href="/cli/">CLI</a>
+          <a href="/vscode/">VS Code</a>
+          <a href="/windsurf/">Windsurf</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+
+
+</body></html>

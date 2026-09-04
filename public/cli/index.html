@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codex CLI 使用指南 2026 - 安装、登录、命令行工作流与常见问题</title>
+  <meta name="description" content="更新于 2026-04-29，整理 Codex CLI 的安装入口、常见命令、ChatGPT 账号登录、Windows 与 macOS 使用方式，以及和 IDE 的关系。">
+  <meta name="keywords" content="Codex CLI,Codex 命令行,@openai/codex,Codex 安装,Codex Terminal,Codex VS Code,codex最新版,codex pet">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/cli/">
+  <meta name="author" content="download.yudidc.cc">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="article:modified_time" content="2026-04-29">
+  <link rel="canonical" href="/cli/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Codex CLI 使用指南 2026 - 安装、登录、命令行工作流与常见问题">
+  <meta property="og:description" content="整理 Codex CLI 的安装入口、登录方式、Windows 与 macOS 使用方式，以及和 IDE 的关系。">
+  <meta property="og:url" content="https://download.yudidc.cc/cli/">
+  <meta property="og:image" content="https://download.yudidc.cc/logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Codex CLI 使用指南 2026 - 安装、登录、命令行工作流与常见问题">
+  <meta name="twitter:description" content="更新于 2026-04-29，整理 Codex CLI 的安装入口、登录方式、Windows 与 macOS 使用方式，以及和 IDE 的关系。">
+  <meta name="twitter:image" content="https://download.yudidc.cc/logo.png">
+  <link rel="stylesheet" href="/mirror/assets/topic-page-e7eec377588c.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://download.yudidc.cc/cli/#webpage",
+          "url": "https://download.yudidc.cc/cli/",
+          "name": "Codex CLI 使用指南 2026",
+          "description": "整理 Codex CLI 的安装入口、常见命令、ChatGPT 账号登录、Windows 与 macOS 使用方式，以及和 IDE 的关系。",
+          "inLanguage": "zh-CN",
+          "dateModified": "2026-04-29"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://download.yudidc.cc/cli/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Codex 下载首页",
+              "item": "https://download.yudidc.cc/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Codex CLI",
+              "item": "https://download.yudidc.cc/cli/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://download.yudidc.cc/cli/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Codex CLI 怎么安装？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "官方仓库和文档提供了 Codex CLI 的安装说明。常见的安装方式会使用 npm 包 @openai/codex。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex CLI 安装后怎么登录？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "安装完成后，通常会通过你的 ChatGPT 账号或相关凭证来完成登录，具体以当前官方文档为准。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex CLI 可以在 Windows PowerShell 使用吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "可以。Windows 用户通常会在 PowerShell、Windows Terminal 或 VS Code 集成终端里运行 Codex CLI。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex CLI 和桌面端有什么区别？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "桌面端更适合从图形界面开始理解产品；CLI 更适合直接在仓库、终端和自动化开发流程中完成任务。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex CLI 适合哪些任务？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "更适合在真实项目中处理写代码、修 bug、重构、补测试和写文档这类连续任务。"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head>
+
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+          <span class="brand-name">郁的 Codex 下载指南</span>
+        </a>
+        <nav class="nav-links" aria-label="主导航">
+          <a class="nav-link" href="/">首页</a><a class="nav-link" href="/relay-guide/">中转站搭建</a>
+          <a class="nav-link" href="/windows/">Windows</a>
+          <a class="nav-link" href="/mac/">macOS</a>
+          <a class="nav-link is-active" href="/cli/">CLI</a>
+          <a class="nav-link" href="/vscode/">VS Code</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-panel">
+          <span class="eyebrow">Updated 2026-04-29</span>
+          <h1>Codex CLI 使用指南</h1>
+          <p class="hero-lead">
+            如果你准备通过命令行使用 Codex，这页会把安装入口、登录方式、Windows 与 macOS 用法，以及它和 VS Code / Cursor / Windsurf 的配合方式整理在一起。
+          </p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="https://developers.openai.com/codex/cli" target="_blank" rel="noreferrer">查看官方 CLI 文档</a>
+            <a class="btn btn-secondary" href="https://github.com/openai/codex" target="_blank" rel="noreferrer">查看官方 GitHub 仓库</a>
+          </div>
+          <div class="chip-row">
+            <span class="chip">CLI</span>
+            <span class="chip">Terminal</span>
+            <span class="chip">PowerShell</span>
+            <span class="chip">macOS Terminal</span>
+            <span class="chip">Repo Workflow</span>
+          </div>
+          <div class="topic-links">
+            <a class="topic-link" href="/windows/">Windows</a>
+            <a class="topic-link" href="/mac/">macOS</a>
+            <a class="topic-link is-current" href="/cli/">CLI</a>
+            <a class="topic-link" href="/vscode/">VS Code</a>
+            <a class="topic-link" href="/cursor/">Cursor</a>
+            <a class="topic-link" href="/windsurf/">Windsurf</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>CLI 用户开始前先看这三件事</h2>
+            <p>先看官方安装文档、再确认账号状态、最后直接放进真实仓库。</p>
+          </div>
+          <div class="grid grid-3">
+            <article class="card">
+              <div class="card-label">Install</div>
+              <h3 class="card-title">安装入口清晰</h3>
+              <p class="card-copy">CLI 用户通常已经准备开始安装、登录并在本地工程里使用，因此最需要的是清楚的文档和入口。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Workflow</div>
+              <h3 class="card-title">更贴近真实开发过程</h3>
+              <p class="card-copy">CLI 用户通常直接把 Codex 放进仓库、终端、Git 和测试流程里，这比孤立的演示更接近实际价值。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Keyword</div>
+              <h3 class="card-title">常见入口不止一个</h3>
+              <p class="card-copy">除了 Codex CLI，本页也把 <code>@openai/codex</code>、Terminal、Windows 和 macOS 的使用方式放在一起，方便直接对照。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="grid grid-2">
+          <div class="section-panel steps">
+            <div class="section-head">
+              <h2>Codex CLI 的开始顺序</h2>
+              <p>CLI 用户最适合按文档、账号、仓库这三个层次来开始。</p>
+            </div>
+            <article class="step">
+              <h3>先看官方安装说明</h3>
+              <p class="copy">目前官方仓库和文档已经单独提供 CLI 入口。常见安装方式会使用 <code>@openai/codex</code>，然后再进入登录流程。</p>
+            </article>
+            <article class="step">
+              <h3>确认登录方式和可用计划</h3>
+              <p class="copy">CLI 是否可直接用、是否走 ChatGPT 账号登录、是否有额度限制，都应以你当前账号和最新文档说明为准。</p>
+            </article>
+            <article class="step">
+              <h3>在真实仓库里启动首个任务</h3>
+              <p class="copy">CLI 最适合直接对着真实项目做修复、重构、补测试、解释代码或完成小型迭代，而不是只跑演示命令。</p>
+            </article>
+          </div>
+
+          <div class="section-panel">
+            <div class="section-head">
+              <h2>CLI 页面适合解决哪些问题</h2>
+              <p>如果你正在准备动手，通常会关心下面这些安装和工作流场景。</p>
+            </div>
+            <ul class="list">
+              <li><strong>Codex CLI 安装</strong>：先看安装步骤和官方文档入口。</li>
+              <li><strong>@openai/codex</strong>：查看包名、仓库和命令行入口。</li>
+              <li><strong>Codex Terminal</strong>：查看终端场景下的常见用法。</li>
+              <li><strong>Codex Windows CLI</strong> 与 <strong>Codex Mac CLI</strong>：按系统查看具体操作环境。</li>
+              <li><strong>Codex VS Code CLI</strong>：查看终端和编辑器如何一起使用。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>CLI 适合哪几类人</h2>
+            <p>如果你属于下面任意一种，CLI 页面通常比桌面端页面更有价值。</p>
+          </div>
+          <div class="grid grid-3">
+            <article class="card">
+              <div class="card-label">Developers</div>
+              <h3 class="card-title">已经习惯终端的人</h3>
+              <p class="card-copy">这类用户会直接把 Codex 放进 PowerShell、Terminal、Git 和脚本流程里使用。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Teams</div>
+              <h3 class="card-title">要处理真实仓库的人</h3>
+              <p class="card-copy">CLI 更适合围绕已有代码库做补测试、修 bug、重构和文档整理，而不是只生成示例片段。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Editors</div>
+              <h3 class="card-title">会同时用 IDE 的人</h3>
+              <p class="card-copy">很多用户会把 CLI 和 VS Code、Cursor、Windsurf 配成一套连续工作流，而不是彼此替代。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>Codex CLI 常见问题</h2>
+            <p>FAQ 会继续围绕安装、登录、终端和编辑器协同来展开。</p>
+          </div>
+          <div class="faq">
+            <article class="faq-item">
+              <h3 class="faq-question">Codex CLI 怎么安装？</h3>
+              <p class="faq-answer">官方仓库和文档已经提供 CLI 的安装说明。常见安装方式会使用 npm 包 <code>@openai/codex</code>，安装前先看最新官方文档更稳妥。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex CLI 安装后怎么登录？</h3>
+              <p class="faq-answer">安装后通常会通过你的 ChatGPT 账号或相关凭证完成登录，具体流程以你当前可见的官方文档为准。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex CLI 可以在 Windows PowerShell 使用吗？</h3>
+              <p class="faq-answer">可以。Windows 开发者通常会在 PowerShell、Windows Terminal 或 VS Code 的集成终端里使用它。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex CLI 和桌面端有什么区别？</h3>
+              <p class="faq-answer">桌面端更适合从图形界面开始理解产品；CLI 更适合直接围绕真实仓库和终端工作流完成任务。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex CLI 适合哪些任务？</h3>
+              <p class="faq-answer">更适合在真实项目中做写代码、修 bug、重构、补测试和文档整理这类连续任务，而不是孤立地只生成几行示例代码。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-panel">
+        <div class="cta-copy">
+          <span class="eyebrow">Next Step</span>
+          <h2>如果你已经决定走命令行，接下来通常会继续看 VS Code、Cursor 或 Windsurf</h2>
+          <p class="copy">如果你已经决定走命令行，下一步通常就是把 CLI 接进自己常用的编辑器环境。</p>
+        </div>
+        <div class="button-row">
+          <a class="btn btn-primary" href="/vscode/">继续看 Codex VS Code</a>
+          <a class="btn btn-secondary" href="/cursor/">继续看 Codex Cursor</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div>本页更新时间：2026-04-29。CLI 的安装方式和登录流程请以 OpenAI 官方文档和 GitHub 仓库为准。</div>
+        <div class="footer-links">
+          <a href="/">首页</a>
+          <a href="/windows/">Windows</a>
+          <a href="/mac/">macOS</a>
+          <a href="/vscode/">VS Code</a>
+          <a href="/cursor/">Cursor</a>
+          <a href="/windsurf/">Windsurf</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+
+
+</body></html>

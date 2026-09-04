@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+artifacts/*.json
+artifacts/*.txt
+artifacts/*.sha256
+playwright-report/
+test-results/
+.DS_Store
+

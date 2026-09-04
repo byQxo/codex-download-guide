@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Codex VS Code 使用指南 2026 - IDE 扩展、CLI 协同与常见问题</title>
+  <meta name="description" content="更新于 2026-04-29，整理 Codex 在 VS Code 中的使用方式、IDE 扩展入口、CLI 协同、账号判断方式与常见问题。">
+  <meta name="keywords" content="Codex VS Code,Codex 扩展,Codex VSCode,OpenAI Codex VS Code,Codex IDE extension,Codex CLI VS Code,codex最新版,codex pet">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+  <meta name="applicable-device" content="pc,mobile">
+  <meta name="mobile-agent" content="format=html5; url=https://download.yudidc.cc/vscode/">
+  <meta name="author" content="download.yudidc.cc">
+  <meta http-equiv="content-language" content="zh-CN">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta property="article:modified_time" content="2026-04-29">
+  <link rel="canonical" href="/vscode/">
+  <link rel="icon" href="/mirror/assets/icon-b7dba42d33a0.png">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Codex VS Code 使用指南 2026 - IDE 扩展、CLI 协同与常见问题">
+  <meta property="og:description" content="整理 Codex 在 VS Code 中的使用方式、IDE 扩展入口、CLI 协同与账号判断方式。">
+  <meta property="og:url" content="https://download.yudidc.cc/vscode/">
+  <meta property="og:image" content="https://download.yudidc.cc/logo.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Codex VS Code 使用指南 2026 - IDE 扩展、CLI 协同与常见问题">
+  <meta name="twitter:description" content="更新于 2026-04-29，整理 Codex 在 VS Code 中的使用方式、IDE 扩展入口、CLI 协同与账号判断方式。">
+  <meta name="twitter:image" content="https://download.yudidc.cc/logo.png">
+  <link rel="stylesheet" href="/mirror/assets/topic-page-e7eec377588c.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://download.yudidc.cc/vscode/#webpage",
+          "url": "https://download.yudidc.cc/vscode/",
+          "name": "Codex VS Code 使用指南 2026",
+          "description": "整理 Codex 在 VS Code 中的使用方式、IDE 扩展入口、CLI 协同、账号判断方式与常见问题。",
+          "inLanguage": "zh-CN",
+          "dateModified": "2026-04-29"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://download.yudidc.cc/vscode/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Codex 下载首页",
+              "item": "https://download.yudidc.cc/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Codex VS Code",
+              "item": "https://download.yudidc.cc/vscode/"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://download.yudidc.cc/vscode/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Codex 在 VS Code 里能用吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "可以。官方文档已经单独提供 Codex IDE 相关入口，VS Code 是重要使用场景之一。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex VS Code 需要 CLI 吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "不一定必须，但很多用户会把 IDE 和 CLI 一起使用，这样更适合真实仓库和终端工作流。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex VS Code 更适合哪些任务？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "更适合在已有项目中完成修 bug、重构、补测试、解释代码和文档整理等任务。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex VS Code 和 Cursor、Windsurf 有关系吗？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "有关系。官方计划说明里把 VS Code、Cursor 和 Windsurf 放在同一类 IDE extension 场景中。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Codex VS Code 是否对所有账号开放？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "不是。是否可用以及额度多少，仍应以你的 ChatGPT 账号页面和最新官方文档为准。"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+
+<script>window.ORIGINAL_SITE='https://download.yudidc.cc';window.CLONE_SITE='https://download.yudidc.cc';</script>
+</head>
+
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="container site-header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+          <span class="brand-name">郁的 Codex 下载指南</span>
+        </a>
+        <nav class="nav-links" aria-label="主导航">
+          <a class="nav-link" href="/">首页</a><a class="nav-link" href="/relay-guide/">中转站搭建</a>
+          <a class="nav-link" href="/windows/">Windows</a>
+          <a class="nav-link" href="/mac/">macOS</a>
+          <a class="nav-link" href="/cli/">CLI</a>
+          <a class="nav-link is-active" href="/vscode/">VS Code</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-panel">
+          <span class="eyebrow">Updated 2026-04-29</span>
+          <h1>Codex VS Code 使用指南</h1>
+          <p class="hero-lead">
+            如果你准备在 VS Code 里使用 Codex，这页会把 IDE extension 入口、CLI 协同方式、账号可用性判断和真实仓库场景统一说明。
+          </p>
+          <div class="button-row">
+            <a class="btn btn-primary" href="https://developers.openai.com/codex/ide" target="_blank" rel="noreferrer">查看官方 IDE 文档</a>
+            <a class="btn btn-secondary" href="/cli/">查看 Codex CLI 页面</a>
+          </div>
+          <div class="chip-row">
+            <span class="chip">VS Code</span>
+            <span class="chip">IDE Extension</span>
+            <span class="chip">CLI</span>
+            <span class="chip">Repo Context</span>
+            <span class="chip">Editor Workflow</span>
+          </div>
+          <div class="topic-links">
+            <a class="topic-link" href="/windows/">Windows</a>
+            <a class="topic-link" href="/mac/">macOS</a>
+            <a class="topic-link" href="/cli/">CLI</a>
+            <a class="topic-link is-current" href="/vscode/">VS Code</a>
+            <a class="topic-link" href="/cursor/">Cursor</a>
+            <a class="topic-link" href="/windsurf/">Windsurf</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>VS Code 用户开始前先看这三件事</h2>
+            <p>先判断账号、再看 IDE 入口、最后把 Codex 放进你的仓库工作流。</p>
+          </div>
+          <div class="grid grid-3">
+            <article class="card">
+              <div class="card-label">Official</div>
+              <h3 class="card-title">官方已经单独给出 IDE 路线</h3>
+              <p class="card-copy">OpenAI 官方文档已把 IDE 作为单独入口说明，先按官方路线理解会更稳妥。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Intent</div>
+              <h3 class="card-title">VS Code 用户通常已有工程环境</h3>
+              <p class="card-copy">这类用户往往已经准备把 Codex 接进自己的编辑器、终端和仓库，而不只是先看功能介绍。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Workflow</div>
+              <h3 class="card-title">IDE 和 CLI 会形成组合</h3>
+              <p class="card-copy">很多人不会只在侧边栏里点几下，而是把 VS Code、终端、Git 和 Codex 结合成一套连续流程。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="grid grid-2">
+          <div class="section-panel steps">
+            <div class="section-head">
+              <h2>VS Code 里开始用 Codex 的顺序</h2>
+              <p>先判断账号，再看 IDE 入口，最后再把它放进仓库工作流。</p>
+            </div>
+            <article class="step">
+              <h3>先确认你的账号是否具备 Codex 入口</h3>
+              <p class="copy">不要默认每个 VS Code 用户都能直接用。是否可见、额度多少、能否调用特定能力，最终还是取决于你的账号与计划。</p>
+            </article>
+            <article class="step">
+              <h3>通过官方 IDE 路线进入</h3>
+              <p class="copy">官方文档已经把 IDE extension 单独列出来。比起四处找第三方教程，优先看官方 IDE 路径更稳妥。</p>
+            </article>
+            <article class="step">
+              <h3>把 CLI 与仓库上下文接进来</h3>
+              <p class="copy">真正高价值的用法通常不是孤立地让编辑器补全，而是让 Codex 理解你的项目结构、终端输出和当前任务目标。</p>
+            </article>
+          </div>
+
+          <div class="section-panel">
+            <div class="section-head">
+              <h2>VS Code 用户通常还会关心什么</h2>
+              <p>下面这些问题最常见，按你的工作流选择继续看即可。</p>
+            </div>
+            <ul class="list">
+              <li><strong>Codex VS Code</strong>：先看 VS Code 场景总览。</li>
+              <li><strong>Codex 扩展</strong>：查看 IDE 入口和扩展相关说明。</li>
+              <li><strong>OpenAI Codex VS Code</strong>：先核对官方入口和产品说明。</li>
+              <li><strong>Codex CLI VS Code</strong>：查看终端和编辑器如何一起使用。</li>
+              <li><strong>Cursor / Windsurf</strong>：如果你还在比较兼容编辑器，可以继续查看对应专题页。</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>VS Code 场景下最有价值的三类任务</h2>
+            <p>如果只是写几行 demo，CLI 或网页都能做；VS Code 页面要覆盖的是真实工程场景。</p>
+          </div>
+          <div class="grid grid-3">
+            <article class="card">
+              <div class="card-label">Bugfix</div>
+              <h3 class="card-title">在现有项目里修问题</h3>
+              <p class="card-copy">让 Codex 读取当前文件、终端输出和仓库结构，再协助定位和修复问题。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Refactor</div>
+              <h3 class="card-title">围绕上下文做重构</h3>
+              <p class="card-copy">当任务不是从零开始时，VS Code 场景更容易体现 Codex 在上下文理解上的价值。</p>
+            </article>
+            <article class="card">
+              <div class="card-label">Tests</div>
+              <h3 class="card-title">补测试与文档</h3>
+              <p class="card-copy">对已经存在的模块补测试、补说明、解释代码，比单纯代码补全更接近真实协作。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-panel">
+          <div class="section-head">
+            <h2>Codex VS Code 常见问题</h2>
+            <p>FAQ 会继续围绕扩展、CLI 和账号这三件事来回答。</p>
+          </div>
+          <div class="faq">
+            <article class="faq-item">
+              <h3 class="faq-question">Codex 在 VS Code 里能用吗？</h3>
+              <p class="faq-answer">可以。官方 IDE 文档已经单独提供相关入口，VS Code 是 Codex 的重要使用场景之一。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex VS Code 需要 CLI 吗？</h3>
+              <p class="faq-answer">不一定必须，但很多用户会把 IDE 和 CLI 一起使用，因为真实任务通常离不开终端、Git 和仓库上下文。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex VS Code 更适合哪些任务？</h3>
+              <p class="faq-answer">更适合在已有项目中处理修 bug、重构、补测试、解释代码和文档整理这类任务，而不是只补全几个片段。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex VS Code 和 Cursor、Windsurf 有关系吗？</h3>
+              <p class="faq-answer">有。OpenAI 官方将 VS Code、Cursor 和 Windsurf 都列在 IDE extension 场景中，你可以按自己常用的编辑器继续查看。</p>
+            </article>
+            <article class="faq-item">
+              <h3 class="faq-question">Codex VS Code 是否对所有账号开放？</h3>
+              <p class="faq-answer">不是。功能可见性和额度会变化，所以最终还是以你的 ChatGPT 账号页面和最新官方文档为准。</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-panel">
+        <div class="cta-copy">
+          <span class="eyebrow">Next Step</span>
+          <h2>如果你的编辑器不是 VS Code 本体，继续看 Cursor 或 Windsurf 页</h2>
+          <p class="copy">如果你的编辑器不是 VS Code 本体，继续看 Cursor 或 Windsurf 的专题说明会更直接。</p>
+        </div>
+        <div class="button-row">
+          <a class="btn btn-primary" href="/cursor/">继续看 Codex Cursor</a>
+          <a class="btn btn-secondary" href="/windsurf/">继续看 Codex Windsurf</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div>本页更新时间：2026-04-29。IDE 入口与计划能力请以 OpenAI 官方文档和账号内显示为准。</div>
+        <div class="footer-links">
+          <a href="/">首页</a>
+          <a href="/windows/">Windows</a>
+          <a href="/mac/">macOS</a>
+          <a href="/cli/">CLI</a>
+          <a href="/cursor/">Cursor</a>
+          <a href="/windsurf/">Windsurf</a>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+
+
+</body></html>

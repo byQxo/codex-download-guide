@@ -1,0 +1,653 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中转站搭建指南 - New API、Docker、Nginx、HTTPS 与 Codex 接入</title>
+  <meta name="description" content="从购买服务器、域名解析、Docker Compose 部署 New API，到 Nginx 反向代理、HTTPS、渠道配置、令牌创建和 Codex 接入的完整中转站搭建指南。">
+  <link rel="canonical" href="/relay-guide/">
+  <script src="/mirror/assets/tailwindcss-29642f5191e6.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #0f172a;
+      --muted: #5f6b7e;
+      --line: rgba(15, 23, 42, .10);
+      --glass: rgba(255,255,255,.78);
+      --blue: #3157ef;
+      --violet: #6d4aff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 104px; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(900px 620px at -4% 2%, rgba(165,227,255,.82), transparent 66%),
+        radial-gradient(940px 680px at 96% 4%, rgba(89,83,255,.58), transparent 62%),
+        radial-gradient(760px 600px at 52% 30%, rgba(255,255,255,.94), transparent 68%),
+        linear-gradient(180deg, #dbe9f8 0%, #d7dcf2 24%, #eff1f7 64%, #f7f7fb 100%);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    .page-noise {
+      position: fixed; inset: 0; pointer-events: none; opacity: .15; z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E");
+    }
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .site-header {
+      position: sticky; top: 0; z-index: 50; padding: 20px 0 14px;
+      background: linear-gradient(180deg, rgba(222,234,248,.88), rgba(222,234,248,.54) 78%, transparent);
+      backdrop-filter: blur(18px) saturate(140%);
+    }
+    .header-row { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+    .brand-mark {
+      display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(15,23,42,.08);
+      border-radius: 999px; background: rgba(255,255,255,.66); box-shadow: 0 14px 44px rgba(28,54,179,.12);
+      backdrop-filter: blur(14px);
+    }
+    .brand-mark img { width: 28px; height: 28px; }
+    .brand-name { font-size: 1.5rem; line-height: 1; font-weight: 800; letter-spacing: -.06em; }
+    .nav-pill {
+      display: flex; align-items: center; gap: 6px; min-width: 0; padding: 6px;
+      border: 1px solid rgba(15,23,42,.08); border-radius: 999px; background: rgba(255,255,255,.52);
+      box-shadow: 0 18px 46px rgba(36,46,92,.10); backdrop-filter: blur(22px);
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .nav-pill::-webkit-scrollbar { display: none; }
+    .nav-item {
+      flex: 0 0 auto; min-height: 40px; display: inline-flex; align-items: center; justify-content: center;
+      border: 1px solid transparent; border-radius: 999px; padding: 0 16px; color: rgba(15,23,42,.72);
+      font-size: .9rem; font-weight: 750; letter-spacing: -.02em; transition: .18s ease;
+    }
+    .nav-item:hover { color: var(--ink); background: rgba(255,255,255,.72); transform: translateY(-1px); }
+    .nav-item.home {
+      color: rgba(15,23,42,.72);
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
+    }
+    .nav-item.active {
+      color: #fff; border-color: rgba(15,23,42,.10); background: #171717;
+      box-shadow: 0 10px 24px rgba(15,23,42,.12);
+    }
+    .hero { padding: 26px 0 42px; }
+    .hero-card {
+      position: relative; overflow: hidden; border: 1px solid rgba(255,255,255,.78); border-radius: 40px;
+      padding: 62px 34px 46px; text-align: center; color: #fff;
+      background:
+        radial-gradient(42% 72% at 10% 25%, rgba(0,130,255,.88), transparent 72%),
+        radial-gradient(38% 62% at 88% 22%, rgba(34,28,228,.88), transparent 72%),
+        radial-gradient(48% 80% at 50% 92%, rgba(180,137,255,.56), transparent 76%),
+        linear-gradient(135deg, #2862f6 0%, #2328d7 48%, #5d3ce8 100%);
+      box-shadow: 0 28px 90px rgba(48,55,180,.25), inset 0 1px 0 rgba(255,255,255,.42);
+    }
+    .hero-card::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at 46% 28%, rgba(255,255,255,.42), transparent 30%);
+      opacity: .75;
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 14px;
+      border: 1px solid rgba(255,255,255,.38); border-radius: 999px; background: rgba(255,255,255,.12);
+      font-size: .82rem; font-weight: 800; letter-spacing: .08em; backdrop-filter: blur(16px);
+    }
+    .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: #a9efff; box-shadow: 0 0 20px #a9efff; }
+    .hero-title { margin: 24px 0 16px; font-size: clamp(3.25rem, 6.2vw, 4.85rem); line-height: 1.04; letter-spacing: -.065em; font-weight: 860; }
+    .hero-copy { max-width: 760px; margin: 0 auto; color: rgba(255,255,255,.84); font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.8; }
+    .hero-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .button {
+      min-height: 52px; display: inline-flex; align-items: center; justify-content: center; border-radius: 999px;
+      padding: 0 23px; border: 1px solid rgba(255,255,255,.32); font-weight: 800; transition: .18s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button.primary { background: #fff; color: #111827; box-shadow: 0 18px 40px rgba(15,23,42,.18); }
+    .button.secondary { background: rgba(255,255,255,.10); color: #fff; backdrop-filter: blur(12px); }
+    .hero-meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 34px auto 0; max-width: 820px; }
+    .hero-meta div { padding: 14px 10px; border: 1px solid rgba(255,255,255,.22); border-radius: 20px; background: rgba(255,255,255,.09); backdrop-filter: blur(12px); }
+    .hero-meta strong { display: block; font-size: 1rem; }
+    .hero-meta span { display: block; margin-top: 4px; color: rgba(255,255,255,.68); font-size: .78rem; }
+    .content-grid { display: grid; grid-template-columns: 270px minmax(0,1fr); gap: 26px; align-items: start; padding-bottom: 80px; }
+    .toc {
+      position: sticky; top: 96px; border: 1px solid rgba(255,255,255,.88); border-radius: 28px;
+      padding: 22px; background: rgba(255,255,255,.70); box-shadow: 0 20px 55px rgba(37,45,91,.10);
+      backdrop-filter: blur(22px);
+    }
+    .toc-label { color: #526075; font-size: .75rem; font-weight: 850; letter-spacing: .12em; }
+    .toc h2 { margin: 7px 0 16px; font-size: 1.2rem; letter-spacing: -.04em; }
+    .toc a { display: flex; gap: 10px; align-items: center; padding: 9px 10px; border-radius: 12px; color: #566176; font-size: .88rem; font-weight: 680; }
+    .toc a:hover { color: var(--ink); background: rgba(49,87,239,.08); }
+    .toc-num { display: grid; place-items: center; width: 24px; height: 24px; flex: 0 0 24px; border-radius: 8px; background: #edf1ff; color: #3659d8; font-size: .72rem; }
+    .main-column { min-width: 0; }
+    .intro-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+    .mini-card, .section-card {
+      border: 1px solid rgba(255,255,255,.92); background: rgba(255,255,255,.74);
+      box-shadow: 0 22px 70px rgba(36,46,92,.10), inset 0 1px 0 rgba(255,255,255,.92);
+      backdrop-filter: blur(22px);
+    }
+    .mini-card { border-radius: 24px; padding: 21px; }
+    .mini-card .tag { color: #4463d8; font-size: .74rem; font-weight: 850; letter-spacing: .08em; }
+    .mini-card h3 { margin: 10px 0 8px; font-size: 1.02rem; letter-spacing: -.03em; }
+    .mini-card p { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.65; }
+    .section-card { border-radius: 32px; padding: 30px; margin-bottom: 22px; }
+    .section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 22px; }
+    .step-num {
+      display: grid; place-items: center; width: 46px; height: 46px; flex: 0 0 46px; border-radius: 16px;
+      color: #fff; font-size: .95rem; font-weight: 850; background: linear-gradient(135deg, var(--blue), var(--violet));
+      box-shadow: 0 15px 32px rgba(66,72,224,.26);
+    }
+    .section-kicker { color: #5060c7; font-size: .76rem; font-weight: 850; letter-spacing: .1em; }
+    .section-card h2 { margin: 4px 0 5px; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.2; letter-spacing: -.05em; }
+    .section-lead { margin: 0; color: var(--muted); line-height: 1.75; }
+    .section-card h3 { margin: 26px 0 11px; font-size: 1.05rem; letter-spacing: -.025em; }
+    .section-card p, .section-card li { color: #566176; line-height: 1.78; }
+    .checklist { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px 18px; padding: 0; list-style: none; }
+    .checklist li { position: relative; padding-left: 28px; }
+    .checklist li::before { content: "✓"; position: absolute; left: 0; top: 2px; display: grid; place-items: center; width: 19px; height: 19px; border-radius: 7px; color: #fff; background: #2f5ae8; font-size: .72rem; font-weight: 900; }
+    .callout { margin: 18px 0; padding: 16px 18px; border: 1px solid rgba(49,87,239,.16); border-radius: 18px; background: rgba(234,240,255,.76); color: #46536a; line-height: 1.72; }
+    .callout.warning { border-color: rgba(217,119,6,.18); background: rgba(255,247,224,.88); }
+    .callout.danger { border-color: rgba(220,38,38,.16); background: rgba(255,239,239,.88); }
+    .callout strong { color: var(--ink); }
+    .code-wrap { position: relative; margin: 14px 0 20px; border-radius: 22px; overflow: hidden; background: #101726; box-shadow: 0 18px 45px rgba(15,23,42,.18); }
+    .code-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 42px; padding: 0 14px 0 17px; border-bottom: 1px solid rgba(255,255,255,.08); color: #9eacc5; font-size: .75rem; font-weight: 750; }
+    .code-dots { display: flex; gap: 6px; }
+    .code-dots i { display: block; width: 8px; height: 8px; border-radius: 50%; background: #536178; }
+    .code-dots i:first-child { background: #ff6b6b; } .code-dots i:nth-child(2) { background: #ffd166; } .code-dots i:nth-child(3) { background: #4dd4a7; }
+    pre { margin: 0; padding: 20px; overflow-x: auto; color: #dae4f6; font: 13px/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre; }
+    .copy-button { border: 0; border-radius: 999px; padding: 7px 11px; color: #dbe6fa; background: rgba(255,255,255,.09); font-size: .72rem; font-weight: 800; cursor: pointer; }
+    .copy-button:hover { background: rgba(255,255,255,.15); }
+    code:not(pre code) { padding: .15em .42em; border: 1px solid rgba(15,23,42,.08); border-radius: 7px; background: rgba(240,243,250,.9); color: #243c9e; font-size: .88em; }
+    .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 18px 0; }
+    .flow div { position: relative; padding: 16px 10px; border: 1px solid var(--line); border-radius: 16px; text-align: center; background: #fff; color: #40506a; font-size: .82rem; font-weight: 800; }
+    .flow div:not(:last-child)::after { content: "→"; position: absolute; right: -9px; top: 50%; z-index: 1; transform: translateY(-50%); color: #6b78a5; }
+    .two-col { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .info-box { padding: 18px; border: 1px solid var(--line); border-radius: 19px; background: rgba(255,255,255,.72); }
+    .info-box h3 { margin: 0 0 8px; }
+    .info-box p { margin: 0; font-size: .9rem; }
+    .table-wrap { overflow-x: auto; margin: 15px 0 20px; border: 1px solid var(--line); border-radius: 18px; }
+    table { width: 100%; border-collapse: collapse; background: rgba(255,255,255,.66); font-size: .88rem; }
+    th, td { padding: 13px 14px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: #26334c; background: rgba(239,242,250,.88); }
+    tr:last-child td { border-bottom: 0; }
+    details { border-top: 1px solid var(--line); }
+    details:last-child { border-bottom: 1px solid var(--line); }
+    summary { cursor: pointer; padding: 17px 2px; color: #26334c; font-weight: 800; list-style: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; float: right; color: #596781; }
+    details[open] summary::after { content: "−"; }
+    details p { margin: -3px 0 18px; }
+    .source-list { margin: 0; padding-left: 20px; }
+    .source-list a { color: #3157d9; text-decoration: underline; text-underline-offset: 4px; }
+    #prepare, #docker, #compose, #domain, #nginx, #initialize, #channel, #token, #codex, #security, #upgrade, #faq, #sources { scroll-margin-top: 104px; }
+    .footer { padding: 12px 0 48px; color: #617089; font-size: .86rem; }
+    .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid rgba(15,23,42,.10); padding-top: 22px; }
+    @media (max-width: 1020px) {
+      .site-header { padding: 14px 0 10px; }
+      .header-row { align-items: center; gap: 14px; }
+      .brand-name { font-size: 1.3rem; }
+      .nav-pill { max-width: 66vw; padding: 5px; gap: 3px; }
+      .nav-item { min-height: 38px; padding: 0 12px; font-size: .82rem; }
+      .hero { padding: 18px 0 32px; }
+      .hero-card { padding: 50px 28px 34px; border-radius: 34px; }
+      .hero-title { font-size: clamp(2.75rem, 7.2vw, 4.5rem); }
+      .hero-meta { grid-template-columns: repeat(2, minmax(0,1fr)); max-width: 620px; }
+      .content-grid { grid-template-columns: 1fr; }
+      .toc { position: relative; top: auto; }
+      .toc nav { display: grid; grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 20px, 1180px); }
+      .site-header { position: relative; padding: 10px 0 8px; background: transparent; backdrop-filter: none; }
+      .header-row { display: block; }
+      .brand { margin: 0 4px 10px; }
+      .brand-mark { width: 40px; height: 40px; }
+      .brand-name { font-size: 1.3rem; }
+      .nav-pill { max-width: none; width: 100%; padding: 5px; }
+      .nav-item { min-height: 38px; padding: 0 14px; font-size: .82rem; }
+      .nav-item[href="/pets/"], .nav-item[href^="https://pan.quark.cn"] { display: none; }
+      #prepare, #docker, #compose, #domain, #nginx, #initialize, #channel, #token, #codex, #security, #upgrade, #faq, #sources { scroll-margin-top: 18px; }
+      .hero { padding-top: 8px; padding-bottom: 28px; }
+      .hero-card { border-radius: 30px; padding: 42px 18px 26px; }
+      .hero-title { margin: 20px 0 14px; font-size: clamp(2.35rem, 12vw, 3.15rem); line-height: 1.03; letter-spacing: -.065em; }
+      .hero-copy { max-width: 31ch; font-size: .96rem; line-height: 1.7; }
+      .hero-actions { margin-top: 22px; }
+      .button { min-height: 48px; padding: 0 20px; }
+      .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 9px; margin-top: 26px; }
+      .hero-meta div { padding: 12px 7px; border-radius: 16px; }
+      .intro-grid, .two-col { grid-template-columns: 1fr; }
+      .section-card { border-radius: 25px; padding: 22px 17px; }
+      .section-head { gap: 12px; }
+      .checklist { grid-template-columns: 1fr; }
+      .toc nav { grid-template-columns: repeat(2, 1fr); }
+      .flow { grid-template-columns: 1fr; }
+      .flow div:not(:last-child)::after { content: "↓"; right: auto; left: 50%; top: auto; bottom: -14px; transform: translateX(-50%); }
+      pre { font-size: 12px; padding: 17px 15px; }
+      .footer-row { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-noise" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="/" aria-label="返回 Codex 下载首页">
+        <span class="brand-mark"><img src="/mirror/assets/icon-b7dba42d33a0.png" alt="Codex 图标"></span>
+        <span class="brand-name">Codex 下载</span>
+      </a>
+      <nav class="nav-pill" aria-label="主导航">
+        <a class="nav-item home" href="/">首页</a>
+        <a class="nav-item active" href="/relay-guide/" aria-current="page">中转站搭建</a>
+        <a class="nav-item" href="/articles/">文章</a>
+        <a class="nav-item" href="/docs/">文档</a>
+        <a class="nav-item" href="/pets/">宠物</a>
+        <a class="nav-item" href="https://pan.quark.cn/s/1ad15b67bc05#/list/share" target="_blank" rel="noreferrer">下载 Codex</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-card">
+          <div class="hero-inner">
+            <div class="eyebrow"><span class="eyebrow-dot"></span> NEW API · SELF-HOSTED GATEWAY</div>
+            <h1 class="hero-title">从零搭建<br>自己的 AI 中转站</h1>
+            <p class="hero-copy">用一台 Linux 服务器完成 New API、PostgreSQL、Redis、Nginx 与 HTTPS 部署，再把上游 API 安全接入 Codex、CC-Switch 或其他 OpenAI-compatible 客户端。</p>
+            <div class="hero-actions">
+              <a class="button primary" href="/relay-guide/">开始搭建</a>
+              <a class="button secondary" href="/relay-guide/">直接看 Docker Compose</a>
+            </div>
+            <div class="hero-meta">
+              <div><strong>Ubuntu 22.04+</strong><span>推荐系统</span></div>
+              <div><strong>2C / 2G</strong><span>个人站建议配置</span></div>
+              <div><strong>Docker Compose</strong><span>生产部署方式</span></div>
+              <div><strong>约 30–60 分钟</strong><span>首次搭建耗时</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap content-grid">
+      <aside class="toc">
+        <div class="toc-label">GUIDE MAP</div>
+        <h2>搭建路线</h2>
+        <nav>
+          <a href="/relay-guide/"><span class="toc-num">01</span>准备服务器</a>
+          <a href="/relay-guide/"><span class="toc-num">02</span>安装 Docker</a>
+          <a href="/relay-guide/"><span class="toc-num">03</span>部署 New API</a>
+          <a href="/relay-guide/"><span class="toc-num">04</span>解析域名</a>
+          <a href="/relay-guide/"><span class="toc-num">05</span>Nginx 与 HTTPS</a>
+          <a href="/relay-guide/"><span class="toc-num">06</span>初始化后台</a>
+          <a href="/relay-guide/"><span class="toc-num">07</span>添加渠道</a>
+          <a href="/relay-guide/"><span class="toc-num">08</span>创建令牌</a>
+          <a href="/relay-guide/"><span class="toc-num">09</span>接入 Codex</a>
+          <a href="/relay-guide/"><span class="toc-num">10</span>安全与备份</a>
+          <a href="/relay-guide/"><span class="toc-num">11</span>升级维护</a>
+          <a href="/relay-guide/"><span class="toc-num">12</span>常见问题</a>
+        </nav>
+      </aside>
+
+      <article class="main-column">
+        <div class="intro-grid">
+          <div class="mini-card"><div class="tag">适用场景</div><h3>个人与小团队</h3><p>统一管理你合法持有的上游 API Key、模型名称、额度与访问令牌。</p></div>
+          <div class="mini-card"><div class="tag">核心能力</div><h3>OpenAI-compatible</h3><p>对外提供统一的 <code>/v1</code> 接口，方便 Codex、IDE 和应用接入。</p></div>
+          <div class="mini-card"><div class="tag">重要边界</div><h3>只接入授权资源</h3><p>不要共享、转售或滥用未获授权的账号、Key、模型和网络资源。</p></div>
+        </div>
+
+        <section class="section-card" id="prepare">
+          <div class="section-head"><span class="step-num">01</span><div><div class="section-kicker">PREPARATION</div><h2>准备服务器与域名</h2><p class="section-lead">先把基础资源准备齐，后面的部署会顺很多。生产环境不建议直接把 3000、5432、6379 暴露到公网。</p></div></div>
+          <ul class="checklist">
+            <li>一台可公网访问的 Linux VPS</li>
+            <li>Ubuntu 22.04 / 24.04 或 Debian 12</li>
+            <li>至少 2 核 CPU、2 GB 内存、20 GB 磁盘</li>
+            <li>一个域名或二级域名，如 <code>api.example.com</code></li>
+            <li>开放 TCP 22、80、443 端口</li>
+            <li>准备合法有效的上游 API Key</li>
+          </ul>
+          <div class="callout warning"><strong>先确认合规：</strong>本指南用于自建 API 网关、统一管理本人或团队获授权的模型接口。你仍需遵守云厂商、模型提供商和所在地区的服务条款与法律要求。</div>
+          <h3>登录服务器并更新系统</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>Ubuntu / Debian</span><button class="copy-button" type="button">复制</button></div><pre><code>ssh root@你的服务器IP
+apt update &amp;&amp; apt upgrade -y
+apt install -y curl ca-certificates gnupg git ufw</code></pre></div>
+          <h3>配置基础防火墙</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>UFW</span><button class="copy-button" type="button">复制</button></div><pre><code>ufw allow OpenSSH
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw enable
+ufw status</code></pre></div>
+          <div class="callout"><strong>避免把自己锁在门外：</strong>务必先放行 OpenSSH，再执行 <code>ufw enable</code>。如果云厂商还有安全组，也要同步开放 22、80、443。</div>
+        </section>
+
+        <section class="section-card" id="docker">
+          <div class="section-head"><span class="step-num">02</span><div><div class="section-kicker">CONTAINER RUNTIME</div><h2>安装 Docker 与 Compose</h2><p class="section-lead">优先使用 Docker 官方仓库，安装后用 hello-world 和 Compose 版本命令确认环境正常。</p></div></div>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>Docker 官方安装方式</span><button class="copy-button" type="button">复制</button></div><pre><code>install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+  | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+chmod a+r /etc/apt/keyrings/docker.gpg
+
+. /etc/os-release
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+https://download.docker.com/linux/ubuntu $VERSION_CODENAME stable" \
+  &gt; /etc/apt/sources.list.d/docker.list
+
+apt update
+apt install -y docker-ce docker-ce-cli containerd.io \
+  docker-buildx-plugin docker-compose-plugin
+systemctl enable --now docker</code></pre></div>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>验证安装</span><button class="copy-button" type="button">复制</button></div><pre><code>docker --version
+docker compose version
+docker run --rm hello-world</code></pre></div>
+          <div class="callout">如果你不是 Ubuntu，请按 Docker 官方安装文档切换到对应发行版，不要盲目套用 Ubuntu 软件源。</div>
+        </section>
+
+        <section class="section-card" id="compose">
+          <div class="section-head"><span class="step-num">03</span><div><div class="section-kicker">NEW API STACK</div><h2>用 Docker Compose 部署 New API</h2><p class="section-lead">下面采用 New API 官方推荐的 PostgreSQL + Redis 组合，并把 Web 端口仅绑定到 <code>127.0.0.1:3000</code>，避免绕过 Nginx 直接访问。</p></div></div>
+          <h3>创建部署目录与随机密钥</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>/opt/new-api</span><button class="copy-button" type="button">复制</button></div><pre><code>mkdir -p /opt/new-api/{data,logs,backups}
+cd /opt/new-api
+
+POSTGRES_PASSWORD=$(openssl rand -hex 24)
+SESSION_SECRET=$(openssl rand -hex 32)
+printf 'POSTGRES_PASSWORD=%s\nSESSION_SECRET=%s\n' \
+  "$POSTGRES_PASSWORD" "$SESSION_SECRET" &gt; .env
+chmod 600 .env</code></pre></div>
+          <h3>创建 <code>docker-compose.yml</code></h3>
+          <p>先从 <code>.env</code> 读取数据库密码，再创建配置；不要把真实密码写进公开文档或仓库。</p>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>生成最终配置</span><button class="copy-button" type="button">复制</button></div><pre><code>cd /opt/new-api
+set -a
+. ./.env
+set +a
+
+cat &gt; docker-compose.yml &lt;&lt;EOF
+services:
+  new-api:
+    image: calciumion/new-api:latest
+    container_name: new-api
+    restart: unless-stopped
+    command: --log-dir /app/logs
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ./data:/data
+      - ./logs:/app/logs
+    environment:
+      - SQL_DSN=postgresql://root:$POSTGRES_PASSWORD@postgres:5432/new-api
+      - REDIS_CONN_STRING=redis://redis
+      - TZ=Asia/Shanghai
+      - SESSION_SECRET=$SESSION_SECRET
+      - ERROR_LOG_ENABLED=true
+      - BATCH_UPDATE_ENABLED=true
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://localhost:3000/api/status | grep -q '\"success\":true'"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  postgres:
+    image: postgres:15
+    container_name: new-api-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: new-api
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d new-api"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: new-api-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+volumes:
+  pg_data:
+  redis_data:
+EOF</code></pre></div>
+          <h3>启动并验证服务</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>启动命令</span><button class="copy-button" type="button">复制</button></div><pre><code>cd /opt/new-api
+docker compose pull
+docker compose up -d
+docker compose ps
+docker compose logs --tail=100 new-api
+curl -fsS http://127.0.0.1:3000/api/status</code></pre></div>
+          <div class="callout danger"><strong>不要照抄弱密码。</strong>官方示例里的 <code>123456</code> 只能用于演示。生产环境应使用随机强密码，且数据库与 Redis 不映射公网端口。</div>
+        </section>
+
+        <section class="section-card" id="domain">
+          <div class="section-head"><span class="step-num">04</span><div><div class="section-kicker">DNS</div><h2>解析域名到服务器</h2><p class="section-lead">在域名 DNS 控制台添加 A 记录，让专用子域名指向 VPS 公网 IPv4。</p></div></div>
+          <div class="table-wrap"><table><thead><tr><th>记录类型</th><th>主机记录</th><th>记录值</th><th>TTL</th></tr></thead><tbody><tr><td>A</td><td>api</td><td>你的服务器 IPv4</td><td>300 / 默认</td></tr><tr><td>AAAA</td><td>api</td><td>服务器 IPv6（可选）</td><td>300 / 默认</td></tr></tbody></table></div>
+          <p>例如你的域名是 <code>example.com</code>，填写主机记录 <code>api</code> 后，最终访问地址就是 <code>api.example.com</code>。</p>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>检查解析</span><button class="copy-button" type="button">复制</button></div><pre><code>getent ahostsv4 api.example.com
+# 或
+dig +short api.example.com A</code></pre></div>
+          <div class="callout">先确认域名已经解析到当前服务器，再申请 HTTPS 证书。否则 Certbot 的 HTTP-01 验证会失败。</div>
+        </section>
+
+        <section class="section-card" id="nginx">
+          <div class="section-head"><span class="step-num">05</span><div><div class="section-kicker">REVERSE PROXY</div><h2>配置 Nginx 与 HTTPS</h2><p class="section-lead">Nginx 负责公网入口、TLS、真实 IP 与长连接转发；New API 继续只监听本机 3000 端口。</p></div></div>
+          <div class="flow"><div>客户端</div><div>HTTPS :443</div><div>Nginx</div><div>127.0.0.1:3000</div><div>New API</div></div>
+          <h3>安装 Nginx 与 Certbot</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>安装软件</span><button class="copy-button" type="button">复制</button></div><pre><code>apt install -y nginx certbot python3-certbot-nginx
+systemctl enable --now nginx</code></pre></div>
+          <h3>创建站点配置</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>/etc/nginx/sites-available/new-api.conf</span><button class="copy-button" type="button">复制</button></div><pre><code>server {
+    listen 80;
+    listen [::]:80;
+    server_name api.example.com;
+
+    client_max_body_size 50m;
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_read_timeout 600s;
+        proxy_send_timeout 600s;
+        proxy_buffering off;
+    }
+}</code></pre></div>
+          <h3>启用配置并申请证书</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>Nginx + Let's Encrypt</span><button class="copy-button" type="button">复制</button></div><pre><code>ln -s /etc/nginx/sites-available/new-api.conf \
+  /etc/nginx/sites-enabled/new-api.conf
+nginx -t
+systemctl reload nginx
+
+certbot --nginx -d api.example.com
+certbot renew --dry-run</code></pre></div>
+          <div class="callout"><strong>关于 CDN：</strong>首次排障建议先用 DNS only 直连源站。确认 HTTPS、流式输出和大请求正常后，再按需要接入 CDN，并保留真实客户端 IP 配置。</div>
+        </section>
+
+        <section class="section-card" id="initialize">
+          <div class="section-head"><span class="step-num">06</span><div><div class="section-kicker">FIRST RUN</div><h2>初始化管理员与系统设置</h2><p class="section-lead">访问你的域名，首次启动会进入初始化页。只需初始化一次，随后用管理员账号登录后台。</p></div></div>
+          <ol>
+            <li>打开 <code>https://api.example.com</code>。</li>
+            <li>按照页面提示创建管理员账号和强密码。</li>
+            <li>登录后进入“设置”，确认站点名称、额度单位、日志与注册策略。</li>
+            <li>如果只供自己使用，建议关闭公开注册；需要团队成员时，再设置邮箱验证、邀请或手动创建用户。</li>
+            <li>不要直接把管理员令牌放进日常客户端，日常调用应使用普通用户令牌。</li>
+          </ol>
+          <div class="two-col">
+            <div class="info-box"><h3>建议打开</h3><p>错误日志、批量更新、合理的流式超时、管理后台登录保护。</p></div>
+            <div class="info-box"><h3>建议关闭或限制</h3><p>开放注册、无限额度、公共测试令牌、无需认证的管理入口。</p></div>
+          </div>
+        </section>
+
+        <section class="section-card" id="channel">
+          <div class="section-head"><span class="step-num">07</span><div><div class="section-kicker">UPSTREAM CHANNEL</div><h2>添加上游渠道与模型</h2><p class="section-lead">“渠道”保存的是你获得授权的上游接口；对外令牌与上游 Key 应分开管理，不要把上游 Key 直接交给客户端。</p></div></div>
+          <ol>
+            <li>进入后台的“渠道”页面，点击“添加渠道”。</li>
+            <li>选择与上游协议相符的类型，如 OpenAI、Anthropic、Gemini 或 OpenAI-compatible。</li>
+            <li>填写上游 Base URL。多数 OpenAI-compatible 服务使用类似 <code>https://provider.example/v1</code> 的地址。</li>
+            <li>填写上游 API Key，并选择或手动填写允许调用的模型列表。</li>
+            <li>根据需要设置模型映射，例如客户端请求 <code>gpt-5.5</code>，上游实际模型名不同，可通过映射统一。</li>
+            <li>保存后使用后台“测试”功能验证连通性与模型可用性，再开启渠道。</li>
+          </ol>
+          <div class="table-wrap"><table><thead><tr><th>字段</th><th>作用</th><th>常见问题</th></tr></thead><tbody><tr><td>渠道类型</td><td>决定协议、鉴权和请求转换方式</td><td>类型选错会出现 400 / 404</td></tr><tr><td>Base URL</td><td>上游 API 根地址</td><td>重复写 <code>/v1/v1</code></td></tr><tr><td>API Key</td><td>向上游鉴权</td><td>Key 失效、额度不足、IP 限制</td></tr><tr><td>模型</td><td>允许网关路由的模型名</td><td>客户端模型名与上游不一致</td></tr><tr><td>优先级 / 权重</td><td>多渠道路由与分流</td><td>测试阶段不建议配置太复杂</td></tr></tbody></table></div>
+          <div class="callout warning"><strong>先简单后复杂：</strong>首次部署只添加一个确认可用的上游渠道，先跑通单模型，再增加多渠道、权重、分组和故障转移。</div>
+        </section>
+
+        <section class="section-card" id="token">
+          <div class="section-head"><span class="step-num">08</span><div><div class="section-kicker">ACCESS TOKEN</div><h2>创建对外访问令牌</h2><p class="section-lead">令牌用于客户端调用你的中转站。建议按设备、项目或人员分别创建，便于限额、审计和单独吊销。</p></div></div>
+          <ol>
+            <li>进入“令牌”页面，新建一个令牌。</li>
+            <li>设置清晰名称，如 <code>codex-laptop</code>、<code>cursor-work</code>。</li>
+            <li>设置到期时间、额度、可用模型或 IP 白名单（如版本支持）。</li>
+            <li>创建后立即复制并安全保存；不要写进公开仓库、网页源码、聊天记录或截图。</li>
+          </ol>
+          <h3>用 curl 验证 OpenAI-compatible 接口</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>列出模型</span><button class="copy-button" type="button">复制</button></div><pre><code>curl https://api.example.com/v1/models \
+  -H "Authorization: Bearer sk-your-relay-token"</code></pre></div>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>Chat Completions 测试</span><button class="copy-button" type="button">复制</button></div><pre><code>curl https://api.example.com/v1/chat/completions \
+  -H "Authorization: Bearer sk-your-relay-token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "你的模型名",
+    "messages": [{"role": "user", "content": "只回复 OK"}],
+    "stream": false
+  }'</code></pre></div>
+        </section>
+
+        <section class="section-card" id="codex">
+          <div class="section-head"><span class="step-num">09</span><div><div class="section-kicker">CODEX CLIENT</div><h2>接入 Codex 与 CC-Switch</h2><p class="section-lead">最省心的方式是用 CC-Switch 图形化新增一个 Codex 渠道；也可以直接编辑 Codex 的认证和配置文件。</p></div></div>
+          <h3>方案 A：使用 CC-Switch</h3>
+          <ol>
+            <li>在 CC-Switch 中选择 Codex，新增供应商或渠道。</li>
+            <li>Base URL 填 <code>https://api.example.com/v1</code>。</li>
+            <li>API Key 填刚刚创建的中转令牌。</li>
+            <li>模型填写后台实际开放给该令牌的模型名。</li>
+            <li>保存并应用配置，重开 Codex 终端后测试。</li>
+          </ol>
+          <h3>方案 B：手动配置 Codex</h3>
+          <p>不同 Codex 版本对 <code>wire_api</code>、Responses API 与 Chat Completions 的支持会变化。下面以 OpenAI-compatible Chat Completions 为例；如果你的上游支持 Responses API，可按实际版本改为 <code>responses</code>。</p>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>~/.codex/auth.json</span><button class="copy-button" type="button">复制</button></div><pre><code>{
+  "OPENAI_API_KEY": "sk-your-relay-token"
+}</code></pre></div>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>~/.codex/config.toml</span><button class="copy-button" type="button">复制</button></div><pre><code>model = "你的模型名"
+model_provider = "my-relay"
+
+[model_providers.my-relay]
+name = "My New API Relay"
+base_url = "https://api.example.com/v1"
+env_key = "OPENAI_API_KEY"
+wire_api = "chat"</code></pre></div>
+          <div class="callout warning"><strong>如果出现 404：</strong>优先检查 Base URL 是否重复包含 <code>/v1</code>，以及当前渠道到底支持 <code>/v1/chat/completions</code> 还是 <code>/v1/responses</code>。</div>
+        </section>
+
+        <section class="section-card" id="security">
+          <div class="section-head"><span class="step-num">10</span><div><div class="section-kicker">SECURITY</div><h2>安全加固与备份</h2><p class="section-lead">中转站保存上游 Key、用户令牌和用量记录，最低限度的安全与备份不能省。</p></div></div>
+          <ul class="checklist">
+            <li>管理员使用独立强密码，不与服务器密码复用</li>
+            <li>关闭不需要的公开注册与测试令牌</li>
+            <li>只开放 22、80、443；数据库和 Redis 不对公网映射</li>
+            <li>为每个客户端创建独立令牌并设置额度</li>
+            <li>定期检查异常请求、错误日志与用量突增</li>
+            <li>备份数据库、Compose、<code>.env</code> 和必要数据目录</li>
+          </ul>
+          <h3>备份 PostgreSQL 与配置</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>手动备份</span><button class="copy-button" type="button">复制</button></div><pre><code>cd /opt/new-api
+STAMP=$(date +%Y%m%d-%H%M%S)
+mkdir -p backups/$STAMP
+
+docker exec new-api-postgres pg_dump -U root -d new-api \
+  &gt; backups/$STAMP/new-api.sql
+cp docker-compose.yml .env backups/$STAMP/
+tar -czf backups/new-api-$STAMP.tar.gz -C backups/$STAMP .
+chmod 600 backups/new-api-$STAMP.tar.gz</code></pre></div>
+          <h3>恢复前先做演练</h3>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>数据库恢复示例</span><button class="copy-button" type="button">复制</button></div><pre><code># 在维护窗口、确认目标数据库为空或允许覆盖后执行
+cat /path/to/new-api.sql | \
+  docker exec -i new-api-postgres psql -U root -d new-api</code></pre></div>
+          <div class="callout danger"><strong>备份也包含敏感信息。</strong>不要把 <code>.env</code>、数据库备份和上游 Key 上传到公共网盘或公开 Git 仓库；异地备份应加密并限制访问。</div>
+        </section>
+
+        <section class="section-card" id="upgrade">
+          <div class="section-head"><span class="step-num">11</span><div><div class="section-kicker">MAINTENANCE</div><h2>安全升级与日常维护</h2><p class="section-lead">升级前备份，升级后检查健康状态、渠道和真实调用。不要只看容器“Up”就认定业务正常。</p></div></div>
+          <div class="code-wrap"><div class="code-top"><span class="code-dots"><i></i><i></i><i></i></span><span>标准升级流程</span><button class="copy-button" type="button">复制</button></div><pre><code>cd /opt/new-api
+
+# 1. 先按上一节完成备份
+# 2. 拉取新镜像并重建
+
+docker compose pull
+docker compose up -d
+
+# 3. 验证
+docker compose ps
+docker compose logs --tail=120 new-api
+curl -fsS https://api.example.com/api/status
+curl -fsS https://api.example.com/v1/models \
+  -H "Authorization: Bearer sk-your-test-token"</code></pre></div>
+          <div class="two-col">
+            <div class="info-box"><h3>日常观察</h3><p><code>docker compose ps</code>、容器日志、磁盘空间、证书续期、上游余额和渠道错误率。</p></div>
+            <div class="info-box"><h3>版本策略</h3><p>关键业务可固定镜像版本，先在旁路实例测试，再切换生产；不要长期无审查地自动追 <code>latest</code>。</p></div>
+          </div>
+        </section>
+
+        <section class="section-card" id="faq">
+          <div class="section-head"><span class="step-num">12</span><div><div class="section-kicker">TROUBLESHOOTING</div><h2>常见问题排查</h2><p class="section-lead">按照“DNS → Nginx → New API → 渠道 → 上游”的顺序逐层定位，避免一上来就反复重装。</p></div></div>
+          <details><summary>打开域名显示 502 Bad Gateway</summary><p>先执行 <code>curl http://127.0.0.1:3000/api/status</code>。如果本机也失败，检查 <code>docker compose ps</code> 和 New API 日志；如果本机成功，检查 Nginx 的 <code>proxy_pass</code>、端口和 <code>nginx -t</code>。</p></details>
+          <details><summary>Certbot 申请证书失败</summary><p>确认域名 A/AAAA 记录已指向本机、80 端口公网可达、Nginx 正常监听，且 CDN/代理没有阻断 HTTP-01 验证。</p></details>
+          <details><summary>客户端返回 401 Unauthorized</summary><p>确认使用的是 New API 生成的对外令牌，而不是管理员密码；检查 Authorization 格式是否为 <code>Bearer sk-...</code>，令牌是否过期、被禁用或额度耗尽。</p></details>
+          <details><summary>客户端返回 404 Not Found</summary><p>检查 Base URL 是否多写或漏写 <code>/v1</code>，并确认客户端调用的是 Chat Completions 还是 Responses API。部分上游或渠道只实现其中一种。</p></details>
+          <details><summary>有模型列表，但调用提示模型不存在</summary><p>检查渠道允许模型、模型映射、令牌模型限制和客户端配置中的模型名是否完全一致。先用后台渠道测试功能确认上游真实模型名。</p></details>
+          <details><summary>流式输出中断或长任务超时</summary><p>Nginx 应关闭 <code>proxy_buffering</code> 并提高 <code>proxy_read_timeout</code>；New API 可按版本配置流式超时。若经过 CDN，还要检查 CDN 的连接时长限制。</p></details>
+          <details><summary>服务器重启后服务没有起来</summary><p>确认 Docker 已启用开机启动，Compose 中服务设置了 <code>restart: unless-stopped</code> 或 <code>always</code>，并检查磁盘空间、数据库健康检查和容器日志。</p></details>
+        </section>
+
+        <section class="section-card" id="sources">
+          <div class="section-head"><span class="step-num">↗</span><div><div class="section-kicker">REFERENCES</div><h2>官方资料与延伸阅读</h2><p class="section-lead">本文以官方文档为基础重新整理，命令和界面可能随版本更新，请在正式部署前交叉核对。</p></div></div>
+          <ul class="source-list">
+            <li><a href="https://docs.newapi.pro/en/docs/installation" target="_blank" rel="noreferrer">New API 官方：安装与部署</a></li>
+            <li><a href="https://docs.newapi.pro/en/docs/installation/deployment/docker-compose" target="_blank" rel="noreferrer">New API 官方：Docker Compose 部署</a></li>
+            <li><a href="https://docs.newapi.pro/en/docs/installation/config-maintenance/docker-compose-yml" target="_blank" rel="noreferrer">New API 官方：Docker Compose 配置说明</a></li>
+            <li><a href="https://github.com/QuantumNous/new-api" target="_blank" rel="noreferrer">QuantumNous/new-api GitHub 仓库</a></li>
+            <li><a href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noreferrer">Docker 官方：Ubuntu 安装</a></li>
+            <li><a href="https://certbot.eff.org/" target="_blank" rel="noreferrer">Certbot / Let's Encrypt 配置向导</a></li>
+            <li><a href="https://nginx.org/en/docs/http/ngx_http_proxy_module.html" target="_blank" rel="noreferrer">Nginx 官方：反向代理模块</a></li>
+          </ul>
+          <div class="callout">最后更新：2026 年 7 月。New API 与 Codex 更新较快，部署前建议优先查看官方版本说明和升级指南。</div>
+        </section>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="wrap footer-row"><span>Codex 下载 · 中转站搭建指南</span><span>自建、可控、只使用获授权的 API 资源</span></div></footer>
+
+  <script>
+    document.querySelectorAll('.copy-button').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const code = button.closest('.code-wrap')?.querySelector('code')?.innerText || '';
+        try {
+          await navigator.clipboard.writeText(code);
+          const old = button.textContent;
+          button.textContent = '已复制';
+          setTimeout(() => { button.textContent = old; }, 1400);
+        } catch {
+          button.textContent = '复制失败';
+        }
+      });
+    });
+  </script>
+
+
+</body></html>
