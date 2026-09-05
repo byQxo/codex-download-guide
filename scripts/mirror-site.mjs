@@ -107,6 +107,8 @@ function rewriteHtml(html, pageUrl) {
       if (value) $(element).attr(attribute, mapUrl(value, pageUrl));
     }
   });
+  // Keep the proxy CTA on this deployment's registration page.
+  $(".proxy-promo-card").attr("href", `${apiBaseUrl}/register`);
   $("meta[content], title, body").each((_index, element) => {
     if (element.tagName === "meta") {
       const content = $(element).attr("content");

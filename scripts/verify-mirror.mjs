@@ -36,6 +36,7 @@ try {
   check("no-yancc-domain", !/yancc\.cloud/i.test(text), "built source contains no yancc.cloud");
   check("assistant-removed", !/codex-advisor-widget/i.test(text), "advisor scripts removed");
   check("brand-present", text.includes("郁的 Codex 下载站"), "custom brand found");
+  check("proxy-registration-cta", /class="proxy-promo-card[^"]*"[^>]*href="https:\/\/api\.yudidc\.cc\/register"/i.test(text), "proxy CTA points to the local registration page");
 } catch (error) {
   check("public-readable", false, error.message);
 }
@@ -44,4 +45,3 @@ await fs.mkdir(artifactsDir, { recursive: true });
 await fs.writeFile(path.join(artifactsDir, "verify-report.json"), `${JSON.stringify(report, null, 2)}\n`);
 console.log(JSON.stringify(report, null, 2));
 if (!report.ok) process.exitCode = 1;
-
