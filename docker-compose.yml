@@ -3,10 +3,12 @@ name: yudidc-codex-download
 services:
   yudidc-codex-download:
     build: .
+    image: yudidc-codex-download:feat-yudidc-mirror
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     environment:
       PORT: 3000
+      STATIC_DIR: /app/public
       PUBLIC_SITE_URL: https://download.yudidc.cc
       API_BASE_URL: https://api.yudidc.cc
     restart: unless-stopped

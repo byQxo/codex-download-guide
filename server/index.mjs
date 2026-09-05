@@ -9,7 +9,7 @@ const preferredDir = path.join(projectRoot, "dist");
 const fallbackDir = path.join(projectRoot, "public");
 const staticDir = process.env.STATIC_DIR
   ? path.resolve(process.env.STATIC_DIR)
-  : fs.existsSync(preferredDir)
+  : fs.existsSync(path.join(preferredDir, "index.html"))
     ? preferredDir
     : fallbackDir;
 const port = Number(process.env.PORT || 3000);
@@ -52,4 +52,3 @@ app.listen(port, "0.0.0.0", () => {
   console.log(`yudidc mirror listening on http://0.0.0.0:${port}`);
   console.log(`serving ${staticDir}`);
 });
-
