@@ -10,3 +10,11 @@ playwright-report/
 test-results/
 .DS_Store
 
+# Local browser traces and deployment bundles
+.playwright-mcp/
+deploy-*.tar
+yancc-home-reference.png
+artifacts/IF_download_yudidc.conf
+artifacts/download-direct.html
+artifacts/*.log
+artifacts/*.yml
