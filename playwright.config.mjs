@@ -1,18 +1,19 @@
 import { defineConfig } from "@playwright/test";
 
+const testPort = Number(process.env.PLAYWRIGHT_PORT || 3000);
+
 export default defineConfig({
   testDir: "./tests",
   timeout: 30_000,
   use: {
-    baseURL: "http://127.0.0.1:4173",
+    baseURL: `http://127.0.0.1:${testPort}`,
     browserName: "chromium",
     screenshot: "only-on-failure",
   },
   webServer: {
     command: "node server/index.mjs",
-    port: 4173,
+    port: testPort,
     reuseExistingServer: true,
-    env: { PORT: "4173", STATIC_DIR: "dist" },
+    env: { PORT: String(testPort), STATIC_DIR: "dist" },
   },
 });
-
